@@ -11,8 +11,18 @@ class GameWorld:
         self._clock = pygame.time.Clock()
         self._font = pygame.font.SysFont(None, 48)
         self.gameObject = GameObject()
+        self.gameObject2 = GameObject()
         self.gameObjects = [self.gameObject]
-        self.gameObjects.append(self.gameObject)
+        self.gameObjects.append(self.gameObject2)
+
+        self.sprite_image = pygame.image.load("grenade.png")
+        self.sprite_image = pygame.transform.scale(self.sprite_image, (50, 80))
+        self.sprite = pygame.sprite.Sprite()
+
+        self.sprite.rect = self.sprite_image.get_rect()
+        self.sprite.rect.x = 100
+        self.sprite.rect.y = 100
+
 
     def run(self):
         while True:
@@ -37,7 +47,9 @@ class GameWorld:
 
     def draw(self):
         # Clear the screen
-        self._screen.fill((0, 0, 0))
+        self._screen.fill((63, 153, 249))
+
+        self._screen.blit(self.sprite_image, self.sprite.rect)
 
         for i in self.gameObjects:
             i.draw(self._screen)
