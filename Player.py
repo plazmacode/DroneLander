@@ -1,5 +1,6 @@
 import pygame
 from GameObject import GameObject
+import math
 
 class Player(GameObject):
     def __init__(self) -> None:
@@ -12,7 +13,10 @@ class Player(GameObject):
         self.tag = "Player"
         self.angle = 0
         self.rotation_speed = 4
+        self.velocity = pygame.math.Vector2(0,0)
+        self.accel = 0
 
+    
     def update(self):
         self.move()
         
@@ -37,8 +41,17 @@ class Player(GameObject):
         self.image = pygame.transform.rotate(self.base_image, self.angle)
         self.rect = self.image.get_rect(center=self.rect.center)
 
+        self.rect.move_ip(self.velocity.x * self.accel, self.velocity.y * self.accel)
+        self.accel -= 0.1
+        if self.accel < 0:
+            self.accel = 0
+
     def thrust(self):
-        pass
+
+        self.velocity = pygame.math.Vector2(0, -1)
+        self.velocity.rotate_ip(-self.angle)
+
+        self.accel = 5
 
     def attack(self):
         pass
