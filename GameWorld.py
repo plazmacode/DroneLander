@@ -1,18 +1,19 @@
 import pygame
 from GameObject import GameObject
+from Player import Player
 
 class GameWorld:
     def __init__(self):
         pygame.init()
-        self._screen_width = 800
-        self._screen_height = 600
+        self._screen_width = 1600
+        self._screen_height = 900
         self._screen = pygame.display.set_mode((self._screen_width, self._screen_height))
         pygame.display.set_caption("Template")
         self._clock = pygame.time.Clock()
         self._font = pygame.font.SysFont(None, 48)
-        self.gameObject = GameObject()
-        self.gameObjects = [self.gameObject]
-        self.gameObjects.append(self.gameObject)
+        self.player = Player()
+        self.gameObjects = pygame.sprite.Group(self.player)
+        # self.gameObjects.append(self.gameObject)
 
     def run(self):
         while True:
@@ -31,16 +32,14 @@ class GameWorld:
     def update(self):
         for i in self.gameObjects:
             i.update()
-        
-        # for i in len(self.gameObjects):
-        #     self.gameObjects[i].update()
 
     def draw(self):
         # Clear the screen
         self._screen.fill((0, 0, 0))
 
-        for i in self.gameObjects:
-            i.draw(self._screen)
+        self.gameObjects.draw(self._screen)
+        # for i in self.gameObjects:
+        #     i.draw(self._screen)
 
         pygame.display.flip()
 
