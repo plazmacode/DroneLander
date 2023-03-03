@@ -31,11 +31,11 @@ class Player(GameObject):
 
         if keys[pygame.K_a]:
             self.angle += self.rotation_speed
-        elif keys[pygame.K_d]:
+        if keys[pygame.K_d]:
             self.angle -= self.rotation_speed
-        elif keys[pygame.K_w]:
+        if keys[pygame.K_w]:
             self.thrust()
-        elif keys[pygame.K_SPACE]:
+        if keys[pygame.K_SPACE]:
             self.attack(self)
         self.angle %= 360
         self.image = pygame.transform.rotate(self.base_image, self.angle)
