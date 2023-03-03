@@ -2,7 +2,7 @@ import pygame
 
 class GameObject(pygame.sprite.Sprite):
     def __init__(self) -> None:
-        self.image = pygame.image.load("drone (3).png").convert()
+        self.image = pygame.image.load("pixil-frame-0.png").convert()
         self.rect = self.image.get_rect()
         self.image = pygame.transform.scale(self.image, (2000, 800))
 
