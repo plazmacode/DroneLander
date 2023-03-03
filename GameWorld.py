@@ -4,8 +4,8 @@ from GameObject import GameObject
 class GameWorld:
     def __init__(self):
         pygame.init()
-        self._screen_width = 800
-        self._screen_height = 600
+        self._screen_width = 1920
+        self._screen_height = 1080
         self._screen = pygame.display.set_mode((self._screen_width, self._screen_height))
         pygame.display.set_caption("Template")
         self._clock = pygame.time.Clock()
