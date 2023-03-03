@@ -1,13 +1,13 @@
 import pygame
 from GameObject import GameObject
-import math
+from Grenade import Grenade
 
 class Player(GameObject):
     def __init__(self) -> None:
         super().__init__()
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load("player.png").convert()
-        self.base_image = pygame.image.load("player.png").convert()
+        self.image = pygame.image.load("player.png").convert_alpha()
+        self.base_image = pygame.image.load("player.png").convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.center = (100,450)
         self.tag = "Player"
@@ -36,7 +36,7 @@ class Player(GameObject):
         if keys[pygame.K_w]:
             self.thrust()
         if keys[pygame.K_SPACE]:
-            self.attack(self)
+            self.attack()
         self.angle %= 360
         self.image = pygame.transform.rotate(self.base_image, self.angle)
         self.rect = self.image.get_rect(center=self.rect.center)
@@ -54,4 +54,6 @@ class Player(GameObject):
         self.accel = 5
 
     def attack(self):
-        pass
+        from GameWorld import GameWorld
+        g = GameWorld()
+        g.gameObjects.add(Grenade(self.rect.x, self.rect.y))

@@ -2,7 +2,15 @@ import pygame
 from GameObject import GameObject
 from Player import Player
 
-class GameWorld:
+class Singleton(type):
+    _instances = {}
+
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super().__call__(*args, **kwargs)
+        return cls._instances[cls]
+
+class GameWorld(metaclass=Singleton):
     def __init__(self):
         pygame.init()
         self._screen_width = 1600
@@ -13,7 +21,7 @@ class GameWorld:
         self._font = pygame.font.SysFont(None, 48)
         self.player = Player()
         self.gameObjects = pygame.sprite.Group(self.player)
-        # self.gameObjects.append(self.gameObject)
+
 
     def run(self):
         while True:
@@ -35,15 +43,18 @@ class GameWorld:
 
     def draw(self):
         # Clear the screen
-        self._screen.fill((0, 0, 0))
+        self._screen.fill((25, 25, 25))
 
+        message = self._font.render(str(len(self.gameObjects)), True, (255, 255, 255))
         self.gameObjects.draw(self._screen)
         # for i in self.gameObjects:
         #     i.draw(self._screen)
 
+
+        self._screen.blit(message, (100, 100))
+
         pygame.display.flip()
-
-
+        
+game = GameWorld()
 if __name__ == "__main__":
-    game = GameWorld()
     game.run()
