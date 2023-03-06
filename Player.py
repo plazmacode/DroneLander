@@ -6,8 +6,10 @@ class Player(GameObject):
     def __init__(self) -> None:
         super().__init__()
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load("player.png").convert_alpha()
-        self.base_image = pygame.image.load("player.png").convert_alpha()
+        self.image = pygame.image.load("Drone(1).png").convert_alpha()
+        self.base_image = pygame.image.load("Drone(1).png").convert_alpha()
+        # self.image = pygame.transform.scale(self.image, (self.image.get_width() * 10, self.image.get_height() * 10))   
+        self.base_image = pygame.transform.scale(self.image, (self.image.get_width() * 10, self.image.get_height() * 10))     
         self.rect = self.image.get_rect()
         self.rect.center = (100,450)
         self.tag = "Player"
