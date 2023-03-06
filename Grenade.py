@@ -1,8 +1,9 @@
 import pygame
 from GameObject import GameObject
+from Explosion import Explosion
 
 class Grenade(GameObject):
-    def __init__(self, x, y, vel, accel) -> None:
+    def __init__(self, x, y, vel, accel, gameWorld) -> None:
         super().__init__()
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load("Grenade.png").convert_alpha()
@@ -11,6 +12,7 @@ class Grenade(GameObject):
         self.rect.move_ip(x, y)
         self.velocity = vel
         self.acceleration = accel
+        self.gameWorld = gameWorld
 
     def update(self):
         self.move()
@@ -33,6 +35,7 @@ class Grenade(GameObject):
             self.explode()
 
     def explode(self):
+        self.gameWorld.instantiate(Explosion(self.rect.x, self.rect.y))
         self.kill()
 
     def draw(self, screen):

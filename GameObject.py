@@ -1,4 +1,5 @@
 import pygame
+import spritesheet
 from abc import ABC, abstractclassmethod
 
 class GameObject(pygame.sprite.Sprite, ABC):
@@ -8,15 +9,21 @@ class GameObject(pygame.sprite.Sprite, ABC):
         self.tag = ""
         self.collision = False
 
-    @abstractclassmethod
     def update(self):
-        #self.rect.y += 1
         pass
 
-    @abstractclassmethod
     def draw(self, screen):
-        #screen.blit(self.image, self.rect)
+        screen.blit(self.image, self.rect)
         pass
 
     def onCollision(self, other):
         pass
+
+    def loadImages(self, imagefile, rects, scale):
+        ss = spritesheet.spritesheet(imagefile)
+        images = []
+        images = ss.sourceRects(rects)
+
+        for i in range(0, len(images)):
+            images[i] = pygame.transform.scale(images[i], scale)
+        return images

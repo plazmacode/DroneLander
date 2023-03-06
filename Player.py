@@ -10,7 +10,8 @@ class Player(GameObject):
         self.image = pygame.image.load("Drone (1).png").convert_alpha()
         self.base_image = pygame.image.load("Drone (1).png").convert_alpha()
         self.base_image = pygame.transform.scale(self.image, (125, 50))
-        self.base_images = self.loadImages()
+        rects = ((0, 0, 20, 8), (20, 0, 20, 8), (40, 0, 20, 8))
+        self.base_images = self.loadImages("drone-spritesheet.png", rects, (125, 50))
         self.currentImage = 0
         self.rect = self.image.get_rect()
         self.rect.center = (100,450)
@@ -25,15 +26,6 @@ class Player(GameObject):
         self.gameWorld = gameWorld
         self.grenades = 5
         self.gameWorld.grenades = self.grenades
-    
-    def loadImages(self):
-        ss = spritesheet.spritesheet("drone-spritesheet.png")
-        images = []
-        images = ss.sourceRects(((0, 0, 20, 8), (20, 0, 20, 8), (40, 0, 20, 8)))
-
-        for i in range(0, len(images)):
-            images[i] = pygame.transform.scale(images[i], (125, 50))
-        return images
 
     def update(self):
         self.move()
@@ -90,7 +82,7 @@ class Player(GameObject):
 
     def attack(self):
         if self.grenades > 0:
-            g = Grenade(self.rect.x + self.rect.width / 2, self.rect.y, self.velocity, self.acceleration)
+            g = Grenade(self.rect.x + self.rect.width / 2, self.rect.y, self.velocity, self.acceleration, self.gameWorld)
             self.grenades -= 1
             self.gameWorld.grenades = self.grenades
             self.gameWorld.instantiate(g)
