@@ -6,6 +6,7 @@ class Grenade(GameObject):
         super().__init__()
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load("Grenade.png").convert_alpha()
+        self.image = pygame.transform.scale(self.image, (25, 40))
         self.rect = self.image.get_rect()
         self.rect.move_ip(x, y)
         self.velocity = vel
