@@ -1,27 +1,26 @@
 import pygame
 from GameObject import GameObject
+from Player import Player
 
-class GameWorld:
+class Singleton(type):
+    _instances = {}
+
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super().__call__(*args, **kwargs)
+        return cls._instances[cls]
+
+class GameWorld(metaclass=Singleton):
     def __init__(self):
         pygame.init()
-        self._screen_width = 1920
-        self._screen_height = 1080
+        self._screen_width = 1600
+        self._screen_height = 900
         self._screen = pygame.display.set_mode((self._screen_width, self._screen_height))
         pygame.display.set_caption("Template")
         self._clock = pygame.time.Clock()
         self._font = pygame.font.SysFont(None, 48)
-        self.gameObject = GameObject()
-        self.gameObject2 = GameObject()
-        self.gameObjects = [self.gameObject]
-        self.gameObjects.append(self.gameObject2)
-
-        self.sprite_image = pygame.image.load("grenade.png")
-        self.sprite_image = pygame.transform.scale(self.sprite_image, (50, 80))
-        self.sprite = pygame.sprite.Sprite()
-
-        self.sprite.rect = self.sprite_image.get_rect()
-        self.sprite.rect.x = 100
-        self.sprite.rect.y = 100
+        self.player = Player()
+        self.gameObjects = pygame.sprite.Group(self.player)
 
 
     def run(self):
@@ -41,22 +40,21 @@ class GameWorld:
     def update(self):
         for i in self.gameObjects:
             i.update()
-        
-        # for i in len(self.gameObjects):
-        #     self.gameObjects[i].update()
 
     def draw(self):
         # Clear the screen
-        self._screen.fill((63, 153, 249))
+        self._screen.fill((25, 25, 25))
 
-        self._screen.blit(self.sprite_image, self.sprite.rect)
+        message = self._font.render(str(len(self.gameObjects)), True, (255, 255, 255))
+        self.gameObjects.draw(self._screen)
+        # for i in self.gameObjects:
+        #     i.draw(self._screen)
 
-        for i in self.gameObjects:
-            i.draw(self._screen)
+
+        self._screen.blit(message, (100, 100))
 
         pygame.display.flip()
-
-
-if __name__ == "__main__":
-    game = GameWorld()
-    game.run()
+        
+game = GameWorld()
+game.run()
+# if __name__ == "__main__":

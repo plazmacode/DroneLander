@@ -1,14 +1,18 @@
 import pygame
+from abc import ABC, abstractclassmethod
 
-class GameObject(pygame.sprite.Sprite):
+class GameObject(pygame.sprite.Sprite, ABC):
     def __init__(self) -> None:
-        self.image = pygame.image.load("treecrown.png").convert_alpha()
-        self.rect = self.image.get_rect()
-        self.image = pygame.transform.scale(self.image, (500, 333))
+        self.image : pygame.image
+        self.rect : pygame.rect
+        self.tag : str
 
+    @abstractclassmethod
     def update(self):
         #self.rect.y += 1
         pass
 
+    @abstractclassmethod
     def draw(self, screen):
-        screen.blit(self.image, self.rect)
+        #screen.blit(self.image, self.rect)
+        pass
