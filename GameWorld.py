@@ -26,6 +26,7 @@ class GameWorld(metaclass=Singleton):
         self.gameObjects.add(Environment("Ground", 0, 850))
         self.gameObjects.add(Environment("TreeTrunk", 1000, 400))
         self.gameObjects.add(Environment("TreeCrown", 850, 80))
+        self.gameObjects.add(Environment("AmmoDump(Shells)", 500, 700))
 
 
     def run(self):
