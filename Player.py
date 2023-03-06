@@ -9,6 +9,8 @@ class Player(GameObject):
         self.image = pygame.image.load("Drone (1).png").convert_alpha()
         self.base_image = pygame.image.load("Drone (1).png").convert_alpha()
         self.base_image = pygame.transform.scale(self.image, (125, 50))
+        self.base_images = self.loadImages()
+        self.currentImage = 0
         self.rect = self.image.get_rect()
         self.rect.center = (100,450)
         self.tag = "Player"
@@ -21,10 +23,18 @@ class Player(GameObject):
         self.canAttack = True
         self.gameWorld = gameWorld
         self.grenades = 5
+        self.gameWorld.grenades = self.grenades
     
+    def loadImages(self):
+        images = [pygame.image.load("Drone (1).png"), pygame.image.load("Drone (2).png"), pygame.image.load("Drone (3).png")]
+        for i in range(0, len(images)):
+            images[i] = pygame.transform.scale(images[i], (125, 50))
+        return images
+
     def update(self):
         self.move()
-        
+        self.animate()
+    
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
@@ -35,13 +45,18 @@ class Player(GameObject):
         self.rect.y += 2
 
         self.angle %= 360
-        self.image = pygame.transform.rotate(self.base_image, self.angle)
+        self.image = pygame.transform.rotate(self.base_images[self.currentImage], self.angle)
         self.rect = self.image.get_rect(center=self.rect.center)
 
         self.rect.move_ip(self.velocity.x * self.acceleration, self.velocity.y * self.acceleration)
         self.acceleration -= 0.1
         if self.acceleration < 0:
             self.acceleration = 0
+
+    def animate(self):
+        self.currentImage += 1
+        if self.currentImage > len(self.base_images) -1:
+            self.currentImage = 0
 
     def inputHandler(self):
         self.keys = pygame.key.get_pressed()

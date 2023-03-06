@@ -19,10 +19,10 @@ class GameWorld(metaclass=Singleton):
         pygame.display.set_caption("Drone Lander")
         self._clock = pygame.time.Clock()
         self._font = pygame.font.SysFont(None, 48)
+        self.grenades = 0
         self.player = Player(self)
         self.gameObjects = pygame.sprite.Group(self.player)
         self.newGameObjects = pygame.sprite.Group()
-        self.grenades = 5
 
     def run(self):
         while True:
