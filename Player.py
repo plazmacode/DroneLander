@@ -3,19 +3,24 @@ from GameObject import GameObject
 from Grenade import Grenade
 
 class Player(GameObject):
-    def __init__(self) -> None:
+    def __init__(self, gameWorld) -> None:
         super().__init__()
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load("player.png").convert_alpha()
-        self.base_image = pygame.image.load("player.png").convert_alpha()
+        self.image = pygame.image.load("Drone (1).png").convert_alpha()
+        self.base_image = pygame.image.load("Drone (1).png").convert_alpha()
+        self.base_image = pygame.transform.scale(self.image, (125, 50))
         self.rect = self.image.get_rect()
         self.rect.center = (100,450)
         self.tag = "Player"
         self.angle = 0
         self.rotation_speed = 4
         self.velocity = pygame.math.Vector2(0,0)
-        self.accel = 0
-
+        self.acceleration = 0
+        self.keys = pygame.key.get_pressed()
+        self.oldKeys = pygame.key.get_pressed()
+        self.canAttack = True
+        self.gameWorld = gameWorld
+        self.grenades = 5
     
     def update(self):
         self.move()
@@ -25,35 +30,50 @@ class Player(GameObject):
         screen.blit(self.image, self.rect)
 
     def move(self):
-        self.rect.y += 1
+        self.inputHandler()
 
-        keys = pygame.key.get_pressed()
+        self.rect.y += 2
 
-        if keys[pygame.K_a]:
-            self.angle += self.rotation_speed
-        if keys[pygame.K_d]:
-            self.angle -= self.rotation_speed
-        if keys[pygame.K_w]:
-            self.thrust()
-        if keys[pygame.K_SPACE]:
-            self.attack()
         self.angle %= 360
         self.image = pygame.transform.rotate(self.base_image, self.angle)
         self.rect = self.image.get_rect(center=self.rect.center)
 
-        self.rect.move_ip(self.velocity.x * self.accel, self.velocity.y * self.accel)
-        self.accel -= 0.1
-        if self.accel < 0:
-            self.accel = 0
+        self.rect.move_ip(self.velocity.x * self.acceleration, self.velocity.y * self.acceleration)
+        self.acceleration -= 0.1
+        if self.acceleration < 0:
+            self.acceleration = 0
+
+    def inputHandler(self):
+        self.keys = pygame.key.get_pressed()
+
+        if self.keys[pygame.K_a]:
+            self.angle += self.rotation_speed
+        if self.keys[pygame.K_d]:
+            self.angle -= self.rotation_speed
+        if self.keys[pygame.K_w]:
+            self.thrust()
+
+        if self.canAttack:
+            if self.keys[pygame.K_SPACE]:
+                self.attack()
+        
+        if self.oldKeys[pygame.K_SPACE] and not self.keys[pygame.K_SPACE]:
+            self.canAttack = True
+
+        self.oldKeys = self.keys
 
     def thrust(self):
 
         self.velocity = pygame.math.Vector2(0, -1)
         self.velocity.rotate_ip(-self.angle)
 
-        self.accel = 5
+        self.acceleration = 8
 
     def attack(self):
-        from GameWorld import GameWorld
-        g = GameWorld()
-        g.gameObjects.add(Grenade(self.rect.x + self.rect.width / 2, self.rect.y))
+        if self.grenades > 0:
+            g = Grenade(self.rect.x + self.rect.width / 2, self.rect.y, self.velocity, self.acceleration)
+            self.grenades -= 1
+            self.gameWorld.grenades = self.grenades
+            self.gameWorld.instantiate(g)
+            self.canAttack = False
+

@@ -13,15 +13,16 @@ class Singleton(type):
 class GameWorld(metaclass=Singleton):
     def __init__(self):
         pygame.init()
-        self._screen_width = 1600
-        self._screen_height = 900
+        self._screen_width = 1920
+        self._screen_height = 1080
         self._screen = pygame.display.set_mode((self._screen_width, self._screen_height))
-        pygame.display.set_caption("Template")
+        pygame.display.set_caption("Drone Lander")
         self._clock = pygame.time.Clock()
         self._font = pygame.font.SysFont(None, 48)
-        self.player = Player()
+        self.player = Player(self)
         self.gameObjects = pygame.sprite.Group(self.player)
-
+        self.newGameObjects = pygame.sprite.Group()
+        self.grenades = 5
 
     def run(self):
         while True:
@@ -38,23 +39,26 @@ class GameWorld(metaclass=Singleton):
             self._clock.tick(60)
     
     def update(self):
-        for i in self.gameObjects:
-            i.update()
+
+        for go in self.newGameObjects:
+            self.gameObjects.add(go)
+        self.newGameObjects.empty()
+
+        self.gameObjects.update()
 
     def draw(self):
         # Clear the screen
-        self._screen.fill((25, 25, 25))
+        self._screen.fill((255, 255, 255))
 
-        message = self._font.render(str(len(self.gameObjects)), True, (255, 255, 255))
+        message = self._font.render("Grenades: " + str(self.grenades), True, (0, 0, 0))
         self.gameObjects.draw(self._screen)
-        # for i in self.gameObjects:
-        #     i.draw(self._screen)
-
 
         self._screen.blit(message, (100, 100))
 
         pygame.display.flip()
+    
+    def instantiate(self, object):
+        self.newGameObjects.add(object)
         
 game = GameWorld()
 game.run()
-# if __name__ == "__main__":
