@@ -56,5 +56,5 @@ class GameWorld(metaclass=Singleton):
         pygame.display.flip()
         
 game = GameWorld()
-if __name__ == "__main__":
-    game.run()
+game.run()
+# if __name__ == "__main__":

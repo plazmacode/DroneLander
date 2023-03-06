@@ -56,4 +56,4 @@ class Player(GameObject):
     def attack(self):
         from GameWorld import GameWorld
         g = GameWorld()
-        g.gameObjects.add(Grenade(self.rect.x, self.rect.y))
+        g.gameObjects.add(Grenade(self.rect.x + self.rect.width / 2, self.rect.y))
