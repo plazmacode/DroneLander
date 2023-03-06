@@ -45,6 +45,14 @@ class GameWorld(metaclass=Singleton):
         self.newGameObjects.empty()
 
         self.gameObjects.update()
+        self.collisionCheck()
+
+    def collisionCheck(self):
+        for go1 in self.gameObjects:
+            for go2 in self.gameObjects:
+                if not go1 is go2:
+                    if go1.rect.colliderect(go2.rect):
+                        go1.onCollision(go2)
 
     def draw(self):
         # Clear the screen

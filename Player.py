@@ -1,4 +1,5 @@
 import pygame
+import spritesheet
 from GameObject import GameObject
 from Grenade import Grenade
 
@@ -26,7 +27,10 @@ class Player(GameObject):
         self.gameWorld.grenades = self.grenades
     
     def loadImages(self):
-        images = [pygame.image.load("Drone (1).png"), pygame.image.load("Drone (2).png"), pygame.image.load("Drone (3).png")]
+        ss = spritesheet.spritesheet("drone-spritesheet.png")
+        images = []
+        images = ss.sourceRects(((0, 0, 20, 8), (20, 0, 20, 8), (40, 0, 20, 8)))
+
         for i in range(0, len(images)):
             images[i] = pygame.transform.scale(images[i], (125, 50))
         return images

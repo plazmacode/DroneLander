@@ -13,6 +13,9 @@ class Grenade(GameObject):
         self.acceleration = accel
 
     def update(self):
+        self.move()
+
+    def move(self):
         #gravity
         self.rect.y += 5
 
@@ -23,6 +26,10 @@ class Grenade(GameObject):
             self.acceleration = 0
 
         if self.rect.y > 1080:
+            self.explode()
+
+    def onCollision(self, other):
+        if other.tag is "Obstacle":
             self.explode()
 
     def explode(self):
