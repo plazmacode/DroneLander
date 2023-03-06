@@ -1,5 +1,6 @@
 import pygame
 from GameObject import GameObject
+from Environment import Environment
 from Player import Player
 
 class Singleton(type):
@@ -22,6 +23,10 @@ class GameWorld(metaclass=Singleton):
         self.player = Player()
         self.gameObjects = pygame.sprite.Group(self.player)
 
+        self.gameObjects.add(Environment("Ground", 0, 850))
+        self.gameObjects.add(Environment("TreeTrunk", 1000, 400))
+        self.gameObjects.add(Environment("TreeCrown", 850, 80))
+
 
     def run(self):
         while True:
@@ -43,7 +48,7 @@ class GameWorld(metaclass=Singleton):
 
     def draw(self):
         # Clear the screen
-        self._screen.fill((25, 25, 25))
+        self._screen.fill((63, 153, 249))
 
         message = self._font.render(str(len(self.gameObjects)), True, (255, 255, 255))
         self.gameObjects.draw(self._screen)
