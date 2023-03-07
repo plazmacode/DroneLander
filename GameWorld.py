@@ -3,6 +3,7 @@ from GameObject import GameObject
 from Environment import Environment
 from Player import Player
 from Button import Button
+from MenuHandler import MenuHandler
 
 class Singleton(type):
     _instances = {}
@@ -15,9 +16,9 @@ class Singleton(type):
 class GameWorld(metaclass=Singleton):
     def __init__(self):
         pygame.init()
-        self._screen_width = 1920
-        self._screen_height = 1080
-        self._screen = pygame.display.set_mode((self._screen_width, self._screen_height))
+        self.screen_width = 1920
+        self.screen_height = 1080
+        self._screen = pygame.display.set_mode((self.screen_width, self.screen_height))
         pygame.display.set_caption("Drone Lander")
         self._clock = pygame.time.Clock()
         self._font = pygame.font.SysFont(None, 48)
@@ -25,17 +26,12 @@ class GameWorld(metaclass=Singleton):
         self.gameObjects = pygame.sprite.Group()
         self.newGameObjects = pygame.sprite.Group()
         self.buttons = []
-        self.startMenu()
-
-    def startMenu(self):
-        buttonColor = (34, 42, 104)
-        hoverColor = (24, 32, 94)
-        self.buttons.append(Button(buttonColor, hoverColor, pygame.Rect(self._screen_width / 2 -150, 300, 300, 80), "PLAY", self))
-        self.buttons.append(Button(buttonColor, hoverColor, pygame.Rect(self._screen_width / 2 -150, 420, 300, 80), "OPTIONS", self))
-        self.buttons.append(Button(buttonColor, hoverColor, pygame.Rect(self._screen_width / 2 -150, 540, 300, 80), "QUIT", self))
-        self.gameState = "MENU" #this is an enum trust me
+        MenuHandler(self).startMenu()
+        self.difficulty = 0
+        self.gameState = "MENU"
 
     def startGame(self):
+        self.gameState = "PLAY"
         self.buttons.clear()
         self.gameObjects.add(Player(self))
         self.gameObjects.add(Environment("Ground", 0, 850))
@@ -47,18 +43,19 @@ class GameWorld(metaclass=Singleton):
     def run(self):
         while True:
             # Handle events
-            for event in pygame.event.get():
+            event_list = pygame.event.get()
+            for event in event_list:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     return
 
-            self.update()
+            self.update(event_list)
             self.draw()
 
             # Limit the frame rate
             self._clock.tick(60)
     
-    def update(self):
+    def update(self, event_list):
 
         for go in self.newGameObjects:
             self.gameObjects.add(go)
@@ -68,7 +65,7 @@ class GameWorld(metaclass=Singleton):
         self.collisionCheck()
 
         for button in self.buttons:
-            button.update()
+            button.update(event_list)
 
     def collisionCheck(self):
         for go1 in self.gameObjects:

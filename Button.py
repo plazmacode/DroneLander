@@ -2,23 +2,31 @@ import pygame
 from ButtonActions import ButtonActions
 
 class Button():
-    def __init__(self, color, hoverColor, rect, text, gameWorld) -> None:
+    def __init__(self, color, hoverColor, rect, text, gameWorld, action) -> None:
         self.baseColor = color
         self.color = color
         self.hoverColor = hoverColor
         self.rect = rect
         self._font = pygame.font.SysFont(None, 48)
         self.surface = self._font.render(str(text), True, (255, 255, 255))
-        self.text = text
         self.gameWorld = gameWorld
+        self.action = action
+        self.oldMouseState = pygame.MOUSEBUTTONUP
 
-    def update(self):
+    def update(self, event_list):
         #if mouse position inside button rectangle
-        mouse = pygame.mouse.get_pos()
-        if self.rect.collidepoint(mouse[0], mouse[1]):
+        mouse = pygame.mouse
+        if self.rect.collidepoint(mouse.get_pos()[0], mouse.get_pos()[1]):
             self.color = self.hoverColor
-            if pygame.mouse.get_pressed()[0]:
-                ButtonActions().run(self.text, self.gameWorld)
+            for event in event_list:
+                if event.type == pygame.MOUSEBUTTONUP and self.oldMouseState == pygame.MOUSEBUTTONDOWN:
+                    ButtonActions(self.gameWorld).run(self.action, self.gameWorld, self)
+                    
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    self.oldMouseState = pygame.MOUSEBUTTONDOWN
+
+                if event.type == pygame.MOUSEBUTTONUP:
+                    self.oldMouseState = pygame.MOUSEBUTTONUP
         else:
             self.color = self.baseColor
 
