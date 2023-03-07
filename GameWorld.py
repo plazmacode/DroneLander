@@ -1,5 +1,6 @@
 import pygame
 from GameObject import GameObject
+from Environment import Environment
 from Player import Player
 
 class Singleton(type):
@@ -22,7 +23,13 @@ class GameWorld(metaclass=Singleton):
         self.grenades = 0
         self.player = Player(self)
         self.gameObjects = pygame.sprite.Group(self.player)
-        self.newGameObjects = pygame.sprite.Group()
+
+        self.gameObjects.add(Environment("Ground", 0, 850))
+        self.gameObjects.add(Environment("TreeTrunk", 1000, 400))
+        self.gameObjects.add(Environment("TreeCrown", 850, 80))
+        self.gameObjects.add(Environment("AmmoDump(Shells)", 500, 700))
+        # self.gameObjects.add(Environment("DetonationDecal", 0, 850))
+
 
     def run(self):
         while True:
@@ -56,7 +63,7 @@ class GameWorld(metaclass=Singleton):
 
     def draw(self):
         # Clear the screen
-        self._screen.fill((255, 255, 255))
+        self._screen.fill((63, 153, 249))
 
         message = self._font.render("Grenades: " + str(self.grenades), True, (0, 0, 0))
         self.gameObjects.draw(self._screen)
