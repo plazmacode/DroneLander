@@ -2,6 +2,7 @@ import pygame
 from GameObject import GameObject
 from Environment import Environment
 from Player import Player
+from Button import Button
 
 class Singleton(type):
     _instances = {}
@@ -23,13 +24,25 @@ class GameWorld(metaclass=Singleton):
         self.grenades = 0
         self.gameObjects = pygame.sprite.Group()
         self.newGameObjects = pygame.sprite.Group()
+        self.buttons = []
+        self.startMenu()
+
+    def startMenu(self):
+        buttonColor = (34, 42, 104)
+        hoverColor = (24, 32, 94)
+        self.buttons.append(Button(buttonColor, hoverColor, pygame.Rect(self._screen_width / 2 -150, 300, 300, 80), "PLAY", self))
+        self.buttons.append(Button(buttonColor, hoverColor, pygame.Rect(self._screen_width / 2 -150, 420, 300, 80), "OPTIONS", self))
+        self.buttons.append(Button(buttonColor, hoverColor, pygame.Rect(self._screen_width / 2 -150, 540, 300, 80), "QUIT", self))
+        self.gameState = "MENU" #this is an enum trust me
+
+    def startGame(self):
+        self.buttons.clear()
         self.gameObjects.add(Player(self))
         self.gameObjects.add(Environment("Ground", 0, 850))
         self.gameObjects.add(Environment("TreeTrunk", 1000, 400))
         self.gameObjects.add(Environment("TreeCrown", 850, 80))
         self.gameObjects.add(Environment("AmmoDump(Shells)", 500, 700))
         # self.gameObjects.add(Environment("DetonationDecal", 0, 850))
-
 
     def run(self):
         while True:
@@ -54,6 +67,9 @@ class GameWorld(metaclass=Singleton):
         self.gameObjects.update()
         self.collisionCheck()
 
+        for button in self.buttons:
+            button.update()
+
     def collisionCheck(self):
         for go1 in self.gameObjects:
             for go2 in self.gameObjects:
@@ -68,7 +84,11 @@ class GameWorld(metaclass=Singleton):
         message = self._font.render("Grenades: " + str(self.grenades), True, (0, 0, 0))
         self.gameObjects.draw(self._screen)
 
-        self._screen.blit(message, (100, 100))
+        if self.gameState == "PLAY":
+            self._screen.blit(message, (100, 100))
+
+        for button in self.buttons:
+            button.draw(self._screen)
 
         pygame.display.flip()
     
