@@ -11,7 +11,7 @@ class Player(GameObject):
         self.base_image = pygame.image.load("Drone(1).png").convert_alpha()
         self.base_image = pygame.transform.scale(self.image, (125, 50))
         rects = ((0, 0, 20, 8), (20, 0, 20, 8), (40, 0, 20, 8), (60, 0, 20, 8))
-        self.base_images = self.loadImages("drone-spritesheet.png", rects, (125, 50))
+        self.base_images = self.loadImages("drone-spritesheet.png", rects, (self.image.get_width() * 10, self.image.get_height() * 10))
         self.currentImage = 0
         self.rect = self.image.get_rect()
         self.rect.center = (100,450)

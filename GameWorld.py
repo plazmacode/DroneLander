@@ -21,9 +21,9 @@ class GameWorld(metaclass=Singleton):
         self._clock = pygame.time.Clock()
         self._font = pygame.font.SysFont(None, 48)
         self.grenades = 0
-        self.player = Player(self)
-        self.gameObjects = pygame.sprite.Group(self.player)
+        self.gameObjects = pygame.sprite.Group()
         self.newGameObjects = pygame.sprite.Group()
+        self.gameObjects.add(Player(self))
         self.gameObjects.add(Environment("Ground", 0, 850))
         self.gameObjects.add(Environment("TreeTrunk", 1000, 400))
         self.gameObjects.add(Environment("TreeCrown", 850, 80))
