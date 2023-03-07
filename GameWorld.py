@@ -26,6 +26,7 @@ class GameWorld(metaclass=Singleton):
         self.gameObjects = pygame.sprite.Group()
         self.newGameObjects = pygame.sprite.Group()
         self.buttons = []
+        self.mixer = pygame.mixer
         MenuHandler(self).startMenu()
         self.difficulty = 0
         self.gameState = "MENU"

@@ -36,6 +36,18 @@ class ButtonActions(metaclass=Singleton):
                 gameworld.difficulty = 0
                 gameworld.difficulty = 0
 
-
         if action == "toggleSound":
             MenuHandler(self.gameWorld).toggleSound()
+            if MenuHandler(self.gameWorld).sound:
+                button.surface = button._font.render(str("Sound is ON"), True, (255, 255, 255))
+            else:
+                button.surface = button._font.render(str("Sound is OFF"), True, (255, 255, 255))
+
+
+
+        if action == "toggleMusic":
+            MenuHandler(self.gameWorld).toggleMusic()
+            if MenuHandler(self.gameWorld).music:
+                button.surface = button._font.render(str("Music is ON"), True, (255, 255, 255))
+            else:
+                button.surface = button._font.render(str("Music is OFF"), True, (255, 255, 255))
