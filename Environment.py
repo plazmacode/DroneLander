@@ -6,6 +6,8 @@ class Environment(GameObject):
         super().__init__()
         pygame.sprite.Sprite.__init__(self)
         self.name = name
+        self.tag = "Obstacle"
+
         self.x = x
         self.y = y
         self.image = pygame.image.load(name + ".png").convert_alpha()   
