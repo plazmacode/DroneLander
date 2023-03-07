@@ -23,7 +23,7 @@ class GameWorld(metaclass=Singleton):
         self.grenades = 0
         self.player = Player(self)
         self.gameObjects = pygame.sprite.Group(self.player)
-
+        self.newGameObjects = pygame.sprite.Group()
         self.gameObjects.add(Environment("Ground", 0, 850))
         self.gameObjects.add(Environment("TreeTrunk", 1000, 400))
         self.gameObjects.add(Environment("TreeCrown", 850, 80))
