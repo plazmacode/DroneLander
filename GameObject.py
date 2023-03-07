@@ -8,6 +8,7 @@ class GameObject(pygame.sprite.Sprite, ABC):
         self.rect : pygame.rect
         self.tag = ""
         self.collision = False
+        # self.origin = (self.rect.x / 2, self.rect.y / 2)
 
     def update(self):
         pass

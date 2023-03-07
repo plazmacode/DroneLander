@@ -24,10 +24,10 @@ class GameWorld(metaclass=Singleton):
         self.player = Player(self)
         self.gameObjects = pygame.sprite.Group(self.player)
         self.newGameObjects = pygame.sprite.Group()
-        self.gameObjects.add(Environment("Ground", 0, 1030))
-        self.gameObjects.add(Environment("TreeTrunk", 1000, 580))
-        self.gameObjects.add(Environment("TreeCrown", 850, 260))
-        self.gameObjects.add(Environment("AmmoDump(Shells)", 500, 880))
+        self.gameObjects.add(Environment("Ground", (1000, 1055), self))
+        self.gameObjects.add(Environment("TreeTrunk", (1200, 800), self))
+        self.gameObjects.add(Environment("TreeCrown", (1200, 400), self))
+        self.gameObjects.add(Environment("AmmoDump(Shells)", (500, 955), self))
         # self.gameObjects.add(Environment("DetonationDecal", 0, 850))
 
 
