@@ -2,6 +2,8 @@ import pygame
 from GameObject import GameObject
 from Environment import Environment
 from Player import Player
+from Button import Button
+from MenuHandler import MenuHandler
 
 class Singleton(type):
     _instances = {}
@@ -14,9 +16,9 @@ class Singleton(type):
 class GameWorld(metaclass=Singleton):
     def __init__(self):
         pygame.init()
-        self._screen_width = 1920
-        self._screen_height = 1080
-        self._screen = pygame.display.set_mode((self._screen_width, self._screen_height))
+        self.screen_width = 1920
+        self.screen_height = 1080
+        self._screen = pygame.display.set_mode((self.screen_width, self.screen_height))
         pygame.display.set_caption("Drone Lander")
         self._clock = pygame.time.Clock()
         self._font = pygame.font.SysFont(None, 48)
@@ -28,24 +30,38 @@ class GameWorld(metaclass=Singleton):
         self.gameObjects.add(Environment("TreeTrunk", (1200, 800), self))
         self.gameObjects.add(Environment("TreeCrown", (1200, 400), self))
         self.gameObjects.add(Environment("AmmoDump(Shells)", (500, 955), self))
-        # self.gameObjects.add(Environment("DetonationDecal", 0, 850))
+        self.buttons = []
+        self.mixer = pygame.mixer
+        MenuHandler(self).startMenu()
+        self.difficulty = 0
+        self.gameState = "MENU"
 
+    def startGame(self):
+        self.gameState = "PLAY"
+        self.buttons.clear()
+        self.gameObjects.add(Player(self))
+        self.gameObjects.add(Environment("Ground", 0, 850))
+        self.gameObjects.add(Environment("TreeTrunk", 1000, 400))
+        self.gameObjects.add(Environment("TreeCrown", 850, 80))
+        self.gameObjects.add(Environment("AmmoDump(Shells)", 500, 700))
+        # self.gameObjects.add(Environment("DetonationDecal", 0, 850))
 
     def run(self):
         while True:
             # Handle events
-            for event in pygame.event.get():
+            event_list = pygame.event.get()
+            for event in event_list:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     return
 
-            self.update()
+            self.update(event_list)
             self.draw()
 
             # Limit the frame rate
             self._clock.tick(60)
     
-    def update(self):
+    def update(self, event_list):
 
         for go in self.newGameObjects:
             self.gameObjects.add(go)
@@ -54,6 +70,9 @@ class GameWorld(metaclass=Singleton):
 
         self.gameObjects.update()
         self.collisionCheck()
+
+        for button in self.buttons:
+            button.update(event_list)
 
     def collisionCheck(self):
         for go1 in self.gameObjects:
@@ -69,7 +88,11 @@ class GameWorld(metaclass=Singleton):
         message = self._font.render("Grenades: " + str(self.grenades), True, (0, 0, 0))
         self.gameObjects.draw(self._screen)
 
-        self._screen.blit(message, (100, 100))
+        if self.gameState == "PLAY":
+            self._screen.blit(message, (100, 100))
+
+        for button in self.buttons:
+            button.draw(self._screen)
 
         pygame.display.flip()
     

@@ -24,13 +24,19 @@ class Player(GameObject):
         self.oldKeys = pygame.key.get_pressed()
         self.canAttack = True
         self.gameWorld = gameWorld
-        self.grenades = 5
+        self.loadDifficulty()
         self.gameWorld.grenades = self.grenades
 
     def update(self):
         self.move()
         self.animate()
     
+    def loadDifficulty(self):
+        if self.gameWorld.difficulty == 0:
+            self.grenades = 10
+        if self.gameWorld.difficulty == 1:
+            self.grenades = 5
+
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
