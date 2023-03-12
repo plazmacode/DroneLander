@@ -2,7 +2,7 @@ import pygame
 from GameObject import GameObject
 from Environment import Environment
 from Player import Player
-from Button import Button
+from classes.Button import Button
 
 class Singleton(type):
     _instances = {}
@@ -83,7 +83,7 @@ class GameWorld(metaclass=Singleton):
             for go2 in self.game_objects:
                 if not go1 is go2:
                     if go1.rect.colliderect(go2.rect):
-                        go1.onCollision(go2)
+                        go1.on_collision(go2)
 
     def draw(self):
         # Clear the screen

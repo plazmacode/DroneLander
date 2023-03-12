@@ -34,7 +34,7 @@ class Grenade(GameObject):
             self.explode()
 
     def on_collision(self, other):
-        if other.tag is "Obstacle":
+        if other.tag == "Obstacle":
             self.explode()
 
     def explode(self):

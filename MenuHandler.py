@@ -1,5 +1,5 @@
 import pygame
-from Button import Button
+from classes.Button import Button
 from GameWorld import GameWorld
 
 button_color = (34, 42, 104)
