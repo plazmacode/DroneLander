@@ -23,22 +23,22 @@ class GameWorld(metaclass=Singleton):
         self._clock = pygame.time.Clock()
         self._font = pygame.font.SysFont(None, 48)
         self.grenades = 0
+        self.difficulty = 0
         self.gameObjects = pygame.sprite.Group()
         self.newGameObjects = pygame.sprite.Group()
         self.buttons = []
         self.mixer = pygame.mixer
         MenuHandler(self).startMenu()
-        self.difficulty = 0
         self.gameState = "MENU"
 
     def startGame(self):
         self.gameState = "PLAY"
         self.buttons.clear()
         self.gameObjects.add(Player(self))
-        self.gameObjects.add(Environment("Ground", 0, 850))
-        self.gameObjects.add(Environment("TreeTrunk", 1000, 400))
-        self.gameObjects.add(Environment("TreeCrown", 850, 80))
-        self.gameObjects.add(Environment("AmmoDump(Shells)", 500, 700))
+        self.gameObjects.add(Environment("Ground", (1000, 1055), self))
+        self.gameObjects.add(Environment("TreeTrunk", (1200, 800), self))
+        self.gameObjects.add(Environment("TreeCrown", (1200, 400), self))
+        self.gameObjects.add(Environment("AmmoDump(Shells)", (500, 955), self))
         # self.gameObjects.add(Environment("DetonationDecal", 0, 850))
 
     def run(self):
@@ -60,6 +60,7 @@ class GameWorld(metaclass=Singleton):
 
         for go in self.newGameObjects:
             self.gameObjects.add(go)
+        
         self.newGameObjects.empty()
 
         self.gameObjects.update()

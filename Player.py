@@ -14,7 +14,7 @@ class Player(GameObject):
         self.base_images = self.loadImages("drone-spritesheet.png", rects, (self.image.get_width() * 10, self.image.get_height() * 10))
         self.currentImage = 0
         self.rect = self.image.get_rect()
-        self.rect.center = (100,450)
+        self.rect.center = (100, 450)
         self.tag = "Player"
         self.angle = 0
         self.rotation_speed = 4
@@ -48,7 +48,7 @@ class Player(GameObject):
 
         self.angle %= 360
         self.image = pygame.transform.rotate(self.base_images[self.currentImage], self.angle)
-        self.rect = self.image.get_rect(center=self.rect.center)
+        self.rect = self.image.get_rect(center =(self.rect.center))
 
         self.rect.move_ip(self.direciton.x * self.velocity.x, self.direciton.y * self.velocity.y)
         self.velocity.y -= 0.1
@@ -92,7 +92,7 @@ class Player(GameObject):
 
     def attack(self):
         if self.grenades > 0:
-            g = Grenade(self.rect.x + self.rect.width / 2, self.rect.y, self.direciton, self.velocity, self.gameWorld)
+            g = Grenade(self.rect.center, self.direciton, self.velocity, self.gameWorld)
             self.grenades -= 1
             self.gameWorld.grenades = self.grenades
             from GameWorld import GameWorld
