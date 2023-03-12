@@ -1,7 +1,7 @@
 import pygame
-from GameObject import GameObject
-from Environment import Environment
-from Player import Player
+from classes.GameObject import GameObject
+from classes.Environment import Environment
+from classes.Player import Player
 from classes.Button import Button
 
 class Singleton(type):
@@ -36,10 +36,10 @@ class GameWorld(metaclass=Singleton):
         self.game_state = "PLAY"
         self.buttons.clear()
         self.game_objects.add(Player())
-        self.game_objects.add(Environment("Ground", self.scale_pos((1000, 1055))))
-        self.game_objects.add(Environment("TreeTrunk", self.scale_pos((1200, 800))))
-        self.game_objects.add(Environment("TreeCrown", self.scale_pos((1200, 400))))
-        self.game_objects.add(Environment("AmmoDump(Shells)", self.scale_pos((500, 955))))
+        self.game_objects.add(Environment("./images/Ground", self.scale_pos((1000, 1055))))
+        self.game_objects.add(Environment("./images/TreeTrunk", self.scale_pos((1200, 800))))
+        self.game_objects.add(Environment("./images/TreeCrown", self.scale_pos((1200, 400))))
+        self.game_objects.add(Environment("./images/AmmoDump(Shells)", self.scale_pos((500, 955))))
         # self.gameObjects.add(Environment("DetonationDecal", 0, 850))
 
     # value is a tuple position where this method returns a tuple that scales to fit the screen
@@ -49,7 +49,7 @@ class GameWorld(metaclass=Singleton):
         return (value[0] * self.screen_ratio_x, value[1] * self.screen_ratio_y)
 
     def run(self):
-        from MenuHandler import MenuHandler
+        from classes.MenuHandler import MenuHandler
         MenuHandler().start_menu()
         while True:
             # Handle events

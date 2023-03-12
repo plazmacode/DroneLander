@@ -1,12 +1,12 @@
 import pygame
-from GameObject import GameObject
-from Explosion import Explosion
+from classes.GameObject import GameObject
+from classes.Explosion import Explosion
 
 class Grenade(GameObject):
     def __init__(self, centerInput, direction, velocity) -> None:
         super().__init__()
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load("Grenade.png").convert_alpha()
+        self.image = pygame.image.load("./images/Grenade.png").convert_alpha()
         self.image = pygame.transform.scale(self.image, (self.image.get_width() * 10, self.image.get_height() * 10))
         self.rect = self.image.get_rect(center = centerInput)
         # self.rect.move_ip(x, y)
@@ -38,7 +38,7 @@ class Grenade(GameObject):
             self.explode()
 
     def explode(self):
-        from GameWorld import GameWorld
+        from classes.GameWorld import GameWorld
         GameWorld().instantiate(Explosion(self.rect.center, 300))
         self.kill()
 

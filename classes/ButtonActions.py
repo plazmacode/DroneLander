@@ -13,8 +13,8 @@ class ButtonActions(metaclass=Singleton):
         pass
 
     def run(self, action, button):
-        from MenuHandler import MenuHandler
-        from GameWorld import GameWorld
+        from classes.MenuHandler import MenuHandler
+        from classes.GameWorld import GameWorld
         if action == "play":
             GameWorld().start_game()
 

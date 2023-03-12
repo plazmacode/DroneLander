@@ -1,5 +1,5 @@
 import pygame
-import spritesheet
+from classes.Spritesheet import Spritesheet
 from abc import ABC, abstractclassmethod
 
 class GameObject(pygame.sprite.Sprite, ABC):
@@ -21,7 +21,7 @@ class GameObject(pygame.sprite.Sprite, ABC):
         pass
 
     def loadImages(self, imagefile, rects, scale):
-        ss = spritesheet.spritesheet(imagefile)
+        ss = Spritesheet(imagefile)
         images = []
         images = ss.source_rects(rects)
 

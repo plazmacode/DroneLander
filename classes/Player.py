@@ -1,18 +1,17 @@
 import pygame
-import spritesheet
-from GameObject import GameObject
-from Grenade import Grenade
+from classes.GameObject import GameObject
+from classes.Grenade import Grenade
 
 class Player(GameObject):
     def __init__(self) -> None:
         super().__init__()
         pygame.sprite.Sprite.__init__(self)
         # this is a mess
-        self.image = pygame.image.load("Drone(1).png").convert_alpha()
-        self.base_image = pygame.image.load("Drone(1).png").convert_alpha()
+        self.image = pygame.image.load("./images/Drone(1).png").convert_alpha()
+        self.base_image = pygame.image.load("./images/Drone(1).png").convert_alpha()
         self.base_image = pygame.transform.scale(self.image, (125, 50))
         rects = ((0, 0, 20, 8), (20, 0, 20, 8), (40, 0, 20, 8), (60, 0, 20, 8))
-        self.base_images = self.loadImages("drone-spritesheet.png", rects, (self.image.get_width() * 10, self.image.get_height() * 10))
+        self.base_images = self.loadImages("./images/drone-spritesheet.png", rects, (self.image.get_width() * 10, self.image.get_height() * 10))
         self.current_image = 0
         self.rect = self.image.get_rect()
         self.rect.center = (100, 450)
@@ -25,7 +24,7 @@ class Player(GameObject):
         self.oldKeys = pygame.key.get_pressed()
         self.can_attack = True
         self.load_difficulty()
-        from GameWorld import GameWorld
+        from classes.GameWorld import GameWorld
         GameWorld().grenades = self.grenades
 
     def update(self):
@@ -33,7 +32,7 @@ class Player(GameObject):
         self.animate()
     
     def load_difficulty(self):
-        from GameWorld import GameWorld
+        from classes.GameWorld import GameWorld
         if GameWorld().difficulty == 0:
             self.grenades = 10
         if GameWorld().difficulty == 1:
@@ -94,7 +93,7 @@ class Player(GameObject):
 
     def attack(self):
         if self.grenades > 0:
-            from GameWorld import GameWorld
+            from classes.GameWorld import GameWorld
             g = Grenade(self.rect.center, self.direciton, self.velocity)
             self.grenades -= 1
             GameWorld().grenades = self.grenades

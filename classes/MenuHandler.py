@@ -1,6 +1,6 @@
 import pygame
 from classes.Button import Button
-from GameWorld import GameWorld
+from classes.GameWorld import GameWorld
 
 button_color = (34, 42, 104)
 hover_color = (24, 32, 94)
@@ -25,7 +25,7 @@ class MenuHandler(metaclass=Singleton):
         if self.music_initialized == False:
             self.music_initialized = True
             GameWorld().mixer.init()
-            GameWorld().mixer.music.load("DroneLander8Bit.wav")
+            GameWorld().mixer.music.load("./sounds/DroneLander8Bit.wav")
             GameWorld().mixer.music.set_volume(0.35)
             GameWorld().mixer.music.play(-1)
         GameWorld().buttons.clear()

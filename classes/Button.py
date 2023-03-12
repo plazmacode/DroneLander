@@ -1,5 +1,5 @@
 import pygame
-from ButtonActions import ButtonActions
+from classes.ButtonActions import ButtonActions
 
 class Button():
     def __init__(self, color, hover_color, rect, text, action) -> None:
