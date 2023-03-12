@@ -17,13 +17,13 @@ class GameObject(pygame.sprite.Sprite, ABC):
         screen.blit(self.image, self.rect)
         pass
 
-    def onCollision(self, other):
+    def on_collision(self, other):
         pass
 
     def loadImages(self, imagefile, rects, scale):
         ss = spritesheet.spritesheet(imagefile)
         images = []
-        images = ss.sourceRects(rects)
+        images = ss.source_rects(rects)
 
         for i in range(0, len(images)):
             images[i] = pygame.transform.scale(images[i], scale)

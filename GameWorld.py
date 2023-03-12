@@ -25,21 +25,21 @@ class GameWorld(metaclass=Singleton):
         self._font = pygame.font.SysFont(None, 48)
         self.grenades = 0
         self.difficulty = 0
-        self.gameObjects = pygame.sprite.Group()
-        self.newGameObjects = pygame.sprite.Group()
+        self.game_objects = pygame.sprite.Group()
+        self.new_game_objects = pygame.sprite.Group()
         self.buttons = []
         self.mixer = pygame.mixer
 
-        self.gameState = "MENU"
+        self.game_state = "MENU"
 
-    def startGame(self):
-        self.gameState = "PLAY"
+    def start_game(self):
+        self.game_state = "PLAY"
         self.buttons.clear()
-        self.gameObjects.add(Player())
-        self.gameObjects.add(Environment("Ground", self.scale_pos((1000, 1055))))
-        self.gameObjects.add(Environment("TreeTrunk", self.scale_pos((1200, 800))))
-        self.gameObjects.add(Environment("TreeCrown", self.scale_pos((1200, 400))))
-        self.gameObjects.add(Environment("AmmoDump(Shells)", self.scale_pos((500, 955))))
+        self.game_objects.add(Player())
+        self.game_objects.add(Environment("Ground", self.scale_pos((1000, 1055))))
+        self.game_objects.add(Environment("TreeTrunk", self.scale_pos((1200, 800))))
+        self.game_objects.add(Environment("TreeCrown", self.scale_pos((1200, 400))))
+        self.game_objects.add(Environment("AmmoDump(Shells)", self.scale_pos((500, 955))))
         # self.gameObjects.add(Environment("DetonationDecal", 0, 850))
 
     # value is a tuple position where this method returns a tuple that scales to fit the screen
@@ -50,7 +50,7 @@ class GameWorld(metaclass=Singleton):
 
     def run(self):
         from MenuHandler import MenuHandler
-        MenuHandler().startMenu()
+        MenuHandler().start_menu()
         while True:
             # Handle events
             event_list = pygame.event.get()
@@ -67,20 +67,20 @@ class GameWorld(metaclass=Singleton):
     
     def update(self, event_list):
 
-        for go in self.newGameObjects:
-            self.gameObjects.add(go)
+        for go in self.new_game_objects:
+            self.game_objects.add(go)
         
-        self.newGameObjects.empty()
+        self.new_game_objects.empty()
 
-        self.gameObjects.update()
-        self.collisionCheck()
+        self.game_objects.update()
+        self.collision_check()
 
         for button in self.buttons:
             button.update(event_list)
 
-    def collisionCheck(self):
-        for go1 in self.gameObjects:
-            for go2 in self.gameObjects:
+    def collision_check(self):
+        for go1 in self.game_objects:
+            for go2 in self.game_objects:
                 if not go1 is go2:
                     if go1.rect.colliderect(go2.rect):
                         go1.onCollision(go2)
@@ -90,9 +90,9 @@ class GameWorld(metaclass=Singleton):
         self._screen.fill((63, 153, 249))
 
         message = self._font.render("Grenades: " + str(self.grenades), True, (0, 0, 0))
-        self.gameObjects.draw(self._screen)
+        self.game_objects.draw(self._screen)
 
-        if self.gameState == "PLAY":
+        if self.game_state == "PLAY":
             self._screen.blit(message, (100, 100))
 
         for button in self.buttons:
@@ -101,7 +101,7 @@ class GameWorld(metaclass=Singleton):
         pygame.display.flip()
     
     def instantiate(self, object):
-        self.newGameObjects.add(object)
+        self.new_game_objects.add(object)
         
 # game = GameWorld()
 # game.run()

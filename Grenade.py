@@ -33,7 +33,7 @@ class Grenade(GameObject):
         if self.rect.y > 1080:
             self.explode()
 
-    def onCollision(self, other):
+    def on_collision(self, other):
         if other.tag is "Obstacle":
             self.explode()
 

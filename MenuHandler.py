@@ -2,8 +2,8 @@ import pygame
 from Button import Button
 from GameWorld import GameWorld
 
-buttonColor = (34, 42, 104)
-hoverColor = (24, 32, 94)
+button_color = (34, 42, 104)
+hover_color = (24, 32, 94)
 
 class Singleton(type):
     _instances = {}
@@ -19,35 +19,35 @@ class MenuHandler(metaclass=Singleton):
         self._screen_height = GameWorld().screen_height
         self.sound = True
         self.music = True
-        self.musicInitialized = False
+        self.music_initialized = False
 
-    def startMenu(self):
-        if self.musicInitialized == False:
-            self.musicInitialized = True
+    def start_menu(self):
+        if self.music_initialized == False:
+            self.music_initialized = True
             GameWorld().mixer.init()
             GameWorld().mixer.music.load("DroneLander8Bit.wav")
             GameWorld().mixer.music.set_volume(0.35)
             GameWorld().mixer.music.play(-1)
         GameWorld().buttons.clear()
-        GameWorld().buttons.append(Button(buttonColor, hoverColor, pygame.Rect(self._screen_width / 2 -150, 300, 300, 80), "PLAY", "play"))
-        GameWorld().buttons.append(Button(buttonColor, hoverColor, pygame.Rect(self._screen_width / 2 -150, 420, 300, 80), "OPTIONS", "options"))
-        GameWorld().buttons.append(Button(buttonColor, hoverColor, pygame.Rect(self._screen_width / 2 -150, 540, 300, 80), "QUIT", "quit"))
-        GameWorld().gameState = "MENU" #this is an enum trust me
+        GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 300, 300, 80), "PLAY", "play"))
+        GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 420, 300, 80), "OPTIONS", "options"))
+        GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 540, 300, 80), "QUIT", "quit"))
+        GameWorld().game_state = "MENU" #this is an enum trust me
 
-    def optionsMenu(self):
+    def options_menu(self):
         GameWorld().buttons.clear()
-        GameWorld().buttons.append(Button(buttonColor, hoverColor, pygame.Rect(self._screen_width / 2 -150, 300, 300, 80), "Difficulty: Easy", "changeDifficulty"))
-        GameWorld().buttons.append(Button(buttonColor, hoverColor, pygame.Rect(self._screen_width / 2 -150, 420, 300, 80), "Sound is ON", "toggleSound"))
-        GameWorld().buttons.append(Button(buttonColor, hoverColor, pygame.Rect(self._screen_width / 2 -150, 540, 300, 80), "Music is ON", "toggleMusic"))
-        GameWorld().buttons.append(Button(buttonColor, hoverColor, pygame.Rect(self._screen_width / 2 -150, 660, 300, 80), "BACK", "mainMenu"))
+        GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 300, 300, 80), "Difficulty: Easy", "changeDifficulty"))
+        GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 420, 300, 80), "Sound is ON", "toggleSound"))
+        GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 540, 300, 80), "Music is ON", "toggleMusic"))
+        GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 660, 300, 80), "BACK", "mainMenu"))
 
-    def toggleSound(self):
+    def toggle_sound(self):
         if self.sound == True:
             self.sound = False
         elif self.sound == False:
             self.sound = True
 
-    def toggleMusic(self):
+    def toggle_music(self):
         if self.music == True:
             self.music = False
             GameWorld().mixer.music.set_volume(0)

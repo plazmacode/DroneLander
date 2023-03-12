@@ -25,7 +25,7 @@ class Environment(GameObject):
     def draw(self, screen):
         screen.blit(self.image, self.rect)
 
-    def onCollision(self, other):
+    def on_collision(self, other):
         if other.tag == "Explosion":
             if self.name == "AmmoDump(Shells)":
                 self.name = "DetonationDecal"

@@ -7,12 +7,13 @@ class Player(GameObject):
     def __init__(self) -> None:
         super().__init__()
         pygame.sprite.Sprite.__init__(self)
+        # this is a mess
         self.image = pygame.image.load("Drone(1).png").convert_alpha()
         self.base_image = pygame.image.load("Drone(1).png").convert_alpha()
         self.base_image = pygame.transform.scale(self.image, (125, 50))
         rects = ((0, 0, 20, 8), (20, 0, 20, 8), (40, 0, 20, 8), (60, 0, 20, 8))
         self.base_images = self.loadImages("drone-spritesheet.png", rects, (self.image.get_width() * 10, self.image.get_height() * 10))
-        self.currentImage = 0
+        self.current_image = 0
         self.rect = self.image.get_rect()
         self.rect.center = (100, 450)
         self.tag = "Player"
@@ -22,8 +23,8 @@ class Player(GameObject):
         self.velocity = pygame.math.Vector2(0,0)
         self.keys = pygame.key.get_pressed()
         self.oldKeys = pygame.key.get_pressed()
-        self.canAttack = True
-        self.loadDifficulty()
+        self.can_attack = True
+        self.load_difficulty()
         from GameWorld import GameWorld
         GameWorld().grenades = self.grenades
 
@@ -31,7 +32,7 @@ class Player(GameObject):
         self.move()
         self.animate()
     
-    def loadDifficulty(self):
+    def load_difficulty(self):
         from GameWorld import GameWorld
         if GameWorld().difficulty == 0:
             self.grenades = 10
@@ -43,12 +44,12 @@ class Player(GameObject):
         screen.blit(self.image, self.rect)
 
     def move(self):
-        self.inputHandler()
+        self.input_handler()
 
         self.rect.y += 2
 
         self.angle %= 360
-        self.image = pygame.transform.rotate(self.base_images[self.currentImage], self.angle)
+        self.image = pygame.transform.rotate(self.base_images[self.current_image], self.angle)
         self.rect = self.image.get_rect(center =(self.rect.center))
 
         self.rect.move_ip(self.direciton.x * self.velocity.x, self.direciton.y * self.velocity.y)
@@ -61,11 +62,11 @@ class Player(GameObject):
             self.velocity.x = 0
 
     def animate(self):
-        self.currentImage += 1
-        if self.currentImage > len(self.base_images) -1:
-            self.currentImage = 0
+        self.current_image += 1
+        if self.current_image > len(self.base_images) -1:
+            self.current_image = 0
 
-    def inputHandler(self):
+    def input_handler(self):
         self.keys = pygame.key.get_pressed()
 
         if self.keys[pygame.K_a]:
@@ -75,12 +76,12 @@ class Player(GameObject):
         if self.keys[pygame.K_w]:
             self.thrust()
 
-        if self.canAttack:
+        if self.can_attack:
             if self.keys[pygame.K_SPACE]:
                 self.attack()
         
         if self.oldKeys[pygame.K_SPACE] and not self.keys[pygame.K_SPACE]:
-            self.canAttack = True
+            self.can_attack = True
 
         self.oldKeys = self.keys
 
@@ -98,5 +99,5 @@ class Player(GameObject):
             self.grenades -= 1
             GameWorld().grenades = self.grenades
             GameWorld().instantiate(g)
-            self.canAttack = False
+            self.can_attack = False
 
