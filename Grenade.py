@@ -39,6 +39,9 @@ class Grenade(GameObject):
             self.explode()
 
     def explode(self):
+        from GameWorld import GameWorld
+        game = GameWorld()
+        # game.instantiate(Explosion(self.rect.x, self.rect.y))
         self.gameWorld.instantiate(Explosion(self.rect.x, self.rect.y))
         self.kill()
 

@@ -16,9 +16,9 @@ class Singleton(type):
 class GameWorld(metaclass=Singleton):
     def __init__(self):
         pygame.init()
-        self.screen_width = 1920
-        self.screen_height = 1080
-        self._screen = pygame.display.set_mode((self.screen_width, self.screen_height))
+        self._screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN, pygame.RESIZABLE)
+        self.screen_width = self._screen.get_width()
+        self.screen_height = self._screen.get_height()
         pygame.display.set_caption("Drone Lander")
         self._clock = pygame.time.Clock()
         self._font = pygame.font.SysFont(None, 48)
@@ -93,5 +93,5 @@ class GameWorld(metaclass=Singleton):
     def instantiate(self, object):
         self.newGameObjects.add(object)
         
-game = GameWorld()
-game.run()
+# game = GameWorld()
+# game.run()

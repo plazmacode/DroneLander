@@ -95,6 +95,9 @@ class Player(GameObject):
             g = Grenade(self.rect.x + self.rect.width / 2, self.rect.y, self.direciton, self.velocity, self.gameWorld)
             self.grenades -= 1
             self.gameWorld.grenades = self.grenades
+            from GameWorld import GameWorld
+            game = GameWorld()
+            # game.instantiate(g)
             self.gameWorld.instantiate(g)
             self.canAttack = False
 
