@@ -4,7 +4,7 @@ from GameObject import GameObject
 from Grenade import Grenade
 
 class Player(GameObject):
-    def __init__(self, gameWorld) -> None:
+    def __init__(self) -> None:
         super().__init__()
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load("Drone(1).png").convert_alpha()
@@ -23,18 +23,19 @@ class Player(GameObject):
         self.keys = pygame.key.get_pressed()
         self.oldKeys = pygame.key.get_pressed()
         self.canAttack = True
-        self.gameWorld = gameWorld
         self.loadDifficulty()
-        self.gameWorld.grenades = self.grenades
+        from GameWorld import GameWorld
+        GameWorld().grenades = self.grenades
 
     def update(self):
         self.move()
         self.animate()
     
     def loadDifficulty(self):
-        if self.gameWorld.difficulty == 0:
+        from GameWorld import GameWorld
+        if GameWorld().difficulty == 0:
             self.grenades = 10
-        if self.gameWorld.difficulty == 1:
+        if GameWorld().difficulty == 1:
             self.grenades = 5
 
 
@@ -92,12 +93,10 @@ class Player(GameObject):
 
     def attack(self):
         if self.grenades > 0:
-            g = Grenade(self.rect.center, self.direciton, self.velocity, self.gameWorld)
-            self.grenades -= 1
-            self.gameWorld.grenades = self.grenades
             from GameWorld import GameWorld
-            game = GameWorld()
-            # game.instantiate(g)
-            self.gameWorld.instantiate(g)
+            g = Grenade(self.rect.center, self.direciton, self.velocity)
+            self.grenades -= 1
+            GameWorld().grenades = self.grenades
+            GameWorld().instantiate(g)
             self.canAttack = False
 

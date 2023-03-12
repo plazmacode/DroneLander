@@ -3,7 +3,6 @@ from GameObject import GameObject
 from Environment import Environment
 from Player import Player
 from Button import Button
-from MenuHandler import MenuHandler
 
 class Singleton(type):
     _instances = {}
@@ -19,6 +18,8 @@ class GameWorld(metaclass=Singleton):
         self._screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN, pygame.RESIZABLE)
         self.screen_width = self._screen.get_width()
         self.screen_height = self._screen.get_height()
+        self.screen_ratio_x = self.screen_width / 1920
+        self.screen_ratio_y = self.screen_height / 1080
         pygame.display.set_caption("Drone Lander")
         self._clock = pygame.time.Clock()
         self._font = pygame.font.SysFont(None, 48)
@@ -28,20 +29,28 @@ class GameWorld(metaclass=Singleton):
         self.newGameObjects = pygame.sprite.Group()
         self.buttons = []
         self.mixer = pygame.mixer
-        MenuHandler(self).startMenu()
+
         self.gameState = "MENU"
 
     def startGame(self):
         self.gameState = "PLAY"
         self.buttons.clear()
-        self.gameObjects.add(Player(self))
-        self.gameObjects.add(Environment("Ground", (1000, 1055), self))
-        self.gameObjects.add(Environment("TreeTrunk", (1200, 800), self))
-        self.gameObjects.add(Environment("TreeCrown", (1200, 400), self))
-        self.gameObjects.add(Environment("AmmoDump(Shells)", (500, 955), self))
+        self.gameObjects.add(Player())
+        self.gameObjects.add(Environment("Ground", self.scale_pos((1000, 1055))))
+        self.gameObjects.add(Environment("TreeTrunk", self.scale_pos((1200, 800))))
+        self.gameObjects.add(Environment("TreeCrown", self.scale_pos((1200, 400))))
+        self.gameObjects.add(Environment("AmmoDump(Shells)", self.scale_pos((500, 955))))
         # self.gameObjects.add(Environment("DetonationDecal", 0, 850))
 
+    # value is a tuple position where this method returns a tuple that scales to fit the screen
+    # assuming the coordinates send to this was from a 1920 by 1080 display
+    # this makes the game show correctly on smaller screens
+    def scale_pos(self, value):
+        return (value[0] * self.screen_ratio_x, value[1] * self.screen_ratio_y)
+
     def run(self):
+        from MenuHandler import MenuHandler
+        MenuHandler().startMenu()
         while True:
             # Handle events
             event_list = pygame.event.get()

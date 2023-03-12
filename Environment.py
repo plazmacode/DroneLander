@@ -3,12 +3,11 @@ from GameObject import GameObject
 from Explosion import Explosion
 
 class Environment(GameObject):
-    def __init__(self, name, centerInput, gameWorld) -> None:
+    def __init__(self, name, centerInput) -> None:
         super().__init__()
         pygame.sprite.Sprite.__init__(self)
         self.name = name
         self.tag = "Obstacle"
-        self.gameWorld = gameWorld
 
         self.image = pygame.image.load(name + ".png").convert_alpha()   
         self.image = pygame.transform.scale(self.image, (self.image.get_width() * 10, self.image.get_height() * 10))    
@@ -30,8 +29,8 @@ class Environment(GameObject):
         if other.tag == "Explosion":
             if self.name == "AmmoDump(Shells)":
                 self.name = "DetonationDecal"
-
-                self.gameWorld.instantiate(Explosion(self.rect.center, 600))
+                from GameWorld import GameWorld
+                GameWorld().instantiate(Explosion(self.rect.center, 600))
 
                 self.image = pygame.image.load(self.name + ".png").convert_alpha()   
                 self.image = pygame.transform.scale(self.image, (self.image.get_width() * 10, self.image.get_height() * 10))  

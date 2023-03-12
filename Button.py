@@ -2,14 +2,13 @@ import pygame
 from ButtonActions import ButtonActions
 
 class Button():
-    def __init__(self, color, hoverColor, rect, text, gameWorld, action) -> None:
+    def __init__(self, color, hoverColor, rect, text, action) -> None:
         self.baseColor = color
         self.color = color
         self.hoverColor = hoverColor
         self.rect = rect
         self._font = pygame.font.SysFont(None, 48)
         self.surface = self._font.render(str(text), True, (255, 255, 255))
-        self.gameWorld = gameWorld
         self.action = action
         self.oldMouseState = pygame.MOUSEBUTTONUP
 
@@ -20,7 +19,7 @@ class Button():
             self.color = self.hoverColor
             for event in event_list:
                 if event.type == pygame.MOUSEBUTTONUP and self.oldMouseState == pygame.MOUSEBUTTONDOWN:
-                    ButtonActions(self.gameWorld).run(self.action, self.gameWorld, self)
+                    ButtonActions().run(self.action, self)
                     
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.oldMouseState = pygame.MOUSEBUTTONDOWN
