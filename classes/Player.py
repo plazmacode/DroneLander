@@ -38,20 +38,24 @@ class Player(GameObject):
         if GameWorld().difficulty == 1:
             self.grenades = 5
 
-
-    def draw(self, screen):
-        screen.blit(self.image, self.rect)
-
     def move(self):
         self.input_handler()
 
+        # gravity
         self.rect.y += 2
 
+        # lock angle to 360 degrees, prevents angles like 1591 degrees
         self.angle %= 360
+
+        # use the base_images to rotate
+        # if we rotate the normal image we get a memory leak which freezes our game within a minute
         self.image = pygame.transform.rotate(self.base_images[self.current_image], self.angle)
         self.rect = self.image.get_rect(center =(self.rect.center))
 
+        # move our player
         self.rect.move_ip(self.direciton.x * self.velocity.x, self.direciton.y * self.velocity.y)
+
+        #decrease our velocity over time until 0
         self.velocity.y -= 0.1
         if self.velocity.y < 0:
             self.velocity.y = 0
@@ -60,11 +64,13 @@ class Player(GameObject):
         if self.velocity.x < 0:
             self.velocity.x = 0
 
+    # animate our sequence of images from base_images by using current_image
     def animate(self):
         self.current_image += 1
         if self.current_image > len(self.base_images) -1:
             self.current_image = 0
 
+    # get user input to change angle and attack
     def input_handler(self):
         self.keys = pygame.key.get_pressed()
 
@@ -85,7 +91,7 @@ class Player(GameObject):
         self.oldKeys = self.keys
 
     def thrust(self):
-
+        # set player direction upwards locally
         self.direciton = pygame.math.Vector2(0, -1)
         self.direciton.rotate_ip(-self.angle)
 

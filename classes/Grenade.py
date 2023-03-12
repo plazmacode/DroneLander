@@ -29,9 +29,11 @@ class Grenade(GameObject):
         self.velocity.x -= 0.05
         if self.velocity.x < 0:
             self.velocity.x = 0
+        
+        # remove grenades if they are outside the screen
+        if self.rect.y > 1200 or self.rect.x > 2000 or self.rect.x < -50:
+            self.kill()
 
-        if self.rect.y > 1080:
-            self.explode()
 
     def on_collision(self, other):
         if other.tag == "Obstacle":

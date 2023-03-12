@@ -19,12 +19,15 @@ class GameObject(pygame.sprite.Sprite, ABC):
 
     def on_collision(self, other):
         pass
-
+    
+    # loads a spritesheet to use for animations
+    # returns an array of images from the spritesheet
     def loadImages(self, imagefile, rects, scale):
         ss = Spritesheet(imagefile)
         images = []
         images = ss.source_rects(rects)
 
+        # fix image scale
         for i in range(0, len(images)):
             images[i] = pygame.transform.scale(images[i], scale)
         return images
