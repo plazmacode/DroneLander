@@ -22,8 +22,9 @@ class Player(GameObject):
         self.base_image = pygame.image.load("./images/Drone(1).png").convert_alpha()
         self.base_image = pygame.transform.scale(self.image, (125, 50))
         rects = ((0, 0, 20, 8), (20, 0, 20, 8), (40, 0, 20, 8), (60, 0, 20, 8))
-        self.base_images = self.loadImages("./images/drone-spritesheet.png", rects, (self.image.get_width() * 10, self.image.get_height() * 10))
+        self.base_images = self.load_images("./images/drone-spritesheet.png", rects, (self.image.get_width() * 10, self.image.get_height() * 10))
         self.current_image = 0
+
         self.rect = self.image.get_rect()
         self.rect.center = (300, 450)
         self.tag = "Player"
@@ -52,7 +53,9 @@ class Player(GameObject):
             self.grenades = 5
 
     def draw(self, screen):
+        from classes.GameWorld import GameWorld
         screen.blit(self.image, self.rect)
+
 
     def move(self):
         self.input_handler()

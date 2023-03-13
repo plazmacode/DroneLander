@@ -12,7 +12,7 @@ class Explosion(GameObject):
             (0, 96, 32, 32), (32, 96, 32, 32), (64, 96, 32, 32), (96, 96, 32, 32)
             )
         self.scale = size
-        self.images = self.loadImages("./images/explosion-spritesheet.png", rects, (self.scale, self.scale))
+        self.images = self.load_images("./images/explosion-spritesheet.png", rects, (self.scale, self.scale))
         self.currentImage = 0
         self.image = self.images[self.currentImage]
         self.rect = self.images[self.currentImage].get_rect(center = centerInput)

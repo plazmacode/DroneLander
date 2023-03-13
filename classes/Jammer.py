@@ -1,6 +1,7 @@
 import pygame
 from classes.GameObject import GameObject
 from classes.Player import Player
+from classes.Jam import Jam
 
 class Jammer(GameObject):
     def __init__(self, centerInput) -> None:
@@ -20,21 +21,30 @@ class Jammer(GameObject):
     def attack(self):
         from classes.GameWorld import GameWorld
 
-
+        # get distance between jammer and player
         distance = pygame.math.Vector2(self.rect.x - GameWorld().camera_x, self.rect.y).distance_to(Player().rect.center)
+
+        # player inside jammer range
         if distance <= self.attack_range:
             if self.attacking == False:
                 self.attack_start = pygame.time.get_ticks()
                 self.attacking = True
+                Jam().alpha = 128
             self.current_attack_time = (pygame.time.get_ticks()-self.attack_start)
+        # player outside jammer range
         else:
             Player().can_input = True
             self.attacking = False
             self.current_attack_time = 0
+            Jam().alpha = 0
 
+
+        # if player has been jammed for attack_cooldown milliseconds
+        # disable player input
         if self.current_attack_time >= self.attack_cooldown:
             Player().can_input = False
 
+        # updates jamming bool used for debug
         GameWorld().jamming = self.attacking
         
     def draw(self, screen):

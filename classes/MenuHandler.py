@@ -53,4 +53,4 @@ class MenuHandler(metaclass=Singleton):
             GameWorld().mixer.music.set_volume(0)
         elif self.music == False:
             self.music = True
-            GameWorld().mixer.music.set_volume(0.35)
+            GameWorld().mixer.music.set_volume(0.2)

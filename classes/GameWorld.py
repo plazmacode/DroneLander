@@ -4,6 +4,7 @@ from classes.Environment import Environment
 from classes.Jammer import Jammer
 from classes.Player import Player
 from classes.Button import Button
+from classes.Jam import Jam
 
 class Singleton(type):
     _instances = {}
@@ -73,6 +74,8 @@ class GameWorld(metaclass=Singleton):
 
         self.game_objects.update()
         self.collision_check()
+        
+        Jam().update()
 
         for button in self.buttons:
             button.update(event_list)
@@ -95,6 +98,10 @@ class GameWorld(metaclass=Singleton):
             game_object.draw(self._screen)
 
         if self.game_state == "PLAY":
+            # draw noise
+            Jam().draw(self._screen)
+
+            #draw UI
             self._screen.blit(grenadeText, (100, 100))
             self._screen.blit(attackText, (100, 200))
 
@@ -107,6 +114,3 @@ class GameWorld(metaclass=Singleton):
     
     def instantiate(self, object):
         self.new_game_objects.add(object)
-        
-# game = GameWorld()
-# game.run()

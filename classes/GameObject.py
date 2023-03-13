@@ -22,7 +22,7 @@ class GameObject(pygame.sprite.Sprite, ABC):
     
     # loads a spritesheet to use for animations
     # returns an array of images from the spritesheet
-    def loadImages(self, imagefile, rects, scale):
+    def load_images(self, imagefile, rects, scale):
         ss = Spritesheet(imagefile)
         images = []
         images = ss.source_rects(rects)
@@ -30,4 +30,13 @@ class GameObject(pygame.sprite.Sprite, ABC):
         # fix image scale
         for i in range(0, len(images)):
             images[i] = pygame.transform.scale(images[i], scale)
+        return images
+    
+    # imagefiles is a tuple with strings that hold the path to the images to be loaded
+    def load_images2(self, imagefiles, scale):
+        images = []
+
+        for i in range(0, len(imagefiles)):
+            images.append(pygame.image.load(imagefiles[i]).convert_alpha())
+            images[i] = pygame.transform.scale(images[i], (images[i].get_width() * scale, images[i].get_height() * scale))
         return images
