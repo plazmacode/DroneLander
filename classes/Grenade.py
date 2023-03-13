@@ -12,6 +12,7 @@ class Grenade(GameObject):
         # self.rect.move_ip(x, y)
         self.direction = direction
         self.velocity = velocity
+        self.tag = "Granade"
 
     def update(self):
         self.move()

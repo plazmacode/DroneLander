@@ -26,10 +26,14 @@ class Player(GameObject):
         self.load_difficulty()
         from classes.GameWorld import GameWorld
         GameWorld().grenades = self.grenades
+        self.too_high = False
+        self.death_timer = 3
+        self.reset_timer = 3
 
     def update(self):
         self.move()
         self.animate()
+        self.checkHeight()
     
     def load_difficulty(self):
         from classes.GameWorld import GameWorld
@@ -41,6 +45,15 @@ class Player(GameObject):
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
+
+    def on_collision(self, other):
+        from classes.GameWorld import GameWorld
+        from classes.MenuHandler import MenuHandler
+        from classes.Explosion import Explosion
+        if other.tag == "Obstacle" or other.tag == "Explosion":
+            MenuHandler().start_menu()
+            GameWorld().instantiate(Explosion(self.rect.center, 300))
+            self.kill()
 
     def move(self):
         self.input_handler()
@@ -100,3 +113,29 @@ class Player(GameObject):
             GameWorld().instantiate(g)
             self.can_attack = False
 
+    def checkHeight(self):
+        from classes.GameWorld import GameWorld
+        if self.rect.y < 200 and self.too_high == False:
+            self.too_high = True
+            self.death_timer = self.reset_timer
+        elif self.rect.y >= 200:
+            self.too_high = False
+            GameWorld().too_high = False
+
+        if self.too_high == True:
+            GameWorld().too_high = True
+            self.countDeath()
+
+    def countDeath(self):
+        if self.death_timer <= 0:
+            from classes.GameWorld import GameWorld
+            from classes.MenuHandler import MenuHandler
+            from classes.Explosion import Explosion
+            GameWorld().too_high = False
+            MenuHandler().start_menu()
+            GameWorld().instantiate(Explosion(self.rect.center, 300))
+            self.kill()
+        else:
+            from classes.GameWorld import GameWorld
+            self.death_timer -= GameWorld().delta_time
+            GameWorld().death_timer = self.death_timer
