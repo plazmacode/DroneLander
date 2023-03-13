@@ -18,8 +18,12 @@ class GameWorld(metaclass=Singleton):
         self._screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN, pygame.RESIZABLE)
         self.screen_width = self._screen.get_width()
         self.screen_height = self._screen.get_height()
-        self.screen_ratio_x = self.screen_width / 1920
-        self.screen_ratio_y = self.screen_height / 1080
+        if self.screen_width > 1920:
+            self.screen_ratio_x = 1920 / self.screen_width
+            self.screen_ratio_y = 1080 / self.screen_height
+        else:
+            self.screen_ratio_x = self.screen_width / 1920
+            self.screen_ratio_y = self.screen_height / 1080
         pygame.display.set_caption("Drone Lander")
         self._clock = pygame.time.Clock()
         self._font = pygame.font.SysFont(None, 48)
