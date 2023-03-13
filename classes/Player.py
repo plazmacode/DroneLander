@@ -14,7 +14,7 @@ class Player(GameObject):
         self.base_images = self.loadImages("./images/drone-spritesheet.png", rects, (self.image.get_width() * 10, self.image.get_height() * 10))
         self.current_image = 0
         self.rect = self.image.get_rect()
-        self.rect.center = (100, 450)
+        self.rect.center = (300, 450)
         self.tag = "Player"
         self.angle = 0
         self.rotation_speed = 4
@@ -30,6 +30,7 @@ class Player(GameObject):
     def update(self):
         self.move()
         self.animate()
+        self.move_camera()
     
     def load_difficulty(self):
         from classes.GameWorld import GameWorld
@@ -37,7 +38,6 @@ class Player(GameObject):
             self.grenades = 10
         if GameWorld().difficulty == 1:
             self.grenades = 5
-
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
@@ -51,7 +51,7 @@ class Player(GameObject):
         self.image = pygame.transform.rotate(self.base_images[self.current_image], self.angle)
         self.rect = self.image.get_rect(center =(self.rect.center))
 
-        self.rect.move_ip(self.direciton.x * self.velocity.x, self.direciton.y * self.velocity.y)
+        self.rect.move_ip(0, self.direciton.y * self.velocity.y)
         self.velocity.y -= 0.1
         if self.velocity.y < 0:
             self.velocity.y = 0
@@ -59,6 +59,14 @@ class Player(GameObject):
         self.velocity.x -= 0.1
         if self.velocity.x < 0:
             self.velocity.x = 0
+
+    def move_camera(self):
+        from classes.GameWorld import GameWorld
+        GameWorld().camera_x += self.direciton.x * self.velocity.x
+
+        # left screen bounds
+        if GameWorld().camera_x <= -200:
+            GameWorld().camera_x = -200
 
     def animate(self):
         self.current_image += 1

@@ -22,8 +22,6 @@ class Environment(GameObject):
             self.image = pygame.transform.scale(self.image, (self.image.get_width() * 10, self.image.get_height() * 10))  
             self.rect = self.image.get_rect(center = (self.x, self.y + 100))
 
-    def draw(self, screen):
-        screen.blit(self.image, self.rect)
 
     def on_collision(self, other):
         if other.tag == "Explosion":

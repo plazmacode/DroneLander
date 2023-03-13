@@ -18,6 +18,7 @@ class GameWorld(metaclass=Singleton):
         self._screen = pygame.display.set_mode((1920, 1080))
         self.screen_width = self._screen.get_width()
         self.screen_height = self._screen.get_height()
+        self.camera_x = 0
         pygame.display.set_caption("Drone Lander")
         self._clock = pygame.time.Clock()
         self._font = pygame.font.SysFont(None, 48)
@@ -65,7 +66,7 @@ class GameWorld(metaclass=Singleton):
 
         for go in self.new_game_objects:
             self.game_objects.add(go)
-        
+            
         self.new_game_objects.empty()
 
         self.game_objects.update()
@@ -86,7 +87,9 @@ class GameWorld(metaclass=Singleton):
         self._screen.fill((63, 153, 249))
 
         message = self._font.render("Grenades: " + str(self.grenades), True, (0, 0, 0))
-        self.game_objects.draw(self._screen)
+
+        for game_object in self.game_objects:
+            game_object.draw(self._screen)
 
         if self.game_state == "PLAY":
             self._screen.blit(message, (100, 100))
@@ -94,9 +97,7 @@ class GameWorld(metaclass=Singleton):
         for button in self.buttons:
             button.draw(self._screen)
 
-        scaled_screen = pygame.transform.scale(self._screen, (self.screen_width, self.screen_height))
-
-        self._screen.blit(scaled_screen, (0,0))
+        self._screen.blit(self._screen, (0,0))
 
         pygame.display.flip()
     
