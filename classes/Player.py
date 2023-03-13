@@ -2,8 +2,19 @@ import pygame
 from classes.GameObject import GameObject
 from classes.Grenade import Grenade
 
+def singleton(class_):
+    instances = {}
+    def getinstance(*args, **kwargs):
+        if class_ not in instances:
+            instances[class_] = class_(*args, **kwargs)
+        return instances[class_]
+    return getinstance
+
+# cannot use metaclass singleton on Player, because it inherits from GameObject, therefore we do this
+# we use a decorator instead
+@singleton
 class Player(GameObject):
-    def __init__(self) -> None:
+    def __init__(self):
         super().__init__()
         pygame.sprite.Sprite.__init__(self)
         # this is a mess
@@ -23,6 +34,7 @@ class Player(GameObject):
         self.keys = pygame.key.get_pressed()
         self.oldKeys = pygame.key.get_pressed()
         self.can_attack = True
+        self.can_input = True
         self.load_difficulty()
         from classes.GameWorld import GameWorld
         GameWorld().grenades = self.grenades
@@ -74,23 +86,24 @@ class Player(GameObject):
             self.current_image = 0
 
     def input_handler(self):
-        self.keys = pygame.key.get_pressed()
+        if self.can_input:
+            self.keys = pygame.key.get_pressed()
 
-        if self.keys[pygame.K_a]:
-            self.angle += self.rotation_speed
-        if self.keys[pygame.K_d]:
-            self.angle -= self.rotation_speed
-        if self.keys[pygame.K_w]:
-            self.thrust()
+            if self.keys[pygame.K_a]:
+                self.angle += self.rotation_speed
+            if self.keys[pygame.K_d]:
+                self.angle -= self.rotation_speed
+            if self.keys[pygame.K_w]:
+                self.thrust()
 
-        if self.can_attack:
-            if self.keys[pygame.K_SPACE]:
-                self.attack()
-        
-        if self.oldKeys[pygame.K_SPACE] and not self.keys[pygame.K_SPACE]:
-            self.can_attack = True
+            if self.can_attack:
+                if self.keys[pygame.K_SPACE]:
+                    self.attack()
+            
+            if self.oldKeys[pygame.K_SPACE] and not self.keys[pygame.K_SPACE]:
+                self.can_attack = True
 
-        self.oldKeys = self.keys
+            self.oldKeys = self.keys
 
     def thrust(self):
 
@@ -102,7 +115,7 @@ class Player(GameObject):
     def attack(self):
         if self.grenades > 0:
             from classes.GameWorld import GameWorld
-            g = Grenade(self.rect.center, self.direciton, self.velocity)
+            g = Grenade((self.rect.center[0] + GameWorld().camera_x, self.rect.center[1]), self.direciton, self.velocity)
             self.grenades -= 1
             GameWorld().grenades = self.grenades
             GameWorld().instantiate(g)

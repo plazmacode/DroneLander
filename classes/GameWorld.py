@@ -1,6 +1,7 @@
 import pygame
 from classes.GameObject import GameObject
 from classes.Environment import Environment
+from classes.Jammer import Jammer
 from classes.Player import Player
 from classes.Button import Button
 
@@ -28,7 +29,7 @@ class GameWorld(metaclass=Singleton):
         self.new_game_objects = pygame.sprite.Group()
         self.buttons = []
         self.mixer = pygame.mixer
-
+        self.jamming = False
         self.game_state = "MENU"
 
     def start_game(self):
@@ -39,6 +40,7 @@ class GameWorld(metaclass=Singleton):
         self.game_objects.add(Environment("./images/TreeTrunk", (1200, 800)))
         self.game_objects.add(Environment("./images/TreeCrown", (1200, 400)))
         self.game_objects.add(Environment("./images/AmmoDump(Shells)", (500, 955)))
+        self.game_objects.add(Jammer((1500, 1000)))
         # self.gameObjects.add(Environment("DetonationDecal", 0, 850))
 
     def run(self):
@@ -66,7 +68,7 @@ class GameWorld(metaclass=Singleton):
 
         for go in self.new_game_objects:
             self.game_objects.add(go)
-            
+
         self.new_game_objects.empty()
 
         self.game_objects.update()
@@ -86,13 +88,15 @@ class GameWorld(metaclass=Singleton):
         # Clear the screen
         self._screen.fill((63, 153, 249))
 
-        message = self._font.render("Grenades: " + str(self.grenades), True, (0, 0, 0))
+        grenadeText = self._font.render("Grenades: " + str(self.grenades), True, (0, 0, 0))
+        attackText = self._font.render("WE JAMMING: " + str(self.jamming), True, (0, 0, 0))
 
         for game_object in self.game_objects:
             game_object.draw(self._screen)
 
         if self.game_state == "PLAY":
-            self._screen.blit(message, (100, 100))
+            self._screen.blit(grenadeText, (100, 100))
+            self._screen.blit(attackText, (100, 200))
 
         for button in self.buttons:
             button.draw(self._screen)

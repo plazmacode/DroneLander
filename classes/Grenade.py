@@ -41,3 +41,6 @@ class Grenade(GameObject):
         from classes.GameWorld import GameWorld
         GameWorld().instantiate(Explosion(self.rect.center, 300))
         self.kill()
+
+    # def draw(self, screen):
+    #     screen.blit(self.image, self.rect)
