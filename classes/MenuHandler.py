@@ -25,8 +25,8 @@ class MenuHandler(metaclass=Singleton):
         if self.music_initialized == False:
             self.music_initialized = True
             GameWorld().mixer.init()
-            GameWorld().mixer.music.load("./sounds/DroneLander8Bit.wav")
-            GameWorld().mixer.music.set_volume(0.35)
+            GameWorld().mixer.music.load(".\sounds\DroneLander8Bit.wav")
+            GameWorld().mixer.music.set_volume(0.2)
             GameWorld().mixer.music.play(-1)
         GameWorld().buttons.clear()
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 300, 300, 80), "PLAY", "play"))

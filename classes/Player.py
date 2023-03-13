@@ -2,8 +2,19 @@ import pygame
 from classes.GameObject import GameObject
 from classes.Grenade import Grenade
 
+def singleton(class_):
+    instances = {}
+    def getinstance(*args, **kwargs):
+        if class_ not in instances:
+            instances[class_] = class_(*args, **kwargs)
+        return instances[class_]
+    return getinstance
+
+# cannot use metaclass singleton on Player, because it inherits from GameObject, therefore we do this
+# we use a decorator instead
+@singleton
 class Player(GameObject):
-    def __init__(self) -> None:
+    def __init__(self):
         super().__init__()
         pygame.sprite.Sprite.__init__(self)
         # this is a mess
@@ -14,7 +25,7 @@ class Player(GameObject):
         self.base_images = self.loadImages("./images/drone-spritesheet.png", rects, (self.image.get_width() * 10, self.image.get_height() * 10))
         self.current_image = 0
         self.rect = self.image.get_rect()
-        self.rect.center = (100, 450)
+        self.rect.center = (300, 450)
         self.tag = "Player"
         self.angle = 0
         self.rotation_speed = 4
@@ -23,6 +34,7 @@ class Player(GameObject):
         self.keys = pygame.key.get_pressed()
         self.oldKeys = pygame.key.get_pressed()
         self.can_attack = True
+        self.can_input = True
         self.load_difficulty()
         from classes.GameWorld import GameWorld
         GameWorld().grenades = self.grenades
@@ -30,6 +42,7 @@ class Player(GameObject):
     def update(self):
         self.move()
         self.animate()
+        self.move_camera()
     
     def load_difficulty(self):
         from classes.GameWorld import GameWorld
@@ -37,6 +50,9 @@ class Player(GameObject):
             self.grenades = 10
         if GameWorld().difficulty == 1:
             self.grenades = 5
+
+    def draw(self, screen):
+        screen.blit(self.image, self.rect)
 
     def move(self):
         self.input_handler()
@@ -52,10 +68,7 @@ class Player(GameObject):
         self.image = pygame.transform.rotate(self.base_images[self.current_image], self.angle)
         self.rect = self.image.get_rect(center =(self.rect.center))
 
-        # move our player
-        self.rect.move_ip(self.direciton.x * self.velocity.x, self.direciton.y * self.velocity.y)
-
-        #decrease our velocity over time until 0
+        self.rect.move_ip(0, self.direciton.y * self.velocity.y)
         self.velocity.y -= 0.1
         if self.velocity.y < 0:
             self.velocity.y = 0
@@ -64,7 +77,14 @@ class Player(GameObject):
         if self.velocity.x < 0:
             self.velocity.x = 0
 
-    # animate our sequence of images from base_images by using current_image
+    def move_camera(self):
+        from classes.GameWorld import GameWorld
+        GameWorld().camera_x += self.direciton.x * self.velocity.x
+
+        # left screen bounds
+        if GameWorld().camera_x <= -200:
+            GameWorld().camera_x = -200
+
     def animate(self):
         self.current_image += 1
         if self.current_image > len(self.base_images) -1:
@@ -72,23 +92,24 @@ class Player(GameObject):
 
     # get user input to change angle and attack
     def input_handler(self):
-        self.keys = pygame.key.get_pressed()
+        if self.can_input:
+            self.keys = pygame.key.get_pressed()
 
-        if self.keys[pygame.K_a]:
-            self.angle += self.rotation_speed
-        if self.keys[pygame.K_d]:
-            self.angle -= self.rotation_speed
-        if self.keys[pygame.K_w]:
-            self.thrust()
+            if self.keys[pygame.K_a]:
+                self.angle += self.rotation_speed
+            if self.keys[pygame.K_d]:
+                self.angle -= self.rotation_speed
+            if self.keys[pygame.K_w]:
+                self.thrust()
 
-        if self.can_attack:
-            if self.keys[pygame.K_SPACE]:
-                self.attack()
-        
-        if self.oldKeys[pygame.K_SPACE] and not self.keys[pygame.K_SPACE]:
-            self.can_attack = True
+            if self.can_attack:
+                if self.keys[pygame.K_SPACE]:
+                    self.attack()
+            
+            if self.oldKeys[pygame.K_SPACE] and not self.keys[pygame.K_SPACE]:
+                self.can_attack = True
 
-        self.oldKeys = self.keys
+            self.oldKeys = self.keys
 
     def thrust(self):
         # set player direction upwards locally
@@ -100,7 +121,7 @@ class Player(GameObject):
     def attack(self):
         if self.grenades > 0:
             from classes.GameWorld import GameWorld
-            g = Grenade(self.rect.center, self.direciton, self.velocity)
+            g = Grenade((self.rect.center[0] + GameWorld().camera_x, self.rect.center[1]), self.direciton, self.velocity)
             self.grenades -= 1
             GameWorld().grenades = self.grenades
             GameWorld().instantiate(g)

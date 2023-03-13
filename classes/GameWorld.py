@@ -1,6 +1,7 @@
 import pygame
 from classes.GameObject import GameObject
 from classes.Environment import Environment
+from classes.Jammer import Jammer
 from classes.Player import Player
 from classes.Button import Button
 
@@ -15,11 +16,10 @@ class Singleton(type):
 class GameWorld(metaclass=Singleton):
     def __init__(self):
         pygame.init()
-        self._screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN, pygame.RESIZABLE)
+        self._screen = pygame.display.set_mode((1920, 1080))
         self.screen_width = self._screen.get_width()
         self.screen_height = self._screen.get_height()
-        self.screen_ratio_x = self.screen_width / 1920
-        self.screen_ratio_y = self.screen_height / 1080
+        self.camera_x = 0
         pygame.display.set_caption("Drone Lander")
         self._clock = pygame.time.Clock()
         self._font = pygame.font.SysFont(None, 48)
@@ -29,24 +29,19 @@ class GameWorld(metaclass=Singleton):
         self.new_game_objects = pygame.sprite.Group()
         self.buttons = []
         self.mixer = pygame.mixer
-
+        self.jamming = False
         self.game_state = "MENU"
 
     def start_game(self):
         self.game_state = "PLAY"
         self.buttons.clear()
         self.game_objects.add(Player())
-        self.game_objects.add(Environment("./images/Ground", self.scale_pos((1000, 1055))))
-        self.game_objects.add(Environment("./images/TreeTrunk", self.scale_pos((1200, 800))))
-        self.game_objects.add(Environment("./images/TreeCrown", self.scale_pos((1200, 400))))
-        self.game_objects.add(Environment("./images/AmmoDump(Shells)", self.scale_pos((500, 955))))
+        self.game_objects.add(Environment("./images/Ground", (1000, 1055)))
+        self.game_objects.add(Environment("./images/TreeTrunk", (1200, 800)))
+        self.game_objects.add(Environment("./images/TreeCrown", (1200, 400)))
+        self.game_objects.add(Environment("./images/AmmoDump(Shells)", (500, 955)))
+        self.game_objects.add(Jammer((1500, 1000)))
         # self.gameObjects.add(Environment("DetonationDecal", 0, 850))
-
-    # value is a tuple position where this method returns a tuple that scales to fit the screen
-    # assuming the coordinates send to this was from a 1920 by 1080 display
-    # this makes the game show correctly on smaller screens
-    def scale_pos(self, value):
-        return (value[0] * self.screen_ratio_x, value[1] * self.screen_ratio_y)
 
     def run(self):
         from classes.MenuHandler import MenuHandler
@@ -58,6 +53,10 @@ class GameWorld(metaclass=Singleton):
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     return
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        pygame.quit()
+                        return
 
             self.update(event_list)
             self.draw()
@@ -69,7 +68,7 @@ class GameWorld(metaclass=Singleton):
 
         for go in self.new_game_objects:
             self.game_objects.add(go)
-        
+
         self.new_game_objects.empty()
 
         self.game_objects.update()
@@ -89,14 +88,20 @@ class GameWorld(metaclass=Singleton):
         # Clear the screen
         self._screen.fill((63, 153, 249))
 
-        message = self._font.render("Grenades: " + str(self.grenades), True, (0, 0, 0))
-        self.game_objects.draw(self._screen)
+        grenadeText = self._font.render("Grenades: " + str(self.grenades), True, (0, 0, 0))
+        attackText = self._font.render("WE JAMMING: " + str(self.jamming), True, (0, 0, 0))
+
+        for game_object in self.game_objects:
+            game_object.draw(self._screen)
 
         if self.game_state == "PLAY":
-            self._screen.blit(message, (100, 100))
+            self._screen.blit(grenadeText, (100, 100))
+            self._screen.blit(attackText, (100, 200))
 
         for button in self.buttons:
             button.draw(self._screen)
+
+        self._screen.blit(self._screen, (0,0))
 
         pygame.display.flip()
     
