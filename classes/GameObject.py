@@ -14,8 +14,7 @@ class GameObject(pygame.sprite.Sprite, ABC):
         pass
 
     def draw(self, screen):
-        from classes.GameWorld import GameWorld
-        screen.blit(self.image, pygame.Rect(self.rect.x, self.rect.y, self.rect.width, self.rect.height))
+        screen.blit(self.image, self.rect)
 
     def on_collision(self, other):
         pass

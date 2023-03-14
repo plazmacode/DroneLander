@@ -29,10 +29,19 @@ class MenuHandler(metaclass=Singleton):
             GameWorld().mixer.music.set_volume(0.2)
             GameWorld().mixer.music.play(-1)
         GameWorld().buttons.clear()
+        GameWorld().game_objects = pygame.sprite.Group()
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 300, 300, 80), "PLAY", "play"))
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 420, 300, 80), "OPTIONS", "options"))
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 540, 300, 80), "QUIT", "quit"))
         GameWorld().game_state = "MENU" #this is an enum trust me
+
+    def end_menu(self):
+        GameWorld().buttons.clear()
+        GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 300, 300, 80), "PLAY", "restartLevel"))
+        GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 420, 300, 80), "OPTIONS", "options"))
+        GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 540, 300, 80), "MAIN MENU", "mainMenu"))
+        GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 660, 300, 80), "QUIT", "quit"))
+        GameWorld().game_state = "ENDMENU"
 
     def options_menu(self):
         GameWorld().buttons.clear()

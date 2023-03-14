@@ -24,8 +24,10 @@ class Player(GameObject):
         rects = ((0, 0, 20, 8), (20, 0, 20, 8), (40, 0, 20, 8), (60, 0, 20, 8))
         self.base_images = self.load_images("./images/drone-spritesheet.png", rects, (self.image.get_width() * 10, self.image.get_height() * 10))
         self.current_image = 0
-
         self.rect = self.image.get_rect()
+        
+
+    def initialize_values(self):
         self.rect.center = (300, 450)
         self.tag = "Player"
         self.angle = 0
@@ -42,6 +44,7 @@ class Player(GameObject):
         self.too_high = False
         self.death_timer = 3
         self.reset_timer = 3
+        self.is_alive = True
 
     def update(self):
         self.move()
@@ -61,13 +64,18 @@ class Player(GameObject):
         screen.blit(self.image, self.rect)
 
     def on_collision(self, other):
-        from classes.GameWorld import GameWorld
-        from classes.MenuHandler import MenuHandler
-        from classes.Explosion import Explosion
         if other.tag == "Obstacle" or other.tag == "Explosion":
-            MenuHandler().start_menu()
-            GameWorld().instantiate(Explosion(self.rect.center, 300))
-            self.kill()
+            self.on_death()
+
+    def on_death(self):
+        from classes.MenuHandler import MenuHandler
+        from classes.GameWorld import GameWorld
+        from classes.Explosion import Explosion
+        MenuHandler().end_menu()
+        self.is_alive = False
+        self.kill()
+        GameWorld().instantiate(Explosion(self.rect.center, 300))
+        GameWorld().get_final_score()
 
     def move(self):
         self.input_handler()
@@ -158,30 +166,17 @@ class Player(GameObject):
     def respawn(self):
         from classes.GameWorld import GameWorld
         GameWorld().camera_x = 0
-        self.angle = 0
-        self.rotation_speed = 4
-        self.direction = pygame.math.Vector2(0,0)
-        self.velocity = pygame.math.Vector2(0,0)
-        self.keys = pygame.key.get_pressed()
-        self.oldKeys = pygame.key.get_pressed()
-        self.can_attack = True
-        self.can_input = True
-        self.load_difficulty()
-        self.rect.center = (300, 450)
-        GameWorld().grenades = self.grenades
-        self.too_high = False
-        self.death_timer = 3
-        self.reset_timer = 3
+        self.initialize_values()
+        
 
     def count_death(self):
         if self.death_timer <= 0:
             from classes.GameWorld import GameWorld
-            from classes.MenuHandler import MenuHandler
             from classes.Explosion import Explosion
             GameWorld().too_high = False
-            MenuHandler().start_menu()
             GameWorld().instantiate(Explosion(self.rect.center, 300))
-            self.kill()
+            self.on_death()
+
         else:
             from classes.GameWorld import GameWorld
             self.death_timer -= GameWorld().delta_time

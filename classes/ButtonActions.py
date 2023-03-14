@@ -24,7 +24,6 @@ class ButtonActions(metaclass=Singleton):
         if action == "quit":
             pygame.quit()
             
-
         if action == "mainMenu":
             MenuHandler().start_menu()
 
@@ -38,14 +37,15 @@ class ButtonActions(metaclass=Singleton):
                 GameWorld().difficulty = 0
                 GameWorld().difficulty = 0
 
+        if action == "restartLevel":
+            GameWorld().start_game()
+
         if action == "toggleSound":
             MenuHandler().toggle_sound()
             if MenuHandler().sound:
                 button.surface = button._font.render(str("Sound is ON"), True, (255, 255, 255))
             else:
                 button.surface = button._font.render(str("Sound is OFF"), True, (255, 255, 255))
-
-
 
         if action == "toggleMusic":
             MenuHandler().toggle_music()

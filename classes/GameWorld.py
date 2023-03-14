@@ -1,4 +1,5 @@
 import pygame
+import math
 from classes.GameObject import GameObject
 from classes.Environment import Environment
 from classes.Jammer import Jammer
@@ -32,20 +33,27 @@ class GameWorld(metaclass=Singleton):
         self.mixer = pygame.mixer
         self.jamming = False
         self.game_state = "MENU"
-
+        self.score = 0
         self.too_high = False
         self.death_timer = 3
+        self.objectives_compeleted = 0
+        self.level_time = 0
+        self.level_start_time = 0
 
     def start_game(self):
         self.game_state = "PLAY"
         self.buttons.clear()
+        self.objectives_completed = 0
+        self.score = 0
+        self.level_time = 0
+        self.level_start_time = pygame.time.get_ticks()
         self.game_objects = pygame.sprite.Group()
         self.game_objects.add(Player())
         self.game_objects.add(Environment("./images/Ground", (1000, 1055), "Obstacle"))
         self.game_objects.add(Environment("./images/TreeTrunk", (1200, 800), "Background"))
         self.game_objects.add(Environment("./images/TreeCrown", (1200, 400), "Obstacle"))
         self.game_objects.add(Environment("./images/AmmoDump(Shells)", (500, 955), "Obstacle"))
-        self.game_objects.add(Jammer((1500, 1000)))
+        self.game_objects.add(Jammer((1500, 900)))
         Player().respawn()
         # self.gameObjects.add(Environment("DetonationDecal", 0, 850))
 
@@ -98,24 +106,38 @@ class GameWorld(metaclass=Singleton):
                     if go1.rect.colliderect(go2.rect):
                         go1.on_collision(go2)
 
+    def get_final_score(self):
+        if self.objectives_completed > 0:
+            self.score += math.ceil(2000 - self.level_time / 1000 * 20)
+            print("added timer score for completing objectives")
+
     def draw(self):
         # Clear the screen
         self._screen.fill((63, 153, 249))
 
-        grenadeText = self._font.render("Grenades: " + str(self.grenades), True, (0, 0, 0))
+        grenade_text = self._font.render("Grenades: " + str(self.grenades), True, (0, 0, 0))
         too_high_text = self._font.render("DIE " + str(int(self.death_timer + 1)), True, (0, 0, 0))
-        attackText = self._font.render("WE JAMMING: " + str(self.jamming), True, (0, 0, 0))
+        attack_text = self._font.render("WE JAMMING: " + str(self.jamming), True, (0, 0, 0))
+        score_text = self._font.render("Score: " + str(self.score), True, (0, 0, 0))
+
+        # only update level time when playing
+        if self.game_state == "PLAY":
+            self.level_time = pygame.time.get_ticks() - self.level_start_time
+        
+        timer_text = self._font.render("Time: " + str(self.level_time / 1000), True, (0, 0, 0))
 
         for game_object in self.game_objects:
             game_object.draw(self._screen)
 
-        if self.game_state == "PLAY":
+        if self.game_state == "PLAY" or self.game_state == "ENDMENU":
             # draw noise
             Jam().draw(self._screen)
 
             #draw UI
-            self._screen.blit(grenadeText, (100, 100))
-            self._screen.blit(attackText, (100, 200))
+            self._screen.blit(grenade_text, (100, 100))
+            self._screen.blit(attack_text, (100, 200))
+            self._screen.blit(score_text, ((self.screen_width - score_text.get_width()) // 2, 50))
+            self._screen.blit(timer_text, (self.screen_width - 200, 50))
 
         if self.too_high == True:
             self._screen.blit(too_high_text, (self.screen_width / 2 - too_high_text.get_width() / 2, self.screen_height / 2 - too_high_text.get_height() / 2))

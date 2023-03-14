@@ -16,8 +16,10 @@ class Explosion(GameObject):
         self.currentImage = 0
         self.image = self.images[self.currentImage]
         self.rect = self.images[self.currentImage].get_rect(center = centerInput)
-        # self.rect.move_ip(x, y - 64)
+        self.explosion_sound = pygame.mixer.Sound("./sounds/explosion.wav")
+        pygame.mixer.Sound.play(self.explosion_sound)
 
+        # self.rect.move_ip(x, y - 64)
         # self.rect = self.image.get_rect(center = (x, y))
 
 
