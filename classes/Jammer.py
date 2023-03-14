@@ -14,8 +14,7 @@ class Jammer(GameObject):
         self.attack_cooldown = 1500
         self.current_attack_time = 0
         self.attacking = False
-        # jam_sound = pygame.mixer.Sound("./sounds/")
-        # pygame.mixer.Sound.play(jam_sound)
+        self.jam_sound = pygame.mixer.Sound("./sounds/noise2.wav")
 
     def update(self):
         self.attack()
@@ -32,6 +31,7 @@ class Jammer(GameObject):
                 self.attack_start = pygame.time.get_ticks()
                 self.attacking = True
                 Jam().alpha = 128
+                pygame.mixer.Sound.play(self.jam_sound)
             self.current_attack_time = (pygame.time.get_ticks()-self.attack_start)
         # player outside jammer range
         else:
