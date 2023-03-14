@@ -39,12 +39,14 @@ class GameWorld(metaclass=Singleton):
     def start_game(self):
         self.game_state = "PLAY"
         self.buttons.clear()
+        self.game_objects = pygame.sprite.Group()
+        self.game_objects.add(Player())
         self.game_objects.add(Environment("./images/Ground", (1000, 1055), "Obstacle"))
         self.game_objects.add(Environment("./images/TreeTrunk", (1200, 800), "Background"))
         self.game_objects.add(Environment("./images/TreeCrown", (1200, 400), "Obstacle"))
         self.game_objects.add(Environment("./images/AmmoDump(Shells)", (500, 955), "Obstacle"))
-        self.game_objects.add(Player())
         self.game_objects.add(Jammer((1500, 1000)))
+        Player().respawn()
         # self.gameObjects.add(Environment("DetonationDecal", 0, 850))
 
     def run(self):
@@ -82,6 +84,12 @@ class GameWorld(metaclass=Singleton):
 
         for button in self.buttons:
             button.update(event_list)
+
+    def move_camera(self, x):
+        #it works first try wow
+        for go in self.game_objects:
+            if go.tag != "Player":
+                go.rect.move_ip(-x, 0)
 
     def collision_check(self):
         for go1 in self.game_objects:

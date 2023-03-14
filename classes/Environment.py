@@ -10,7 +10,7 @@ class Environment(GameObject):
         self.tag = tagInput
 
         self.image = pygame.image.load(name + ".png").convert_alpha()   
-        self.image = pygame.transform.scale(self.image, (self.image.get_width() * 10, self.image.get_height() * 10))    
+        self.image = pygame.transform.scale(self.image, (self.image.get_width() * 10, self.image.get_height() * 10))
         self.rect = self.image.get_rect(center = centerInput)
         # self.rect.move_ip(x, y)
 
