@@ -33,14 +33,17 @@ class GameWorld(metaclass=Singleton):
         self.jamming = False
         self.game_state = "MENU"
 
+        self.too_high = False
+        self.death_timer = 3
+
     def start_game(self):
         self.game_state = "PLAY"
         self.buttons.clear()
+        self.game_objects.add(Environment("./images/Ground", (1000, 1055), "Obstacle"))
+        self.game_objects.add(Environment("./images/TreeTrunk", (1200, 800), "Background"))
+        self.game_objects.add(Environment("./images/TreeCrown", (1200, 400), "Obstacle"))
+        self.game_objects.add(Environment("./images/AmmoDump(Shells)", (500, 955), "Obstacle"))
         self.game_objects.add(Player())
-        self.game_objects.add(Environment("./images/Ground", (1000, 1055)))
-        self.game_objects.add(Environment("./images/TreeTrunk", (1200, 800)))
-        self.game_objects.add(Environment("./images/TreeCrown", (1200, 400)))
-        self.game_objects.add(Environment("./images/AmmoDump(Shells)", (500, 955)))
         self.game_objects.add(Jammer((1500, 1000)))
         # self.gameObjects.add(Environment("DetonationDecal", 0, 850))
 
@@ -63,7 +66,7 @@ class GameWorld(metaclass=Singleton):
             self.draw()
 
             # Limit the frame rate
-            self._clock.tick(60)
+            self.delta_time = self._clock.tick(60) / 1000
     
     def update(self, event_list):
 
@@ -92,6 +95,7 @@ class GameWorld(metaclass=Singleton):
         self._screen.fill((63, 153, 249))
 
         grenadeText = self._font.render("Grenades: " + str(self.grenades), True, (0, 0, 0))
+        too_high_text = self._font.render("DIE " + str(int(self.death_timer + 1)), True, (0, 0, 0))
         attackText = self._font.render("WE JAMMING: " + str(self.jamming), True, (0, 0, 0))
 
         for game_object in self.game_objects:
@@ -104,6 +108,9 @@ class GameWorld(metaclass=Singleton):
             #draw UI
             self._screen.blit(grenadeText, (100, 100))
             self._screen.blit(attackText, (100, 200))
+
+        if self.too_high == True:
+            self._screen.blit(too_high_text, (self.screen_width / 2 - too_high_text.get_width() / 2, self.screen_height / 2 - too_high_text.get_height() / 2))
 
         for button in self.buttons:
             button.draw(self._screen)

@@ -3,11 +3,11 @@ from classes.GameObject import GameObject
 from classes.Explosion import Explosion
 
 class Environment(GameObject):
-    def __init__(self, name, centerInput) -> None:
+    def __init__(self, name, centerInput, tagInput) -> None:
         super().__init__()
         pygame.sprite.Sprite.__init__(self)
         self.name = name.replace("./images/", "")
-        self.tag = "Obstacle"
+        self.tag = tagInput
 
         self.image = pygame.image.load(name + ".png").convert_alpha()   
         self.image = pygame.transform.scale(self.image, (self.image.get_width() * 10, self.image.get_height() * 10))    
