@@ -14,6 +14,8 @@ class Jammer(GameObject):
         self.attack_cooldown = 1500
         self.current_attack_time = 0
         self.attacking = False
+        # jam_sound = pygame.mixer.Sound("./sounds/")
+        # pygame.mixer.Sound.play(jam_sound)
 
     def update(self):
         self.attack()
