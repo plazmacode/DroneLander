@@ -167,7 +167,7 @@ class Player(GameObject):
         self.can_attack = True
         self.can_input = True
         self.load_difficulty()
-        self.rect.center = (300, 450)
+        self.rect.center = (960, 450)
         GameWorld().grenades = self.grenades
         self.too_high = False
         self.death_timer = 3
