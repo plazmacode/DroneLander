@@ -163,6 +163,7 @@ class GameWorld(metaclass=Singleton):
                         go1.on_collision(go2)
 
     def get_final_score(self):
+        # add extra bonus score based on completion time if any objectives have been completed
         if self.objectives_completed > 0:
             self.score += math.ceil(2000 - self.level_time / 1000 * 20)
             print("added timer score for completing objectives")

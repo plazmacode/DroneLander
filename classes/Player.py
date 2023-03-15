@@ -25,13 +25,19 @@ class Player(GameObject):
         self.base_images = self.load_images("./images/drone-spritesheet.png", rects, (self.image.get_width() * 10, self.image.get_height() * 10))
         self.current_image = 0
         self.rect = self.image.get_rect()
+        self.tag = "Player"
+        # we have 5 sounds. they are all annoying :)
+        # sound 4 and 5 loops the best because they are synthesized
+        # number 5 is best because mixer.Sound.play("sound", -1) doesn't loop instantly
+        self.servo_sound = pygame.mixer.Sound("./sounds/drone4.wav")
+        self.servo_sound.set_volume(0.4)
+        self.servo_channel = pygame.mixer.Channel(2)
+        self.rotation_speed = 4
         
-
+    #initialize values that are shared between first instantiation and when respawning
     def initialize_values(self):
         self.rect.center = (960, 450)
-        self.tag = "Player"
         self.angle = 0
-        self.rotation_speed = 4
         self.direction = pygame.math.Vector2(0,0)
         self.velocity = pygame.math.Vector2(0,0)
         self.keys = pygame.key.get_pressed()
@@ -51,7 +57,17 @@ class Player(GameObject):
         self.animate()
         self.checkHeight()
         self.move_camera()
+        self.play_sound()
     
+    def play_sound(self):
+        # loop code 1
+        # if self.servo_channel.get_busy() == False:
+        #     self.servo_channel.play(self.servo_sound)
+
+        #loop code 2
+        if self.servo_channel.get_busy() == False:
+            self.servo_channel.play(self.servo_sound, -1)
+
     def load_difficulty(self):
         from classes.GameWorld import GameWorld
         if GameWorld().difficulty == 0:
@@ -60,7 +76,6 @@ class Player(GameObject):
             self.grenades = 5
 
     def draw(self, screen):
-        from classes.GameWorld import GameWorld
         screen.blit(self.image, self.rect)
 
     def on_collision(self, other):
@@ -74,7 +89,10 @@ class Player(GameObject):
         MenuHandler().end_menu()
         self.is_alive = False
         self.kill()
+        # stop servo sound from playing/looping
+        self.servo_sound.stop()
         GameWorld().instantiate(Explosion(self.rect.center, 300))
+        # get final score to add time bonus
         GameWorld().get_final_score()
 
     def move(self):
@@ -102,7 +120,7 @@ class Player(GameObject):
 
     def move_camera(self):
         from classes.GameWorld import GameWorld
-        # GameWorld().camera_x += self.direciton.x * self.velocity.x
+        #call move_camera() with our x velocity to change the camera position
         GameWorld().move_camera(self.direction.x * self.velocity.x)
         # left screen bounds
         if GameWorld().camera_x <= -200:
