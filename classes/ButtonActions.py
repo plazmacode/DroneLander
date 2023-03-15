@@ -44,10 +44,7 @@ class ButtonActions(metaclass=Singleton):
 
         if action == "toggleSound":
             MenuHandler().toggle_sound()
-            if MenuHandler().sound:
-                button.surface = button._font.render(str("Sound is ON"), True, (255, 255, 255))
-            else:
-                button.surface = button._font.render(str("Sound is OFF"), True, (255, 255, 255))
+            button.surface = button._font.render(str(MenuHandler().get_sound()), True, (255, 255, 255))
 
         if action == "toggleMusic":
             MenuHandler().toggle_music()

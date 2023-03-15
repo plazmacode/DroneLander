@@ -32,8 +32,9 @@ class Jammer(GameObject):
             if self.attacking == False:
                 self.attack_start = pygame.time.get_ticks()
                 self.attacking = True
-                Jam().alpha = 128
-                if Player().is_alive:
+                Jam().alpha = 128 # DEBUG
+                from classes.MenuHandler import MenuHandler
+                if Player().is_alive and MenuHandler().sound_enabled:
                     pygame.mixer.Sound.play(self.jam_sound)
             self.current_attack_time = (pygame.time.get_ticks()-self.attack_start)
         # player outside jammer range
