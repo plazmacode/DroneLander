@@ -198,6 +198,7 @@ class Player(GameObject):
         """
         Check to see if Player is too high up
         """
+        # Start a new countdown if the Player gets too high up
         from classes.GameWorld import GameWorld
         if self.rect.y < 200 and self.too_high == False:
             self.too_high = True
@@ -206,6 +207,7 @@ class Player(GameObject):
             self.too_high = False
             GameWorld().too_high = False
 
+        # Runs the countdown as long as the Player is too high up
         if self.too_high == True:
             GameWorld().too_high = True
             self.count_death()     
@@ -214,6 +216,7 @@ class Player(GameObject):
         """
         Counts down and kills Player when too high up for too long
         """
+        # Kills the Player when the timer hits 0
         if self.death_timer <= 0:
             from classes.GameWorld import GameWorld
             from classes.Explosion import Explosion
@@ -221,6 +224,7 @@ class Player(GameObject):
             GameWorld().instantiate(Explosion(self.rect.center, 300))
             self.on_death()
 
+        # Counts down as long as timer is above 0
         else:
             from classes.GameWorld import GameWorld
             self.death_timer -= GameWorld().delta_time
