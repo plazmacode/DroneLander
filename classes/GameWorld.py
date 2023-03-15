@@ -41,6 +41,9 @@ class GameWorld(metaclass=Singleton):
         self.level_start_time = 0
 
     def start_game(self):
+        """
+        Creates the selected level and starts the game
+        """
         self.game_state = "PLAY"
         self.buttons.clear()
         self.objectives_completed = 0
@@ -124,10 +127,13 @@ class GameWorld(metaclass=Singleton):
 
         
         self.game_objects.add(Player())
-        Player().respawn()
+        Player().initialize_values()
         # self.gameObjects.add(Environment("DetonationDecal", 0, 850))
 
     def run(self):
+        """
+        Main program loop
+        """
         from classes.MenuHandler import MenuHandler
         MenuHandler().start_menu()
         while True:
@@ -149,6 +155,9 @@ class GameWorld(metaclass=Singleton):
             self.delta_time = self._clock.tick(60) / 1000
     
     def update(self, event_list):
+        """
+        Main update
+        """
 
         for go in self.new_game_objects:
             self.game_objects.add(go)
@@ -164,12 +173,18 @@ class GameWorld(metaclass=Singleton):
             button.update(event_list)
 
     def move_camera(self, x):
+        """
+        Moves everything except Player in x-axis according to Player movement
+        """
         #it works first try wow
         for go in self.game_objects:
             if go.tag != "Player":
                 go.rect.move_ip(-x, 0)
 
     def collision_check(self):
+        """
+        Checks collision between GameObjects
+        """
         for go1 in self.game_objects:
             for go2 in self.game_objects:
                 if not go1 is go2:
@@ -177,11 +192,17 @@ class GameWorld(metaclass=Singleton):
                         go1.on_collision(go2)
 
     def get_final_score(self):
+        """
+        Adds score based on time spent to complete level
+        """
         if self.objectives_completed > 0:
             self.score += math.ceil(2000 - self.level_time / 1000 * 20)
             print("added timer score for completing objectives")
 
     def draw(self):
+        """
+        Main draw
+        """
         # Clear the screen
         self._screen.fill((63, 153, 249))
 
@@ -220,4 +241,7 @@ class GameWorld(metaclass=Singleton):
         pygame.display.flip()
     
     def instantiate(self, object):
+        """
+        Adds new GameObject to existing list of GameObjects
+        """
         self.new_game_objects.add(object)

@@ -15,9 +15,15 @@ class Grenade(GameObject):
         self.tag = "Granade"
 
     def update(self):
+        """
+        Grenade update
+        """
         self.move()
 
     def move(self):
+        """
+        Grenade movement
+        """
         #gravity
         self.rect.y += 8
 
@@ -37,13 +43,16 @@ class Grenade(GameObject):
 
 
     def on_collision(self, other):
+        """
+        Grenade collision
+        """
         if other.tag == "Obstacle":
             self.explode()
 
     def explode(self):
+        """
+        Grenade explodes on collision
+        """
         from classes.GameWorld import GameWorld
         GameWorld().instantiate(Explosion(self.rect.center, 300))
         self.kill()
-
-    # def draw(self, screen):
-    #     screen.blit(self.image, self.rect)
