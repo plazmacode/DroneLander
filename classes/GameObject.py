@@ -4,12 +4,15 @@ from abc import ABC, abstractclassmethod
 
 class GameObject(pygame.sprite.Sprite, ABC):
     def __init__(self) -> None:
+        """
+        Base __init__ with fields all game objects are expected to use
+        """
         self.image : pygame.image
         self.rect : pygame.rect
-        self.tag = ""
+        self.tag = ""   # Tag system used for collisions, identifies what collided so the correct response can be run
         self.collision = False
-        # self.origin = (self.rect.x / 2, self.rect.y / 2)
 
+    # Methods all game objects are expected to define
     def update(self):
         pass
 
@@ -19,19 +22,19 @@ class GameObject(pygame.sprite.Sprite, ABC):
     def on_collision(self, other):
         pass
     
-    # loads a spritesheet to use for animations
-    # returns an array of images from the spritesheet
+    # Loads a spritesheet to use for animations
+    # Returns an array of images from the spritesheet
     def load_images(self, imagefile, rects, scale):
-        ss = Spritesheet(imagefile)
+        sprite_sheet = Spritesheet(imagefile)
         images = []
-        images = ss.source_rects(rects)
+        images = sprite_sheet.source_rects(rects)
 
-        # fix image scale
+        # Fix image scale
         for i in range(0, len(images)):
             images[i] = pygame.transform.scale(images[i], scale)
         return images
     
-    # imagefiles is a tuple with strings that hold the path to the images to be loaded
+    # Imagefiles is a tuple with strings that hold the path to the images to be loaded
     def load_images2(self, imagefiles, scale):
         images = []
 
