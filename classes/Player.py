@@ -26,13 +26,17 @@ class Player(GameObject):
         self.current_image = 0
         self.rect = self.image.get_rect()
         self.tag = "Player"
+        self.rotation_speed = 4
+
         # we have 5 sounds. they are all annoying :)
         # sound 4 and 5 loops the best because they are synthesized
         # number 5 is best because mixer.Sound.play("sound", -1) doesn't loop instantly
-        self.servo_sound = pygame.mixer.Sound("./sounds/drone4.wav")
+        self.servo_sound = pygame.mixer.Sound("./sounds/drone5.wav")
         self.servo_sound.set_volume(0.4)
+        self.servo_duration = self.servo_sound.get_length() * 1000
+        self.playing_sound = False
         self.servo_channel = pygame.mixer.Channel(2)
-        self.rotation_speed = 4
+        self.servo_start_time = 0
         
     #initialize values that are shared between first instantiation and when respawning
     def initialize_values(self):
@@ -64,9 +68,22 @@ class Player(GameObject):
         # if self.servo_channel.get_busy() == False:
         #     self.servo_channel.play(self.servo_sound)
 
-        #loop code 2
-        if self.servo_channel.get_busy() == False:
-            self.servo_channel.play(self.servo_sound, -1)
+        # loop code 2
+        # if self.servo_channel.get_busy() == False:
+        #     self.servo_channel.play(self.servo_sound, -1)
+
+        # loop code 3
+        # use the files duration to manually check if it looped
+        # we can manually adjust duration to perfect the loop
+        # we cannot make this loop perfectly, instead we play the sound overlapping
+        # it's a feature now
+        if self.playing_sound == False:
+            self.playing_sound = True
+            pygame.mixer.Sound.play(self.servo_sound)
+            self.servo_start_time = pygame.time.get_ticks()
+        else:
+            if pygame.time.get_ticks() >= self.servo_start_time + self.servo_duration - 225:
+                self.playing_sound = False
 
     def load_difficulty(self):
         from classes.GameWorld import GameWorld
