@@ -39,6 +39,7 @@ class Environment(GameObject):
                 # Replaces itself with and moves the blast decal
                 ### Very fragile implementation, should be improved
                 self.name = "DetonationDecal"
+                GameWorld().score += 200
                 self.image = pygame.image.load("./images/" + self.name + ".png").convert_alpha()   
                 self.image = pygame.transform.scale(self.image, (self.image.get_width() * 10, self.image.get_height() * 10))  
                 self.rect = self.image.get_rect(center = (self.rect.centerx, self.rect.centery + 100))

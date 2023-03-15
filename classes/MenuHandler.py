@@ -20,7 +20,7 @@ class MenuHandler(metaclass=Singleton):
     def __init__(self) -> None:
         self._screen_width = GameWorld().screen_width
         self._screen_height = GameWorld().screen_height
-        self.sound = True
+        self.sound_enabled = True
         self.music = True
         self.music_initialized = False
 
@@ -46,7 +46,7 @@ class MenuHandler(metaclass=Singleton):
         End screen menu
         """
         GameWorld().buttons.clear()
-        GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 300, 300, 80), "PLAY", "restartLevel"))
+        GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 300, 300, 80), "RESTART", "restartLevel"))
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 420, 300, 80), "OPTIONS", "options"))
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 540, 300, 80), "MAIN MENU", "mainMenu"))
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 660, 300, 80), "QUIT", "quit"))
@@ -58,18 +58,24 @@ class MenuHandler(metaclass=Singleton):
         """
         GameWorld().buttons.clear()
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 300, 300, 80), "Difficulty: Easy", "changeDifficulty"))
-        GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 420, 300, 80), "Sound is ON", "toggleSound"))
+        GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 420, 300, 80), self.get_sound(), "toggleSound"))
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 540, 300, 80), "Music is ON", "toggleMusic"))
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 660, 300, 80), "BACK", "mainMenu"))
+
+    def get_sound(self):
+        if self.sound_enabled:
+            return "Sound is ON"
+        else:
+            return "Sound is OFF"
 
     def toggle_sound(self):
         """
         Toggles sound effects on and off
         """
-        if self.sound == True:
-            self.sound = False
-        elif self.sound == False:
-            self.sound = True
+        if self.sound_enabled == True:
+            self.sound_enabled = False
+        elif self.sound_enabled == False:
+            self.sound_enabled = True
 
     def toggle_music(self):
         """

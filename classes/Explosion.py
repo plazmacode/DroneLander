@@ -29,7 +29,9 @@ class Explosion(GameObject):
 
         # Set audio
         self.explosion_sound = pygame.mixer.Sound("./sounds/explosion.wav")
-        pygame.mixer.Sound.play(self.explosion_sound)
+        from classes.MenuHandler import MenuHandler
+        if MenuHandler().sound_enabled:
+            pygame.mixer.Sound.play(self.explosion_sound)
 
     # Runs the animation
     def update(self):
