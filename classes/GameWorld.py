@@ -94,7 +94,7 @@ class GameWorld(metaclass=Singleton):
             button.update(event_list)
 
     def move_camera(self, x):
-        #it works first try wow
+        # move every objects rect except the player, which the camera follows
         for go in self.game_objects:
             if go.tag != "Player":
                 go.rect.move_ip(-x, 0)

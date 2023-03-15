@@ -29,7 +29,7 @@ class Environment(GameObject):
                 self.name = "DetonationDecal"
                 from classes.GameWorld import GameWorld
                 GameWorld().instantiate(Explosion(self.rect.center, 600))
-
+                GameWorld().score += 200
                 self.image = pygame.image.load("./images/" + self.name + ".png").convert_alpha()   
                 self.image = pygame.transform.scale(self.image, (self.image.get_width() * 10, self.image.get_height() * 10))  
                 self.rect = self.image.get_rect(center = (self.rect.centerx, self.rect.centery + 100))
