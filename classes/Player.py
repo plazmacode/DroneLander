@@ -28,7 +28,7 @@ class Player(GameObject):
         
 
     def initialize_values(self):
-        self.rect.center = (300, 450)
+        self.rect.center = (960, 450)
         self.tag = "Player"
         self.angle = 0
         self.rotation_speed = 4

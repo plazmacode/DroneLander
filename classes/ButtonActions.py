@@ -22,7 +22,9 @@ class ButtonActions(metaclass=Singleton):
             MenuHandler().options_menu()
 
         if action == "quit":
-            pygame.quit()
+            # send quit event
+            quit_event = pygame.event.Event(pygame.QUIT)
+            pygame.event.post(quit_event)
             
         if action == "mainMenu":
             MenuHandler().start_menu()

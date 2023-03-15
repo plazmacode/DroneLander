@@ -48,12 +48,68 @@ class GameWorld(metaclass=Singleton):
         self.level_time = 0
         self.level_start_time = pygame.time.get_ticks()
         self.game_objects = pygame.sprite.Group()
+
+        if self.difficulty == 0:
+            for x in range(5):
+                self.game_objects.add(Environment("./images/Ground", (x * 2000, 1055), "Obstacle"))
+            self.game_objects.add(Environment("./images/TreeTrunk", (-300, 800), "Background"))
+            self.game_objects.add(Environment("./images/TreeCrown", (-300, 405), "Obstacle"))
+            self.game_objects.add(Environment("./images/TreeCrown", (-500, 935), "Obstacle"))
+
+            self.game_objects.add(Environment("./images/TreeTrunk", (1200, 800), "Background"))
+            self.game_objects.add(Environment("./images/TreeCrown", (1200, 405), "Obstacle"))
+
+            self.game_objects.add(Environment("./images/AmmoDump(Shells)", (2000, 955), "Obstacle"))
+
+            self.game_objects.add(Environment("./images/TreeCrown", (2500, 935), "Obstacle"))
+
+            self.game_objects.add(Environment("./images/TreeCrown", (2900, 935), "Obstacle"))
+
+            self.game_objects.add(Environment("./images/TreeTrunk", (4000, 805), "Background"))
+            self.game_objects.add(Environment("./images/TreeCrown", (4000, 400), "Obstacle"))
+
+            self.game_objects.add(Environment("./images/AmmoDump(Shells)", (4000, 955), "Obstacle"))
+
+
+
+        if self.difficulty == 1:
+            for x in range(5):
+                self.game_objects.add(Environment("./images/Ground", (x * 2000, 1055), "Obstacle"))
+            self.game_objects.add(Environment("./images/TreeTrunk", (-300, 800), "Background"))
+            self.game_objects.add(Environment("./images/TreeCrown", (-300, 405), "Obstacle"))
+            self.game_objects.add(Environment("./images/TreeCrown", (-500, 935), "Obstacle"))
+
+            self.game_objects.add(Environment("./images/TreeCrown", (800, 935), "Obstacle"))
+
+            self.game_objects.add(Environment("./images/TreeTrunk", (1910, 780), "Background"))
+            self.game_objects.add(Environment("./images/TreeTrunk", (2330, 780), "Background"))
+            self.game_objects.add(Environment("./images/TreeTrunk", (1700, 800), "Background"))
+            self.game_objects.add(Environment("./images/TreeCrown", (1700, 395), "Obstacle"))
+            self.game_objects.add(Environment("./images/TreeTrunk", (2560, 800), "Background"))
+            self.game_objects.add(Environment("./images/TreeCrown", (2560, 405), "Obstacle"))
+            self.game_objects.add(Environment("./images/TreeTrunk", (2120, 790), "Background"))
+            self.game_objects.add(Environment("./images/TreeCrown", (2120, 405), "Obstacle"))
+
+            self.game_objects.add(Environment("./images/TreeTrunk", (3500, 790), "Background"))
+            self.game_objects.add(Environment("./images/TreeCrown", (3500, 405), "Obstacle"))
+            self.game_objects.add(Environment("./images/AmmoDump(Shells)", (3600, 955), "Obstacle"))
+
+            self.game_objects.add(Environment("./images/AmmoDump(Shells)", (4750, 955), "Obstacle"))
+            self.game_objects.add(Environment("./images/TreeCrown", (4400, 935), "Obstacle"))
+            self.game_objects.add(Environment("./images/TreeCrown", (5100, 935), "Obstacle"))
+
+            self.game_objects.add(Environment("./images/TreeTrunk", (5860, 790), "Background"))
+            self.game_objects.add(Environment("./images/TreeCrown", (5860, 405), "Obstacle"))
+
+            self.game_objects.add(Environment("./images/TreeTrunk", (6860, 790), "Background"))
+            self.game_objects.add(Environment("./images/TreeCrown", (6860, 405), "Obstacle"))
+            self.game_objects.add(Environment("./images/AmmoDump(Shells)", (6710, 955), "Obstacle"))
+            self.game_objects.add(Environment("./images/TreeCrown", (7000, 935), "Obstacle"))
+            self.game_objects.add(Jammer((6500, 905)))
+
+            #self.game_objects.add(Jammer((8000, 1000)))
+        
         self.game_objects.add(Player())
-        self.game_objects.add(Environment("./images/Ground", (1000, 1055), "Obstacle"))
-        self.game_objects.add(Environment("./images/TreeTrunk", (1200, 800), "Background"))
-        self.game_objects.add(Environment("./images/TreeCrown", (1200, 400), "Obstacle"))
-        self.game_objects.add(Environment("./images/AmmoDump(Shells)", (500, 955), "Obstacle"))
-        self.game_objects.add(Jammer((1500, 900)))
         Player().respawn()
         # self.gameObjects.add(Environment("DetonationDecal", 0, 850))
 
