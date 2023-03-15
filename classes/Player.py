@@ -3,6 +3,9 @@ from classes.GameObject import GameObject
 from classes.Grenade import Grenade
 
 def singleton(class_):
+    """
+    Player singleton
+    """
     instances = {}
     def getinstance(*args, **kwargs):
         if class_ not in instances:
@@ -14,7 +17,13 @@ def singleton(class_):
 # we use a decorator instead
 @singleton
 class Player(GameObject):
+    """
+    Player Class
+    """
     def __init__(self):
+        """
+        Player init
+        """
         super().__init__()
         pygame.sprite.Sprite.__init__(self)
         # this is a mess
@@ -28,6 +37,9 @@ class Player(GameObject):
         
 
     def initialize_values(self):
+        """
+        Set initial values for Player
+        """
         self.rect.center = (960, 450)
         self.tag = "Player"
         self.angle = 0
@@ -47,12 +59,18 @@ class Player(GameObject):
         self.is_alive = True
 
     def update(self):
+        """
+        Player update
+        """
         self.move()
         self.animate()
         self.checkHeight()
         self.move_camera()
     
     def load_difficulty(self):
+        """
+        Adjusts values that are difficulty dependent
+        """
         from classes.GameWorld import GameWorld
         if GameWorld().difficulty == 0:
             self.grenades = 10
@@ -60,14 +78,23 @@ class Player(GameObject):
             self.grenades = 5
 
     def draw(self, screen):
+        """
+        Player draw
+        """
         from classes.GameWorld import GameWorld
         screen.blit(self.image, self.rect)
 
     def on_collision(self, other):
+        """
+        Player collision
+        """
         if other.tag == "Obstacle" or other.tag == "Explosion":
             self.on_death()
 
     def on_death(self):
+        """
+        Functionality relating to Player death
+        """
         from classes.MenuHandler import MenuHandler
         from classes.GameWorld import GameWorld
         from classes.Explosion import Explosion
@@ -78,6 +105,9 @@ class Player(GameObject):
         GameWorld().get_final_score()
 
     def move(self):
+        """
+        Player movement
+        """
         self.input_handler()
 
         # gravity
@@ -101,6 +131,9 @@ class Player(GameObject):
             self.velocity.x = 0
 
     def move_camera(self):
+        """
+        Camera movement
+        """
         from classes.GameWorld import GameWorld
         # GameWorld().camera_x += self.direciton.x * self.velocity.x
         GameWorld().move_camera(self.direction.x * self.velocity.x)
@@ -109,12 +142,18 @@ class Player(GameObject):
             GameWorld().camera_x = -200
 
     def animate(self):
+        """
+        Player animation
+        """
         self.current_image += 1
         if self.current_image > len(self.base_images) -1:
             self.current_image = 0
 
     # get user input to change angle and attack
     def input_handler(self):
+        """
+        Player input
+        """
         if self.can_input:
             self.keys = pygame.key.get_pressed()
 
@@ -135,13 +174,18 @@ class Player(GameObject):
             self.oldKeys = self.keys
 
     def thrust(self):
-        # set player direction upwards locally
+        """
+        Moves Player upwards locally
+        """
         self.direction = pygame.math.Vector2(0, -1)
         self.direction.rotate_ip(-self.angle)
 
         self.velocity = pygame.math.Vector2(8,8)
 
     def attack(self):
+        """
+        Throws granade from Player
+        """
         if self.grenades > 0:
             from classes.GameWorld import GameWorld
             g = Grenade((self.rect.center[0] + GameWorld().camera_x, self.rect.center[1]), self.direction, self.velocity)
@@ -151,6 +195,9 @@ class Player(GameObject):
             self.can_attack = False
 
     def checkHeight(self):
+        """
+        Check to see if Player is too high up
+        """
         from classes.GameWorld import GameWorld
         if self.rect.y < 200 and self.too_high == False:
             self.too_high = True
@@ -161,15 +208,12 @@ class Player(GameObject):
 
         if self.too_high == True:
             GameWorld().too_high = True
-            self.count_death()
-
-    def respawn(self):
-        from classes.GameWorld import GameWorld
-        GameWorld().camera_x = 0
-        self.initialize_values()
-        
+            self.count_death()     
 
     def count_death(self):
+        """
+        Counts down and kills Player when too high up for too long
+        """
         if self.death_timer <= 0:
             from classes.GameWorld import GameWorld
             from classes.Explosion import Explosion

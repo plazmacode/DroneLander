@@ -14,6 +14,9 @@ class Singleton(type):
         return cls._instances[cls]
 
 class MenuHandler(metaclass=Singleton):
+    """
+    Handles switching between menus
+    """
     def __init__(self) -> None:
         self._screen_width = GameWorld().screen_width
         self._screen_height = GameWorld().screen_height
@@ -22,6 +25,9 @@ class MenuHandler(metaclass=Singleton):
         self.music_initialized = False
 
     def start_menu(self):
+        """
+        Start menu
+        """
         if self.music_initialized == False:
             self.music_initialized = True
             GameWorld().mixer.init()
@@ -36,6 +42,9 @@ class MenuHandler(metaclass=Singleton):
         GameWorld().game_state = "MENU" #this is an enum trust me
 
     def end_menu(self):
+        """
+        End screen menu
+        """
         GameWorld().buttons.clear()
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 300, 300, 80), "PLAY", "restartLevel"))
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 420, 300, 80), "OPTIONS", "options"))
@@ -44,6 +53,9 @@ class MenuHandler(metaclass=Singleton):
         GameWorld().game_state = "ENDMENU"
 
     def options_menu(self):
+        """
+        Options menu
+        """
         GameWorld().buttons.clear()
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 300, 300, 80), "Difficulty: Easy", "changeDifficulty"))
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 420, 300, 80), "Sound is ON", "toggleSound"))
@@ -51,12 +63,18 @@ class MenuHandler(metaclass=Singleton):
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 660, 300, 80), "BACK", "mainMenu"))
 
     def toggle_sound(self):
+        """
+        Toggles sound effects on and off
+        """
         if self.sound == True:
             self.sound = False
         elif self.sound == False:
             self.sound = True
 
     def toggle_music(self):
+        """
+        Toggles music on and off
+        """
         if self.music == True:
             self.music = False
             GameWorld().mixer.music.set_volume(0)

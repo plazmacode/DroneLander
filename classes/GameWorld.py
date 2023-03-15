@@ -124,7 +124,7 @@ class GameWorld(metaclass=Singleton):
 
         
         self.game_objects.add(Player())
-        Player().respawn()
+        Player().initialize_values()
         # self.gameObjects.add(Environment("DetonationDecal", 0, 850))
 
     def run(self):
