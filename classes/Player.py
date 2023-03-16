@@ -92,9 +92,11 @@ class Player(GameObject):
         # we can manually adjust duration to perfect the loop
         # we cannot make this loop perfectly, instead we play the sound overlapping
         # it's a feature now
+        from classes.MenuHandler import MenuHandler
         if self.playing_sound == False:
             self.playing_sound = True
-            pygame.mixer.Sound.play(self.servo_sound)
+            if Player().is_alive and MenuHandler().sound_enabled:
+                pygame.mixer.Sound.play(self.servo_sound)
             self.servo_start_time = pygame.time.get_ticks()
         else:
             if pygame.time.get_ticks() >= self.servo_start_time + self.servo_duration - 225:

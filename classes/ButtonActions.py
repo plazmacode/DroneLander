@@ -13,6 +13,11 @@ class ButtonActions(metaclass=Singleton):
         pass
 
     def run(self, action, button):
+        """
+        :param action: name of the action to be executed
+        :param button: the button which called run()
+
+        """
         from classes.MenuHandler import MenuHandler
         from classes.GameWorld import GameWorld
         if action == "play":
