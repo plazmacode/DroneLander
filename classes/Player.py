@@ -46,6 +46,8 @@ class Player(GameObject):
         self.playing_sound = False
         self.servo_channel = pygame.mixer.Channel(2)
         self.servo_start_time = 0
+
+        self.release_sound = pygame.mixer.Sound("./sounds/release.wav")
         
     #initialize values that are shared between first instantiation and when respawning
     def initialize_values(self):
@@ -230,6 +232,8 @@ class Player(GameObject):
             GameWorld().grenades = self.grenades
             GameWorld().instantiate(g)
             self.can_attack = False
+            pygame.mixer.Sound.play(self.release_sound)
+            
 
     def checkHeight(self):
         """
