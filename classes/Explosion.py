@@ -25,7 +25,9 @@ class Explosion(GameObject):
         self.images = self.load_images("./images/explosion-spritesheet.png", rects, (self.scale, self.scale))
         self.currentImage = 0
         self.image = self.images[self.currentImage]
-        self.mask = pygame.mask.from_surface(self.images[15])
+        # use a frame where the explosion is biggest
+        # alternatively update the mask as the explosion animates
+        self.mask = pygame.mask.from_surface(self.images[11])
         self.rect = self.images[self.currentImage].get_rect(center = position)
 
         # Set audio

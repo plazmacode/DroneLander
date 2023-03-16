@@ -44,6 +44,7 @@ class Jammer(GameObject):
             self.attacking = False
             self.current_attack_time = 0
             Jam().alpha = 0
+            pygame.mixer.Sound.stop(self.jam_sound)
         if Player().is_alive == False:
             Jam().alpha = 0
             pygame.mixer.Sound.stop(self.jam_sound)

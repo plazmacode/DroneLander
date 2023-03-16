@@ -190,6 +190,7 @@ class GameWorld(metaclass=Singleton):
                 if not go1 is go2:
                     # if go1.rect.colliderect(go2.rect):
                     #     go1.on_collision(go2)
+                    # THE GAME WILL CRASH if a gameobject lacks a mask
                     if go1.mask.overlap(go2.mask, (go2.rect.x - go1.rect.x, go2.rect.y - go1.rect.y)):
                         go1.on_collision(go2)
 
