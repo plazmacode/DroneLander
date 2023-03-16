@@ -207,7 +207,7 @@ class GameWorld(metaclass=Singleton):
         self._screen.fill((63, 153, 249))
 
         grenade_text = self._font.render("Grenades: " + str(self.grenades), True, (0, 0, 0))
-        too_high_text = self._font.render("DIE " + str(int(self.death_timer + 1)), True, (0, 0, 0))
+        too_high_text = self._font.render("GET DOWN! " + str(int(self.death_timer + 1)), True, (0, 0, 0))
         attack_text = self._font.render("WE JAMMING: " + str(self.jamming), True, (0, 0, 0)) # DEBUG
         score_text = self._font.render("Score: " + str(self.score), True, (0, 0, 0))
 
