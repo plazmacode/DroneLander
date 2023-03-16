@@ -1,6 +1,5 @@
 import pygame
 
-
 class Singleton(type):
     _instances = {}
 
@@ -10,6 +9,8 @@ class Singleton(type):
         return cls._instances[cls]
 
 class Jam(metaclass=Singleton):
+    # used for creating noise on the screen
+    # draws noise images over the screen with transparency
     def __init__(self) -> None:
         self.noise_images = self.load_noise(("./images/noise1.png", "./images/noise2.png", "./images/noise3.png"), 3)
         self.current_noise = 0
@@ -31,6 +32,8 @@ class Jam(metaclass=Singleton):
         screen.blit(surface, (0, 0))
 
     def load_noise(self, imagefiles, scale):
+        # noise animation frames are saved in separate files, use this to load them into an array
+        # afterwards the images can be scaled together
         images = []
 
         for i in range(0, len(imagefiles)):

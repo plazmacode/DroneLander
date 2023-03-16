@@ -12,7 +12,7 @@ class Jammer(GameObject):
         self.rect = self.image.get_rect(center = centerInput)
         self.tag = "Jammer"
         self.attack_range = 500
-        self.attack_cooldown = 1500
+        self.attack_cooldown = 1500 # time before the player input is jammed
         self.current_attack_time = 0
         self.attacking = False
         self.jam_sound = pygame.mixer.Sound("./sounds/noise2.wav")
@@ -68,8 +68,11 @@ class Jammer(GameObject):
     def on_collision(self, other):
         from classes.GameWorld import GameWorld
         if other.tag == "Explosion":
+            # add score and objectives completed
             GameWorld().objectives_completed += 1
             GameWorld().score += 1000
+
+            # reset jammer values to stop jamming effect
             pygame.mixer.Sound.stop(self.jam_sound)
             Jam().alpha = 0
             self.is_alive = False
@@ -79,5 +82,6 @@ class Jammer(GameObject):
             GameWorld().jamming = self.attacking
 
             # if the jammer dies after the player, we add the time score bonus
+            # could be made optional if the jammer is not the main objective
             if Player().is_alive == False:
                 GameWorld().get_final_score()

@@ -50,10 +50,12 @@ class ButtonActions(metaclass=Singleton):
         if action == "restartLevel":
             GameWorld().start_game()
 
+        # toggle sound and update button text
         if action == "toggleSound":
             MenuHandler().toggle_sound()
             button.surface = button._font.render(str(MenuHandler().get_sound()), True, (255, 255, 255))
 
+        # toggle music and update button text
         if action == "toggleMusic":
             MenuHandler().toggle_music()
             button.surface = button._font.render(str(MenuHandler().get_music()), True, (255, 255, 255))
