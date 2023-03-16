@@ -60,7 +60,7 @@ class Jammer(GameObject):
         screen.blit(self.image, pygame.Rect(self.rect.x - GameWorld().camera_x, self.rect.y, self.rect.width, self.rect.height))
 
         
-        #jammer debug circle
+        # jammer debug circle
         surface = pygame.Surface((GameWorld().screen_width, GameWorld().screen_height), pygame.SRCALPHA)
         pygame.draw.circle(surface, (255, 0, 0, 50), (self.rect.center[0] - GameWorld().camera_x, self.rect.center[1]), 500)
         screen.blit(surface, (0, 0))
@@ -81,3 +81,6 @@ class Jammer(GameObject):
             # if the jammer dies after the player, we add the time score bonus
             if Player().is_alive == False:
                 GameWorld().get_final_score()
+            
+            # Checks if this was the main objective
+            super().on_collision(other)

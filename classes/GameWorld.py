@@ -22,9 +22,12 @@ class GameWorld(metaclass=Singleton):
         self.screen_width = self._screen.get_width()
         self.screen_height = self._screen.get_height()
         self.camera_x = 0
+
         pygame.display.set_caption("Drone Lander")
         self._clock = pygame.time.Clock()
         self._font = pygame.font.SysFont(None, 48)
+        self.endscreen_string = "you suck"
+
         self.grenades = 0
         self.difficulty = 0
         self.game_objects = pygame.sprite.Group()
@@ -36,7 +39,10 @@ class GameWorld(metaclass=Singleton):
         self.score = 0
         self.too_high = False
         self.death_timer = 3
+
         self.objectives_compeleted = 0
+        self.main_objective_completed = False
+
         self.level_time = 0
         self.level_start_time = 0
 
@@ -46,11 +52,15 @@ class GameWorld(metaclass=Singleton):
         """
         self.game_state = "PLAY"
         self.buttons.clear()
+
         self.objectives_completed = 0
+        self.main_objective_completed = False
+
         self.score = 0
         self.level_time = 0
         self.level_start_time = pygame.time.get_ticks()
         self.game_objects = pygame.sprite.Group()
+
 
         # Easy Level
         if self.difficulty == 0:
@@ -61,6 +71,9 @@ class GameWorld(metaclass=Singleton):
             self.game_objects.add(Environment("TreeTrunk", (000, 800), "Background"))
             self.game_objects.add(Environment("TreeCrown", (000, 405), "Obstacle"))
             self.game_objects.add(Environment("TreeCrown", (-200, 935), "Obstacle"))
+
+            # Launch brick
+            self.game_objects.add(Environment("Brick", (960, 1015), "Brick"))
 
             # Tree
             self.game_objects.add(Environment("TreeTrunk", (1500, 800), "Background"))
@@ -73,12 +86,13 @@ class GameWorld(metaclass=Singleton):
             self.game_objects.add(Environment("TreeCrown", (2600, 935), "Obstacle"))
             self.game_objects.add(Environment("TreeCrown", (2900, 955), "Obstacle"))
 
-            # Last ammo dump + right bounds "wall"
-            self.game_objects.add(Environment("AmmoDump(Shells)", (3800, 955), "Obstacle"))
+            # Last ammo dump (main objective) + right bounds "wall" 
+            self.main_objective_object = Environment("AmmoDump(Shells)", (3800, 955), "Obstacle")
+            self.main_objective_object.main_objective = True
+            self.game_objects.add(self.main_objective_object)
             self.game_objects.add(Environment("TreeTrunk", (4000, 805), "Background"))
             self.game_objects.add(Environment("TreeCrown", (4000, 400), "Obstacle"))
             self.game_objects.add(Environment("TreeCrown", (4250, 955), "Obstacle"))
-
 
 
         # Hard Level
@@ -91,8 +105,11 @@ class GameWorld(metaclass=Singleton):
             self.game_objects.add(Environment("TreeCrown", (000, 405), "Obstacle"))
             self.game_objects.add(Environment("TreeCrown", (-200, 935), "Obstacle"))
 
+            # Launch brick
+            self.game_objects.add(Environment("Brick", (960, 1015), "Brick"))
+
             # Bush
-            self.game_objects.add(Environment("TreeCrown", (800, 935), "Obstacle"))
+            self.game_objects.add(Environment("TreeCrown", (500, 935), "Obstacle"))
 
             # Tree patch
             self.game_objects.add(Environment("TreeTrunk", (1910, 780), "Background"))
@@ -123,7 +140,9 @@ class GameWorld(metaclass=Singleton):
             self.game_objects.add(Environment("TreeCrown", (6860, 405), "Obstacle"))
             self.game_objects.add(Environment("AmmoDump(Shells)", (6710, 955), "Obstacle"))
             self.game_objects.add(Environment("TreeCrown", (7000, 935), "Obstacle"))
-            self.game_objects.add(Jammer((6500, 905)))
+            self.main_objective_object = Jammer((6500, 905))
+            self.main_objective_object.main_objective = True
+            self.game_objects.add(self.main_objective_object)
 
         
         self.game_objects.add(Player())
@@ -208,8 +227,13 @@ class GameWorld(metaclass=Singleton):
 
         grenade_text = self._font.render("Grenades: " + str(self.grenades), True, (0, 0, 0))
         too_high_text = self._font.render("GET DOWN! " + str(int(self.death_timer + 1)), True, (0, 0, 0))
-        attack_text = self._font.render("WE JAMMING: " + str(self.jamming), True, (0, 0, 0)) # DEBUG
+        endscreen_text = self._font.render(self.endscreen_string, True, (0, 0, 0))
         score_text = self._font.render("Score: " + str(self.score), True, (0, 0, 0))
+
+        # DEBUG
+        attack_text = self._font.render("WE JAMMING: " + str(self.jamming), True, (0, 0, 0)) 
+        # objective_text = self._font.render("MAIN OBJECTIVE COMPLETED: " + str(self.main_objective_completed), True, (0, 0, 0)) 
+        # player_angle_text = self._font.render("ANGLE: " + str(Player().angle), True, (0, 0, 0)) 
 
         # only update level time when playing
         if self.game_state == "PLAY":
@@ -220,15 +244,21 @@ class GameWorld(metaclass=Singleton):
         for game_object in self.game_objects:
             game_object.draw(self._screen)
 
+        if self.game_state == "ENDMENU":
+            self._screen.blit(endscreen_text, ((self.screen_width - endscreen_text.get_width()) // 2, 200))
+
         if self.game_state == "PLAY" or self.game_state == "ENDMENU":
             # draw noise
             Jam().draw(self._screen)
 
             #draw UI
             self._screen.blit(grenade_text, (100, 100))
-            self._screen.blit(attack_text, (100, 200))
             self._screen.blit(score_text, ((self.screen_width - score_text.get_width()) // 2, 50))
             self._screen.blit(timer_text, (self.screen_width - 200, 50))
+            # DEBUG
+            self._screen.blit(attack_text, (100, 200))
+            # self._screen.blit(objective_text, (100, 300))
+            # self._screen.blit(player_angle_text, (100, 400))
 
         if self.too_high == True:
             self._screen.blit(too_high_text, (self.screen_width / 2 - too_high_text.get_width() / 2, self.screen_height / 2 - too_high_text.get_height() / 2))
