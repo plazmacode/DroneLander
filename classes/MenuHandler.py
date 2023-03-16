@@ -21,7 +21,7 @@ class MenuHandler(metaclass=Singleton):
         self._screen_width = GameWorld().screen_width
         self._screen_height = GameWorld().screen_height
         self.sound_enabled = True
-        self.music = True
+        self.music_enabled = True
         self.music_initialized = False
 
     def start_menu(self):
@@ -59,7 +59,7 @@ class MenuHandler(metaclass=Singleton):
         GameWorld().buttons.clear()
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 300, 300, 80), "DIFFICULTY: EASY", "changeDifficulty"))
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 420, 300, 80), self.get_sound(), "toggleSound"))
-        GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 540, 300, 80), "MUSIC IS: ON", "toggleMusic"))
+        GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 540, 300, 80), self.get_music(), "toggleMusic"))
         if GameWorld().game_state == "MENU":
             GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 660, 300, 80), "BACK", "mainMenu"))
         else:
@@ -67,9 +67,15 @@ class MenuHandler(metaclass=Singleton):
 
     def get_sound(self):
         if self.sound_enabled:
-            return "Sound is ON"
+            return "SOUND IS: ON"
         else:
-            return "Sound is OFF"
+            return "SOUND IS: OFF"
+        
+    def get_music(self):
+        if self.music_enabled:
+            return "MUSIC IS: ON"
+        else:
+            return "MUSIC IS: OFF"
 
     def toggle_sound(self):
         """
@@ -84,9 +90,9 @@ class MenuHandler(metaclass=Singleton):
         """
         Toggles music on and off
         """
-        if self.music == True:
-            self.music = False
+        if self.music_enabled == True:
+            self.music_enabled = False
             GameWorld().mixer.music.set_volume(0)
-        elif self.music == False:
-            self.music = True
+        elif self.music_enabled == False:
+            self.music_enabled = True
             GameWorld().mixer.music.set_volume(0.2)
