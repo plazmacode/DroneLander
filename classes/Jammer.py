@@ -17,6 +17,7 @@ class Jammer(GameObject):
         self.attacking = False
         self.jam_sound = pygame.mixer.Sound("./sounds/noise2.wav")
         self.is_alive = True
+        self.mask = pygame.mask.from_surface(self.image)
 
     def update(self):
         self.attack()

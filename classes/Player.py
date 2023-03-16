@@ -32,6 +32,7 @@ class Player(GameObject):
         self.base_image = pygame.transform.scale(self.image, (125, 50))
         rects = ((0, 0, 20, 8), (20, 0, 20, 8), (40, 0, 20, 8), (60, 0, 20, 8))
         self.base_images = self.load_images("./images/drone-spritesheet.png", rects, (self.image.get_width() * 10, self.image.get_height() * 10))
+        self.mask = pygame.mask.from_surface(self.base_images[0])
         self.current_image = 0
         self.rect = self.image.get_rect()
         self.tag = "Player"
@@ -159,6 +160,10 @@ class Player(GameObject):
         # if we rotate the normal image we get a memory leak which freezes our game within a minute
         self.image = pygame.transform.rotate(self.base_images[self.current_image], self.angle)
         self.rect = self.image.get_rect(center =(self.rect.center))
+
+        # update mask for pixel collision
+        self.mask = pygame.mask.from_surface(self.image) 
+
 
         self.rect.move_ip(0, self.direction.y * self.velocity.y)
         self.velocity.y -= 0.1

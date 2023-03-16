@@ -188,7 +188,9 @@ class GameWorld(metaclass=Singleton):
         for go1 in self.game_objects:
             for go2 in self.game_objects:
                 if not go1 is go2:
-                    if go1.rect.colliderect(go2.rect):
+                    # if go1.rect.colliderect(go2.rect):
+                    #     go1.on_collision(go2)
+                    if go1.mask.overlap(go2.mask, (go2.rect.x - go1.rect.x, go2.rect.y - go1.rect.y)):
                         go1.on_collision(go2)
 
     def get_final_score(self):

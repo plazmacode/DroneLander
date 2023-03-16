@@ -13,6 +13,7 @@ class Grenade(GameObject):
         self.direction = direction
         self.velocity = velocity
         self.tag = "Granade"
+        self.mask = pygame.mask.from_surface(self.image)
 
     def update(self):
         """
