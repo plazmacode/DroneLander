@@ -34,13 +34,16 @@ class ButtonActions(metaclass=Singleton):
         if action == "mainMenu":
             MenuHandler().start_menu()
 
+        if action == "endMenu":
+            MenuHandler().end_menu()
+
         if action == "changeDifficulty":
             if GameWorld().difficulty == 0:
-                button.surface = button._font.render(str("Difficulty: Hard"), True, (255, 255, 255))
+                button.surface = button._font.render(str("DIFFICULTY: HARD"), True, (255, 255, 255))
                 GameWorld().difficulty = 1
                 GameWorld().difficulty = 1
             elif GameWorld().difficulty == 1:
-                button.surface = button._font.render(str("Difficulty: Easy"), True, (255, 255, 255))
+                button.surface = button._font.render(str("DIFFICULTY: EASY"), True, (255, 255, 255))
                 GameWorld().difficulty = 0
                 GameWorld().difficulty = 0
 
@@ -53,7 +56,4 @@ class ButtonActions(metaclass=Singleton):
 
         if action == "toggleMusic":
             MenuHandler().toggle_music()
-            if MenuHandler().music:
-                button.surface = button._font.render(str("Music is ON"), True, (255, 255, 255))
-            else:
-                button.surface = button._font.render(str("Music is OFF"), True, (255, 255, 255))
+            button.surface = button._font.render(str(MenuHandler().get_music()), True, (255, 255, 255))
