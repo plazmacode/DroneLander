@@ -41,6 +41,10 @@ class Environment(GameObject):
                 ### Very fragile implementation, should be improved
                 self.name = "DetonationDecal"
                 GameWorld().score += 200
+                
+                update_score_event = pygame.event.Event(pygame.USEREVENT + 1)
+                pygame.event.post(update_score_event)
+
                 self.image = pygame.image.load("./images/" + self.name + ".png").convert_alpha()   
                 self.image = pygame.transform.scale(self.image, (self.image.get_width() * 10, self.image.get_height() * 10))  
                 self.rect = self.image.get_rect(center = (self.rect.centerx, self.rect.centery + 100))

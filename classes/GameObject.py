@@ -26,6 +26,8 @@ class GameObject(pygame.sprite.Sprite, ABC):
             from classes.GameWorld import GameWorld
             GameWorld().main_objective_completed = True
             GameWorld().endscreen_string = "MISSION COMPLETE DRONE LOST"
+            update_endmessage_event = pygame.event.Event(pygame.USEREVENT + 2)
+            pygame.event.post(update_endmessage_event)
     
     # Loads a spritesheet to use for animations
     # Returns an array of images from the spritesheet

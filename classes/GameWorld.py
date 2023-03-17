@@ -5,6 +5,7 @@ from classes.Environment import Environment
 from classes.Jammer import Jammer
 from classes.Player import Player
 from classes.Button import Button
+from classes.TextField import TextField
 from classes.Jam import Jam
 
 class Singleton(type):
@@ -60,6 +61,8 @@ class GameWorld(metaclass=Singleton):
         self.level_time = 0
         self.level_start_time = pygame.time.get_ticks()
         self.game_objects = pygame.sprite.Group()
+
+        GameWorld().buttons.append(TextField((34, 42, 104), (self.screen_width / 2, 200), "Score: " + str(GameWorld().score), 48, "score"))
 
 
         # Easy Level
@@ -218,6 +221,9 @@ class GameWorld(metaclass=Singleton):
         Adds score based on time spent to complete level
         """
         self.score += math.ceil(2000 - self.level_time / 1000 * 20)
+        
+        update_score_event = pygame.event.Event(pygame.USEREVENT + 1)
+        pygame.event.post(update_score_event)
 
     def draw(self):
         """
@@ -228,8 +234,8 @@ class GameWorld(metaclass=Singleton):
 
         grenade_text = self._font.render("Grenades: " + str(self.grenades), True, (0, 0, 0))
         too_high_text = self._font.render("GET DOWN! " + str(int(self.death_timer + 1)), True, (0, 0, 0))
-        endscreen_text = self._font.render(self.endscreen_string, True, (0, 0, 0))
-        score_text = self._font.render("Score: " + str(self.score), True, (0, 0, 0))
+        # endscreen_text = self._font.render(self.endscreen_string, True, (0, 0, 0))
+        # score_text = self._font.render("Score: " + str(self.score), True, (0, 0, 0))
 
         # DEBUG
         # attack_text = self._font.render("WE JAMMING: " + str(self.jamming), True, (0, 0, 0)) 
@@ -245,8 +251,8 @@ class GameWorld(metaclass=Singleton):
         for game_object in self.game_objects:
             game_object.draw(self._screen)
 
-        if self.game_state == "SCORESCREEN":
-            self._screen.blit(endscreen_text, ((self.screen_width - endscreen_text.get_width()) // 2, 500))
+        # if self.game_state == "SCORESCREEN":
+            # self._screen.blit(endscreen_text, ((self.screen_width - endscreen_text.get_width()) // 2, 500))
 
         if self.game_state == "PLAY" or self.game_state == "SCORESCREEN":
             # draw noise
@@ -254,7 +260,7 @@ class GameWorld(metaclass=Singleton):
 
             #draw UI
             self._screen.blit(grenade_text, (100, 100))
-            self._screen.blit(score_text, ((self.screen_width - score_text.get_width()) // 2, 150))
+            # self._screen.blit(score_text, ((self.screen_width - score_text.get_width()) // 2, 150))
             self._screen.blit(timer_text, (self.screen_width - 200, 50))
             # DEBUG
             # self._screen.blit(attack_text, (100, 200))
