@@ -1,6 +1,7 @@
 import pygame
 from classes.GameObject import GameObject
 from classes.Grenade import Grenade
+from classes.Parallax import Parallax
 
 def singleton(class_):
     """
@@ -222,8 +223,9 @@ class Player(GameObject):
         Camera movement
         """
         from classes.GameWorld import GameWorld
-        #call move_camera() with our x velocity to change the camera position
+        # call move_camera() with our x velocity to change the camera position
         GameWorld().move_camera(self.direction.x * self.velocity.x)
+        Parallax().move_parallax(self.direction.x * self.velocity.x)
         # left screen bounds
         if GameWorld().camera_x <= -200:
             GameWorld().camera_x = -200

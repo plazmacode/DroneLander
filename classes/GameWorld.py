@@ -1,11 +1,10 @@
 import pygame
 import math
-from classes.GameObject import GameObject
 from classes.Environment import Environment
 from classes.Jammer import Jammer
 from classes.Player import Player
-from classes.Button import Button
 from classes.Jam import Jam
+from classes.Parallax import Parallax
 
 class Singleton(type):
     _instances = {}
@@ -60,7 +59,9 @@ class GameWorld(metaclass=Singleton):
         self.level_time = 0
         self.level_start_time = pygame.time.get_ticks()
         self.game_objects = pygame.sprite.Group()
-
+        
+        # Resets parallax
+        Parallax().reset_position()
 
         # Easy Level
         if self.difficulty == 0:
@@ -184,9 +185,10 @@ class GameWorld(metaclass=Singleton):
         self.new_game_objects.empty()
 
         self.game_objects.update()
-        self.collision_check()
+        # self.collision_check()
         
         Jam().update()
+        Parallax().update()
 
         for button in self.buttons:
             button.update(event_list)
@@ -225,6 +227,9 @@ class GameWorld(metaclass=Singleton):
         """
         # Clear the screen
         self._screen.fill((63, 153, 249))
+        
+        # draw background with parallax
+        Parallax().draw(self._screen)
 
         grenade_text = self._font.render("Grenades: " + str(self.grenades), True, (0, 0, 0))
         too_high_text = self._font.render("GET DOWN! " + str(int(self.death_timer + 1)), True, (0, 0, 0))
