@@ -166,7 +166,7 @@ class Player(GameObject):
                     self.player_frozen = True
 
                     from classes.MenuHandler import MenuHandler
-                    MenuHandler().end_menu()
+                    MenuHandler().score_screen()
                     GameWorld().get_final_score()
                     GameWorld().endscreen_string = "MISSION COMPLETE"
                 else:
@@ -181,7 +181,7 @@ class Player(GameObject):
         from classes.MenuHandler import MenuHandler
         from classes.GameWorld import GameWorld
         from classes.Explosion import Explosion
-        MenuHandler().end_menu()
+        MenuHandler().score_screen()
         self.is_alive = False
         self.kill()
         # stop servo sound from playing/looping

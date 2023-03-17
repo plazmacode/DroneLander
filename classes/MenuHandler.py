@@ -65,6 +65,14 @@ class MenuHandler(metaclass=Singleton):
         else:
             GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 660, 300, 80), "BACK", "endMenu"))
 
+    def score_screen(self):
+        """
+        Score screen
+        """
+        GameWorld().buttons.clear()
+        GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 660, 300, 80), "CONTINUE", "endMenu"))
+        GameWorld().game_state = "SCORESCREEN"
+
     def get_sound(self):
         if self.sound_enabled:
             return "SOUND IS: ON"

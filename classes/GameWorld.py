@@ -250,16 +250,16 @@ class GameWorld(metaclass=Singleton):
         for game_object in self.game_objects:
             game_object.draw(self._screen)
 
-        if self.game_state == "ENDMENU":
-            self._screen.blit(endscreen_text, ((self.screen_width - endscreen_text.get_width()) // 2, 200))
+        if self.game_state == "SCORESCREEN":
+            self._screen.blit(endscreen_text, ((self.screen_width - endscreen_text.get_width()) // 2, 500))
 
-        if self.game_state == "PLAY" or self.game_state == "ENDMENU":
+        if self.game_state == "PLAY" or self.game_state == "SCORESCREEN":
             # draw noise
             Jam().draw(self._screen)
 
             #draw UI
             self._screen.blit(grenade_text, (100, 100))
-            self._screen.blit(score_text, ((self.screen_width - score_text.get_width()) // 2, 50))
+            self._screen.blit(score_text, ((self.screen_width - score_text.get_width()) // 2, 150))
             self._screen.blit(timer_text, (self.screen_width - 200, 50))
             # DEBUG
             # self._screen.blit(attack_text, (100, 200))
