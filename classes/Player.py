@@ -28,15 +28,21 @@ class Player(GameObject):
         pygame.sprite.Sprite.__init__(self)
         # this is a mess
         self.image = pygame.image.load("./images/Drone(1).png").convert_alpha()
+        self.image = pygame.transform.scale(self.image, (self.image.get_width() * 10, self.image.get_height() * 10))
         self.base_image = pygame.image.load("./images/Drone(1).png").convert_alpha()
         self.base_image = pygame.transform.scale(self.image, (125, 50))
         rects = ((0, 0, 20, 8), (20, 0, 20, 8), (40, 0, 20, 8), (60, 0, 20, 8))
-        self.base_images = self.load_images("./images/drone-spritesheet.png", rects, (self.image.get_width() * 10, self.image.get_height() * 10))
+        self.base_images = self.load_images("./images/drone-spritesheet.png", rects, (self.image.get_width(), self.image.get_height()))
         self.mask = pygame.mask.from_surface(self.base_images[0])
         self.current_image = 0
         self.rect = self.image.get_rect()
         self.tag = "Player"
         self.rotation_speed = 4
+        self.angle = 0
+
+        self.game_won = False
+
+        self.player_frozen = True   # Prevents the player from falling and flying
 
         # we have 5 sounds. they are all annoying :)
         # sound 4 and 5 loops the best because they are synthesized
@@ -55,7 +61,7 @@ class Player(GameObject):
         """
         Set initial values for Player
         """
-        self.rect.center = (960, 450)
+        self.rect.center = (960, 950)
         self.angle = 0
         self.direction = pygame.math.Vector2(0,0)
         self.velocity = pygame.math.Vector2(0,0)
@@ -70,16 +76,31 @@ class Player(GameObject):
         self.death_timer = 3
         self.reset_timer = 3
         self.is_alive = True
+        self.game_won = False
+
+        self.player_frozen = True   # Locks the player waiting for throttle input
+        # Resets visuals
+        self.image = pygame.transform.rotate(self.base_images[0], self.angle)
+        self.rect = self.image.get_rect(center =(self.rect.center))
 
     def update(self):
         """
         Player update
         """
-        self.move()
+        if self.player_frozen == True:
+            self.keys = pygame.key.get_pressed()
+            from classes.GameWorld import GameWorld
+            if self.keys[pygame.K_w] and GameWorld().main_objective_completed == False:
+                self.player_frozen = False
+
+        # Freezes player movement, used before and after gameplay starts
+        if self.player_frozen == False:
+            self.move()
+            self.move_camera()
+            self.play_sound()
+
         self.animate()
         self.checkHeight()
-        self.move_camera()
-        self.play_sound()
     
     def play_sound(self):
         # loop code 1
@@ -127,6 +148,29 @@ class Player(GameObject):
         """
         if other.tag == "Obstacle" or other.tag == "Explosion":
             self.on_death()
+            from classes.GameWorld import GameWorld
+            if GameWorld().main_objective_completed == True:
+                GameWorld().endscreen_string = "MISSION COMPLETE DRONE LOST"
+            else:
+                GameWorld().endscreen_string = "MISSION FAILED"
+        
+        # Ends the game in a win if the main objective is complete before landing
+        if other.tag == "Brick" and self.game_won == False:
+            from classes.GameWorld import GameWorld
+            if GameWorld().main_objective_completed == True:   # Is the objective complete?
+                if self.angle < 10 or self.angle > 350:   # Is the landing flat?
+                    self.game_won = True
+
+                    self.player_frozen = True
+
+                    from classes.MenuHandler import MenuHandler
+                    MenuHandler().end_menu()
+                    GameWorld().get_final_score()
+                    GameWorld().endscreen_string = "MISSION COMPLETE"
+                else:
+                    self.on_death()
+                    GameWorld().endscreen_string = "CRASHED ON LANDING"
+                
 
     def on_death(self):
         """

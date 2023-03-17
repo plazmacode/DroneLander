@@ -11,6 +11,7 @@ class GameObject(pygame.sprite.Sprite, ABC):
         self.rect : pygame.rect
         self.tag = ""   # Tag system used for collisions, identifies what collided so the correct response can be run
         self.collision = False
+        self.main_objective = False
 
     # Methods all game objects are expected to define
     def update(self):
@@ -20,7 +21,11 @@ class GameObject(pygame.sprite.Sprite, ABC):
         screen.blit(self.image, self.rect)
 
     def on_collision(self, other):
-        pass
+        # Tells the game you can return to land now
+        if  self.main_objective == True:
+            from classes.GameWorld import GameWorld
+            GameWorld().main_objective_completed = True
+            GameWorld().endscreen_string = "MISSION COMPLETE DRONE LOST"
     
     # Loads a spritesheet to use for animations
     # Returns an array of images from the spritesheet
