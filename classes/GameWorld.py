@@ -217,9 +217,7 @@ class GameWorld(metaclass=Singleton):
         """
         Adds score based on time spent to complete level
         """
-        if self.objectives_completed > 0:
-            self.score += math.ceil(2000 - self.level_time / 1000 * 20)
-            print("added timer score for completing objectives")
+        self.score += math.ceil(2000 - self.level_time / 1000 * 20)
 
     def draw(self):
         """
@@ -234,7 +232,7 @@ class GameWorld(metaclass=Singleton):
         score_text = self._font.render("Score: " + str(self.score), True, (0, 0, 0))
 
         # DEBUG
-        attack_text = self._font.render("WE JAMMING: " + str(self.jamming), True, (0, 0, 0)) 
+        # attack_text = self._font.render("WE JAMMING: " + str(self.jamming), True, (0, 0, 0)) 
         # objective_text = self._font.render("MAIN OBJECTIVE COMPLETED: " + str(self.main_objective_completed), True, (0, 0, 0)) 
         # player_angle_text = self._font.render("ANGLE: " + str(Player().angle), True, (0, 0, 0)) 
 
@@ -259,7 +257,7 @@ class GameWorld(metaclass=Singleton):
             self._screen.blit(score_text, ((self.screen_width - score_text.get_width()) // 2, 50))
             self._screen.blit(timer_text, (self.screen_width - 200, 50))
             # DEBUG
-            self._screen.blit(attack_text, (100, 200))
+            # self._screen.blit(attack_text, (100, 200))
             # self._screen.blit(objective_text, (100, 300))
             # self._screen.blit(player_angle_text, (100, 400))
 

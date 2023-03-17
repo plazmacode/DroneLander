@@ -82,6 +82,7 @@ class Player(GameObject):
         # Resets visuals
         self.image = pygame.transform.rotate(self.base_images[0], self.angle)
         self.rect = self.image.get_rect(center =(self.rect.center))
+        self.mask = pygame.mask.from_surface(self.image)
 
     def update(self):
         """
@@ -123,7 +124,7 @@ class Player(GameObject):
                 pygame.mixer.Sound.play(self.servo_sound)
             self.servo_start_time = pygame.time.get_ticks()
         else:
-            if pygame.time.get_ticks() >= self.servo_start_time + self.servo_duration - 225:
+            if pygame.time.get_ticks() >= self.servo_start_time + self.servo_duration -225:
                 self.playing_sound = False
 
     def load_difficulty(self):
@@ -185,8 +186,6 @@ class Player(GameObject):
         # stop servo sound from playing/looping
         self.servo_sound.stop()
         GameWorld().instantiate(Explosion(self.rect.center, 300))
-        # get final score to add time bonus
-        GameWorld().get_final_score()
 
     def move(self):
         """

@@ -83,10 +83,5 @@ class Jammer(GameObject):
             self.attacking = False
             GameWorld().jamming = self.attacking
 
-            # if the jammer dies after the player, we add the time score bonus
-            # could be made optional if the jammer is not the main objective
-            if Player().is_alive == False:
-                GameWorld().get_final_score()
-            
             # Checks if this was the main objective
             super().on_collision(other)
