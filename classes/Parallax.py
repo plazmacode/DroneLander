@@ -25,8 +25,8 @@ class Parallax(metaclass = Singleton):
         self.layer3_scroll_speed = 0.8
 
         self.layer1_height = 0
-        self.layer2_height = 300
-        self.layer3_height = 580
+        self.layer2_height = 450
+        self.layer3_height = 700
 
         self.tiles = 3
 

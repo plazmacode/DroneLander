@@ -26,9 +26,9 @@ class GameWorld(metaclass=Singleton):
         self._clock = pygame.time.Clock()
         self._font = pygame.font.SysFont(None, 48)
         self.endscreen_string = "you suck"
-        self.background_image = pygame.image.load("./images/Sky.png")
+        self.background_image = pygame.image.load("./images/Sky.png").convert_alpha()
         self.background_image = pygame.transform.scale(self.background_image, (1920, 1080))
-
+        self.background_rect = self.background_image.get_rect()
         self.grenades = 0
         self.difficulty = 0
         self.game_objects = pygame.sprite.Group()
@@ -229,7 +229,7 @@ class GameWorld(metaclass=Singleton):
         """
         # Clear the screen
         self._screen.fill((63, 153, 249))
-        # self._screen.blit(self.background_image, (0, 0))
+        self._screen.blit(self.background_image, self.background_rect)
 
         # draw background with parallax
         Parallax().draw(self._screen)
