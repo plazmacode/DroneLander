@@ -20,7 +20,6 @@ class GameWorld(metaclass=Singleton):
         self._screen = pygame.display.set_mode((1920, 1080))
         self.screen_width = self._screen.get_width()
         self.screen_height = self._screen.get_height()
-        self.camera_x = 0
 
         pygame.display.set_caption("Drone Lander")
         self._clock = pygame.time.Clock()
@@ -152,6 +151,11 @@ class GameWorld(metaclass=Singleton):
         Player().initialize_values()
         # self.gameObjects.add(Environment("DetonationDecal", 0, 850))
 
+    def update_fps(self):
+        fps = str(int(self._clock.get_fps()))
+        fps_text = self._font.render(fps, 1, pygame.Color("coral"))
+        return fps_text
+
     def run(self):
         """
         Main program loop
@@ -276,6 +280,8 @@ class GameWorld(metaclass=Singleton):
             button.draw(self._screen)
 
         self._screen.blit(self._screen, (0,0))
+
+        self._screen.blit(self.update_fps(), (10,0))
 
         pygame.display.flip()
     

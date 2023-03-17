@@ -9,6 +9,7 @@ class GameObject(pygame.sprite.Sprite, ABC):
         """
         self.image : pygame.image
         self.rect : pygame.rect
+        self.mask : pygame.mask
         self.tag = ""   # Tag system used for collisions, identifies what collided so the correct response can be run
         self.collision = False
         self.main_objective = False

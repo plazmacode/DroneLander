@@ -226,9 +226,6 @@ class Player(GameObject):
         # call move_camera() with our x velocity to change the camera position
         GameWorld().move_camera(self.direction.x * self.velocity.x)
         Parallax().move_parallax(self.direction.x * self.velocity.x)
-        # left screen bounds
-        if GameWorld().camera_x <= -200:
-            GameWorld().camera_x = -200
 
     def animate(self):
         """
@@ -277,7 +274,7 @@ class Player(GameObject):
         """
         if self.grenades > 0:
             from classes.GameWorld import GameWorld
-            g = Grenade((self.rect.center[0] + GameWorld().camera_x, self.rect.center[1]), self.direction, self.velocity)
+            g = Grenade((self.rect.center[0], self.rect.center[1]), self.direction, self.velocity)
             self.grenades -= 1
             GameWorld().grenades = self.grenades
             GameWorld().instantiate(g)

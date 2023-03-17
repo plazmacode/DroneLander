@@ -2,6 +2,7 @@ import pygame
 from classes.GameObject import GameObject
 from classes.Player import Player
 from classes.Jam import Jam
+from abc import ABC, abstractclassmethod
 
 class Jammer(GameObject):
     def __init__(self, centerInput) -> None:
@@ -26,7 +27,7 @@ class Jammer(GameObject):
         from classes.GameWorld import GameWorld
 
         # get distance between jammer and player
-        distance = pygame.math.Vector2(self.rect.x - GameWorld().camera_x, self.rect.y).distance_to(Player().rect.center)
+        distance = pygame.math.Vector2(self.rect.x, self.rect.y).distance_to(Player().rect.center)
 
         # player inside jammer range
         if distance <= self.attack_range and self.is_alive == True:
@@ -59,13 +60,13 @@ class Jammer(GameObject):
         
     def draw(self, screen):
         from classes.GameWorld import GameWorld
-        screen.blit(self.image, pygame.Rect(self.rect.x - GameWorld().camera_x, self.rect.y, self.rect.width, self.rect.height))
+        screen.blit(self.image, pygame.Rect(self.rect.x, self.rect.y, self.rect.width, self.rect.height))
 
         
         # jammer debug circle
-        surface = pygame.Surface((GameWorld().screen_width, GameWorld().screen_height), pygame.SRCALPHA)
-        pygame.draw.circle(surface, (255, 0, 0, 50), (self.rect.center[0] - GameWorld().camera_x, self.rect.center[1]), 500)
-        screen.blit(surface, (0, 0))
+        # surface = pygame.Surface((GameWorld().screen_width, GameWorld().screen_height), pygame.SRCALPHA)
+        # pygame.draw.circle(surface, (255, 0, 0, 50), (self.rect.center[0], self.rect.center[1]), 500)
+        # screen.blit(surface, (0, 0))
 
     def on_collision(self, other):
         from classes.GameWorld import GameWorld

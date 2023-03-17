@@ -57,7 +57,7 @@ class MenuHandler(metaclass=Singleton):
         Options menu
         """
         GameWorld().buttons.clear()
-        GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 300, 300, 80), "DIFFICULTY: EASY", "changeDifficulty"))
+        GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 300, 300, 80), self.get_difficulty(), "changeDifficulty"))
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 420, 300, 80), self.get_sound(), "toggleSound"))
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 540, 300, 80), self.get_music(), "toggleMusic"))
         if GameWorld().game_state == "MENU":
@@ -84,6 +84,13 @@ class MenuHandler(metaclass=Singleton):
             return "MUSIC IS: ON"
         else:
             return "MUSIC IS: OFF"
+
+    def get_difficulty(self):
+        if GameWorld().difficulty == 0:
+            return "DIFFICULTY: EASY"
+        elif GameWorld().difficulty == 1:
+            return "DIFFICULTY: HARD"
+
 
     def toggle_sound(self):
         """
