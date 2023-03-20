@@ -266,7 +266,7 @@ class GameWorld(metaclass=Singleton):
             game_object.draw(self._screen)
 
         # if self.game_state == "SCORESCREEN":
-            # self._screen.blit(endscreen_text, ((self.screen_width - endscreen_text.get_width()) // 2, 500))
+        #     self._screen.blit(endscreen_text, ((self.screen_width - endscreen_text.get_width()) // 2, 500))
 
         if self.game_state == "PLAY" or self.game_state == "SCORESCREEN":
             # draw noise
