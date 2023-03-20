@@ -1,12 +1,6 @@
 import pygame
-
-class Singleton(type):
-    _instances = {}
-
-    def __call__(cls, *args, **kwargs):
-        if cls not in cls._instances:
-            cls._instances[cls] = super().__call__(*args, **kwargs)
-        return cls._instances[cls]
+from classes.Singleton import Singleton
+from classes.LevelLoader import LevelLoader
 
 class ButtonActions(metaclass=Singleton):
     def __init__(self) -> None:
@@ -37,6 +31,9 @@ class ButtonActions(metaclass=Singleton):
         if action == "endMenu":
             MenuHandler().end_menu()
 
+        if action == "select":
+            MenuHandler().select_level()
+
         if action == "changeDifficulty":
             if GameWorld().difficulty == 0:
                 button.surface = button._font.render(str("DIFFICULTY: HARD"), True, (255, 255, 255))
@@ -47,8 +44,19 @@ class ButtonActions(metaclass=Singleton):
                 GameWorld().difficulty = 0
                 GameWorld().difficulty = 0
 
+        if action == "nextLevel":
+            LevelLoader().next_level()
+
         if action == "restartLevel":
             GameWorld().start_game()
+
+        if action == "level1":
+            LevelLoader().current_level = 1
+            LevelLoader().load_level(0)
+
+        if action == "level2":
+            LevelLoader().current_level = 2
+            LevelLoader().load_level(0)
 
         # toggle sound and update button text
         if action == "toggleSound":

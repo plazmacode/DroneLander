@@ -133,10 +133,15 @@ class Player(GameObject):
         Adjusts values that are difficulty dependent
         """
         from classes.GameWorld import GameWorld
+        from classes.LevelLoader import LevelLoader
         if GameWorld().difficulty == 0:
-            self.grenades = 10
+            self.grenades = 6
         if GameWorld().difficulty == 1:
-            self.grenades = 5
+            self.grenades = 0
+
+        # adds level specific grenade amounts
+        # based on number of objectives in level
+        self.grenades += LevelLoader().grenade_count
 
     def draw(self, screen):
         """

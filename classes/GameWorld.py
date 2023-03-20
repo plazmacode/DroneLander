@@ -7,6 +7,8 @@ from classes.TutorialText import TutorialText
 from classes.TextField import TextField
 from classes.Jam import Jam
 from classes.Parallax import Parallax
+from classes.LevelLoader import LevelLoader
+from classes.GameObject import GameObject
 
 class Singleton(type):
     _instances = {}
@@ -44,131 +46,19 @@ class GameWorld(metaclass=Singleton):
         self.score = 0
         self.too_high = False
         self.death_timer = 3
-
+        
         self.objectives_compeleted = 0
         self.main_objective_completed = False
 
         self.level_time = 0
         self.level_start_time = 0
 
+    # obsolete?
     def start_game(self):
         """
         Creates the selected level and starts the game
         """
-        self.game_state = "PLAY"
-        self.buttons.clear()
-
-        self.objectives_completed = 0
-        self.main_objective_completed = False
-
-        self.score = 0
-        self.level_time = 0
-        self.level_start_time = pygame.time.get_ticks()
-        self.game_objects = pygame.sprite.Group()
-        self.tutorial_text = pygame.sprite.Group()
-
-        GameWorld().buttons.append(TextField((34, 42, 104), (self.screen_width / 2, 200), "Score: " + str(GameWorld().score), 48, "score"))
-
-        
-        # Resets parallax
-        Parallax().reset_position()
-
-        # Easy Level
-        if self.difficulty == 0:
-            # Place floor, value sets number of tiles placed
-            for x in range(5):
-                self.game_objects.add(Environment("Ground", (x * 2000, 1055), "Obstacle"))
-            # Left bounds "wall"
-            self.game_objects.add(Environment("TreeTrunk", (000, 800), "Background"))
-            self.game_objects.add(Environment("TreeCrown", (000, 405), "Obstacle"))
-            self.game_objects.add(Environment("TreeCrown", (-200, 935), "Obstacle"))
-
-            # Launch brick
-            self.game_objects.add(Environment("Brick", (960, 1015), "Brick"))
-
-            # Tutorial Text
-            self.tutorial_text.add(TutorialText("Press W to thrust, Press A or D to rotate", (600, 800)))
-            self.tutorial_text.add(TutorialText("Press SPACE to release grenades", (600, 850)))
-            self.tutorial_text.add(TutorialText("Destroy side objective to earn score", (1800, 800)))
-            self.tutorial_text.add(TutorialText("This is the main objective, destroy it and fly back", (3500, 800)))
-            self.tutorial_text.add(TutorialText("Height limit above this text", (600, 250)))
-
-            # See TutorialText.py 
-            self.tutorial_text.add(TutorialText("Main objective completed land here", (600, 1000)))
-
-            # Tree
-            self.game_objects.add(Environment("TreeTrunk", (1500, 800), "Background"))
-            self.game_objects.add(Environment("TreeCrown", (1500, 405), "Obstacle"))
-
-            # First ammo dump
-            self.game_objects.add(Environment("AmmoDump(Shells)", (2200, 955), "Obstacle"))
-
-            # Bush
-            self.game_objects.add(Environment("TreeCrown", (2600, 935), "Obstacle"))
-            self.game_objects.add(Environment("TreeCrown", (2900, 955), "Obstacle"))
-
-            # Last ammo dump (main objective) + right bounds "wall" 
-            self.main_objective_object = Environment("AmmoDump(Shells)", (3800, 955), "Obstacle")
-            self.main_objective_object.main_objective = True
-            self.game_objects.add(self.main_objective_object)
-            self.game_objects.add(Environment("TreeTrunk", (4000, 805), "Background"))
-            self.game_objects.add(Environment("TreeCrown", (4000, 400), "Obstacle"))
-            self.game_objects.add(Environment("TreeCrown", (4250, 955), "Obstacle"))
-
-
-        # Hard Level
-        if self.difficulty == 1:
-            # Place floor, value sets number of tiles placed
-            for x in range(5):
-                self.game_objects.add(Environment("Ground", (x * 2000, 1055), "Obstacle"))
-            # Left bounds "wall"
-            self.game_objects.add(Environment("TreeTrunk", (000, 800), "Background"))
-            self.game_objects.add(Environment("TreeCrown", (000, 405), "Obstacle"))
-            self.game_objects.add(Environment("TreeCrown", (-200, 935), "Obstacle"))
-
-            # Launch brick
-            self.game_objects.add(Environment("Brick", (960, 1015), "Brick"))
-
-            # Bush
-            self.game_objects.add(Environment("TreeCrown", (500, 935), "Obstacle"))
-
-            # Tree patch
-            self.game_objects.add(Environment("TreeTrunk", (1910, 780), "Background"))
-            self.game_objects.add(Environment("TreeTrunk", (2330, 780), "Background"))
-            self.game_objects.add(Environment("TreeTrunk", (1700, 800), "Background"))
-            self.game_objects.add(Environment("TreeCrown", (1700, 395), "Obstacle"))
-            self.game_objects.add(Environment("TreeTrunk", (2560, 800), "Background"))
-            self.game_objects.add(Environment("TreeCrown", (2560, 405), "Obstacle"))
-            self.game_objects.add(Environment("TreeTrunk", (2120, 790), "Background"))
-            self.game_objects.add(Environment("TreeCrown", (2120, 405), "Obstacle"))
-
-            # Ammo dump under tree
-            self.game_objects.add(Environment("TreeTrunk", (3500, 790), "Background"))
-            self.game_objects.add(Environment("TreeCrown", (3500, 405), "Obstacle"))
-            self.game_objects.add(Environment("AmmoDump(Shells)", (3500, 955), "Obstacle"))
-
-            # Ammo dump between bushes
-            self.game_objects.add(Environment("AmmoDump(Shells)", (4750, 955), "Obstacle"))
-            self.game_objects.add(Environment("TreeCrown", (4400, 935), "Obstacle"))
-            self.game_objects.add(Environment("TreeCrown", (5100, 935), "Obstacle"))
-
-            # Tree
-            self.game_objects.add(Environment("TreeTrunk", (5860, 790), "Background"))
-            self.game_objects.add(Environment("TreeCrown", (5860, 405), "Obstacle"))
-
-            # Jammer + right bounds "wall"
-            self.game_objects.add(Environment("TreeTrunk", (6860, 790), "Background"))
-            self.game_objects.add(Environment("TreeCrown", (6860, 405), "Obstacle"))
-            self.game_objects.add(Environment("AmmoDump(Shells)", (6710, 955), "Obstacle"))
-            self.game_objects.add(Environment("TreeCrown", (7000, 935), "Obstacle"))
-            self.main_objective_object = Jammer((6500, 905))
-            self.main_objective_object.main_objective = True
-            self.game_objects.add(self.main_objective_object)
-
-        
-        self.game_objects.add(Player())
-        Player().initialize_values()
-        # self.gameObjects.add(Environment("DetonationDecal", 0, 850))
+        LevelLoader().load_level(0)
 
     def update_fps(self):
         fps = str(int(self._clock.get_fps()))
