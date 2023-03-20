@@ -101,6 +101,8 @@ class MenuHandler(metaclass=Singleton):
         if GameWorld().difficulty == 0:
             return "DIFFICULTY: EASY"
         elif GameWorld().difficulty == 1:
+            return "DIFFICULTY: MEDIUM"
+        elif GameWorld().difficulty == 2:
             return "DIFFICULTY: HARD"
 
 

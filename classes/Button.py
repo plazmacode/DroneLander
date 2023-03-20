@@ -11,7 +11,7 @@ class Button():
         self.color = color
         self.hover_color = hover_color
         self.rect = rect
-        self._font = pygame.font.SysFont(None, 48)
+        self._font = pygame.font.SysFont(None, 40)
         self.surface = self._font.render(str(text), True, (255, 255, 255))
         self.action = action
         self.old_mouse_state = pygame.MOUSEBUTTONUP

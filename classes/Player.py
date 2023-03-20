@@ -137,6 +137,8 @@ class Player(GameObject):
         if GameWorld().difficulty == 0:
             self.grenades = 6
         if GameWorld().difficulty == 1:
+            self.grenades = 3
+        if GameWorld().difficulty == 2:
             self.grenades = 0
 
         # adds level specific grenade amounts

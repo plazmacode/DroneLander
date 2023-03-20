@@ -35,14 +35,17 @@ class ButtonActions(metaclass=Singleton):
             MenuHandler().select_level()
 
         if action == "changeDifficulty":
+            GameWorld().difficulty += 1
+
+            if GameWorld().difficulty > 2:
+                GameWorld().difficulty = 0
+
             if GameWorld().difficulty == 0:
-                button.surface = button._font.render(str("DIFFICULTY: HARD"), True, (255, 255, 255))
-                GameWorld().difficulty = 1
-                GameWorld().difficulty = 1
-            elif GameWorld().difficulty == 1:
                 button.surface = button._font.render(str("DIFFICULTY: EASY"), True, (255, 255, 255))
-                GameWorld().difficulty = 0
-                GameWorld().difficulty = 0
+            elif GameWorld().difficulty == 1:
+                button.surface = button._font.render(str("DIFFICULTY: MEDIUM"), True, (255, 255, 255))
+            elif GameWorld().difficulty == 2:
+                button.surface = button._font.render(str("DIFFICULTY: HARD"), True, (255, 255, 255))
 
         if action == "nextLevel":
             LevelLoader().next_level()
