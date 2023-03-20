@@ -257,6 +257,10 @@ class GameWorld(metaclass=Singleton):
         # attack_text = self._font.render("WE JAMMING: " + str(self.jamming), True, (0, 0, 0)) 
         # objective_text = self._font.render("MAIN OBJECTIVE COMPLETED: " + str(self.main_objective_completed), True, (0, 0, 0)) 
         # player_angle_text = self._font.render("ANGLE: " + str(Player().angle), True, (0, 0, 0)) 
+        player_directionx_text = self._font.render("Direction.x: " + str(Player().direction.x), True, (0, 0, 0)) 
+        player_directiony_text = self._font.render("Direction.y: " + str(Player().direction.y), True, (0, 0, 0))
+        player_velocityx_text = self._font.render("Velocity.x: " + str(Player().velocity.x), True, (0, 0, 0)) 
+        player_velocityy_text = self._font.render("Velocity.y: " + str(Player().velocity.y), True, (0, 0, 0))
 
         # only update level time when playing
         if self.game_state == "PLAY":
@@ -285,6 +289,10 @@ class GameWorld(metaclass=Singleton):
             # self._screen.blit(attack_text, (100, 200))
             # self._screen.blit(objective_text, (100, 300))
             # self._screen.blit(player_angle_text, (100, 400))
+            self._screen.blit(player_directionx_text, (100, 200))
+            self._screen.blit(player_directiony_text, (100, 300))
+            self._screen.blit(player_velocityx_text, (100, 400))
+            self._screen.blit(player_velocityy_text, (100, 500))
 
         if self.too_high == True:
             self._screen.blit(too_high_text, (self.screen_width / 2 - too_high_text.get_width() / 2, self.screen_height / 2 - too_high_text.get_height() / 2))

@@ -56,6 +56,10 @@ class Player(GameObject):
         self.servo_start_time = 0
 
         self.release_sound = pygame.mixer.Sound("./sounds/release.wav")
+
+        # DEBUG
+        self.direction = pygame.math.Vector2(0,0)
+        self.velocity = pygame.math.Vector2(0,0)
         
     #initialize values that are shared between first instantiation and when respawning
     def initialize_values(self):
@@ -64,8 +68,8 @@ class Player(GameObject):
         """
         self.rect.center = (960, 950)
         self.angle = 0
-        self.direction = pygame.math.Vector2(0,0)
-        self.velocity = pygame.math.Vector2(0,0)
+        self.direction = pygame.math.Vector2(0, 0)
+        self.velocity = pygame.math.Vector2(0, 0)
         self.keys = pygame.key.get_pressed()
         self.oldKeys = pygame.key.get_pressed()
         self.can_attack = True
@@ -93,6 +97,7 @@ class Player(GameObject):
             self.keys = pygame.key.get_pressed()
             from classes.GameWorld import GameWorld
             if self.keys[pygame.K_w] and GameWorld().main_objective_completed == False:
+                self.velocity.y = -5
                 self.player_frozen = False
 
         # Freezes player movement, used before and after gameplay starts
@@ -195,7 +200,7 @@ class Player(GameObject):
         self.input_handler()
 
         # gravity
-        self.rect.y += 2
+        self.rect.y += 5
 
         # lock angle to 360 degrees, prevents angles like 1591 degrees
         self.angle %= 360
@@ -209,14 +214,17 @@ class Player(GameObject):
         self.mask = pygame.mask.from_surface(self.image) 
 
 
-        self.rect.move_ip(0, self.direction.y * self.velocity.y)
-        self.velocity.y -= 0.1
+        # self.rect.move_ip(0, self.direction.y * self.velocity.y)
+        self.rect.move_ip(0, self.velocity.y)
         if self.velocity.y < 0:
-            self.velocity.y = 0
+            self.velocity.y += 0.25
+        elif self.velocity.y > 0:
+            self.velocity.y -= 0.25
 
-        self.velocity.x -= 0.1
         if self.velocity.x < 0:
-            self.velocity.x = 0
+            self.velocity.x += 0.1
+        elif self.velocity.x > 0:
+            self.velocity.x -= 0.1
 
     def move_camera(self):
         """
@@ -224,8 +232,10 @@ class Player(GameObject):
         """
         from classes.GameWorld import GameWorld
         # call move_camera() with our x velocity to change the camera position
-        GameWorld().move_camera(self.direction.x * self.velocity.x)
-        Parallax().move_parallax(self.direction.x * self.velocity.x)
+        # GameWorld().move_camera(self.direction.x * self.velocity.x)
+        # Parallax().move_parallax(self.direction.x * self.velocity.x)
+        GameWorld().move_camera(self.velocity.x)
+        Parallax().move_parallax(self.velocity.x)
 
     def animate(self):
         """
@@ -266,7 +276,11 @@ class Player(GameObject):
         self.direction = pygame.math.Vector2(0, -1)
         self.direction.rotate_ip(-self.angle)
 
-        self.velocity = pygame.math.Vector2(8,8)
+        if abs(self.velocity.x) < 20:
+            self.velocity.x = self.velocity.x + 0.8 * self.direction.x
+        if abs(self.velocity.y) < 15:
+            self.velocity.y = self.velocity.y + 0.8 * self.direction.y
+
 
     def attack(self):
         """
@@ -274,7 +288,7 @@ class Player(GameObject):
         """
         if self.grenades > 0:
             from classes.GameWorld import GameWorld
-            g = Grenade((self.rect.center[0], self.rect.center[1]), self.direction, self.velocity)
+            g = Grenade((self.rect.center[0], self.rect.center[1]), self.velocity.x, self.velocity.y)
             self.grenades -= 1
             GameWorld().grenades = self.grenades
             GameWorld().instantiate(g)
