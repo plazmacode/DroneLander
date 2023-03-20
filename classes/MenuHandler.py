@@ -37,6 +37,7 @@ class MenuHandler(metaclass=Singleton):
             GameWorld().mixer.music.play(-1)
         GameWorld().buttons.clear()
         GameWorld().game_objects = pygame.sprite.Group()
+        GameWorld().tutorial_text = pygame.sprite.Group()
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 300, 300, 80), "PLAY", "play"))
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 420, 300, 80), "OPTIONS", "options"))
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 540, 300, 80), "QUIT", "quit"))

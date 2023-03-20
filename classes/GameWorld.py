@@ -3,7 +3,7 @@ import math
 from classes.Environment import Environment
 from classes.Jammer import Jammer
 from classes.Player import Player
-from classes.Button import Button
+from classes.TutorialText import TutorialText
 from classes.TextField import TextField
 from classes.Jam import Jam
 from classes.Parallax import Parallax
@@ -36,6 +36,7 @@ class GameWorld(metaclass=Singleton):
         self.difficulty = 0
         self.game_objects = pygame.sprite.Group()
         self.new_game_objects = pygame.sprite.Group()
+        self.tutorial_text = pygame.sprite.Group()
         self.buttons = []
         self.mixer = pygame.mixer
         self.jamming = False
@@ -64,6 +65,7 @@ class GameWorld(metaclass=Singleton):
         self.level_time = 0
         self.level_start_time = pygame.time.get_ticks()
         self.game_objects = pygame.sprite.Group()
+        self.tutorial_text = pygame.sprite.Group()
 
         GameWorld().buttons.append(TextField((34, 42, 104), (self.screen_width / 2, 200), "Score: " + str(GameWorld().score), 48, "score"))
 
@@ -83,6 +85,16 @@ class GameWorld(metaclass=Singleton):
 
             # Launch brick
             self.game_objects.add(Environment("Brick", (960, 1015), "Brick"))
+
+            # Tutorial Text
+            self.tutorial_text.add(TutorialText("Press W to thrust, Press A or D to rotate", (600, 800)))
+            self.tutorial_text.add(TutorialText("Press SPACE to release grenades", (600, 850)))
+            self.tutorial_text.add(TutorialText("Destroy side objective to earn score", (1800, 800)))
+            self.tutorial_text.add(TutorialText("This is the main objective, destroy it and fly back", (3500, 800)))
+            self.tutorial_text.add(TutorialText("Height limit above this text", (600, 250)))
+
+            # See TutorialText.py 
+            self.tutorial_text.add(TutorialText("Main objective completed land here", (600, 1000)))
 
             # Tree
             self.game_objects.add(Environment("TreeTrunk", (1500, 800), "Background"))
@@ -199,7 +211,9 @@ class GameWorld(metaclass=Singleton):
 
         self.game_objects.update()
         self.collision_check()
-        
+
+        self.tutorial_text.update()
+
         Jam().update()
         Parallax().update()
 
@@ -214,6 +228,9 @@ class GameWorld(metaclass=Singleton):
         for go in self.game_objects:
             if go.tag != "Player":
                 go.rect.move_ip(-x, 0)
+
+        for text in self.tutorial_text:
+            text.rect.move_ip(-x, 0)
 
     def collision_check(self):
         """
@@ -285,6 +302,9 @@ class GameWorld(metaclass=Singleton):
             # self._screen.blit(attack_text, (100, 200))
             # self._screen.blit(objective_text, (100, 300))
             # self._screen.blit(player_angle_text, (100, 400))
+
+        for text in self.tutorial_text:
+            text.draw(self._screen)
 
         if self.too_high == True:
             self._screen.blit(too_high_text, (self.screen_width / 2 - too_high_text.get_width() / 2, self.screen_height / 2 - too_high_text.get_height() / 2))
