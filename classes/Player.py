@@ -310,6 +310,7 @@ class Player(GameObject):
             from classes.Explosion import Explosion
             GameWorld().too_high = False
             GameWorld().instantiate(Explosion(self.rect.center, 300))
+            GameWorld().endscreen_string = "SHOTDOWN"
             self.on_death()
 
         # Counts down as long as timer is above 0

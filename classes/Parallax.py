@@ -70,10 +70,17 @@ class Parallax(metaclass = Singleton):
             self.layer3_scroll += self.layer3.get_width()
 
     def draw(self, screen):
+        from classes.GameWorld import GameWorld
         i = 0
 
         while (i < self.tiles):
-            screen.blit(self.layer1, (-self.layer1.get_width() + self.layer1.get_width() * i + self.layer1_scroll, self.layer1_height))
-            screen.blit(self.layer2, (-self.layer2.get_width() + self.layer2.get_width() * i + self.layer2_scroll, self.layer2_height))
-            screen.blit(self.layer3, (-self.layer3.get_width() + self.layer3.get_width() * i + self.layer3_scroll, self.layer3_height))
+            if GameWorld().game_state == "MENU":
+
+                # screen.blit(self.layer1, (-self.layer1.get_width() + self.layer1.get_width() * i + self.layer1_scroll, self.layer1_height))
+                screen.blit(self.layer2, (-self.layer2.get_width() + self.layer2.get_width() * i + self.layer2_scroll, self.layer2_height))
+                screen.blit(self.layer3, (-self.layer3.get_width() + self.layer3.get_width() * i + self.layer3_scroll, self.layer3_height))
+            else:
+                screen.blit(self.layer1, (-self.layer1.get_width() + self.layer1.get_width() * i + self.layer1_scroll, self.layer1_height))
+                screen.blit(self.layer2, (-self.layer2.get_width() + self.layer2.get_width() * i + self.layer2_scroll, self.layer2_height))
+                screen.blit(self.layer3, (-self.layer3.get_width() + self.layer3.get_width() * i + self.layer3_scroll, self.layer3_height))
             i += 1

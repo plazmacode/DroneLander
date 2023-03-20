@@ -29,6 +29,8 @@ class GameWorld(metaclass=Singleton):
         self.endscreen_string = "you suck"
         self.background_image = pygame.image.load("./images/Sky.png").convert_alpha()
         self.background_image = pygame.transform.scale(self.background_image, (1920, 1080))
+        self.field_image = pygame.image.load("./images/Field.png").convert_alpha()
+        self.field_image = pygame.transform.scale(self.field_image, (1920, 600))
         self.background_rect = self.background_image.get_rect()
         self.grenades = 0
         self.difficulty = 0
@@ -267,6 +269,9 @@ class GameWorld(metaclass=Singleton):
 
         # if self.game_state == "SCORESCREEN":
         #     self._screen.blit(endscreen_text, ((self.screen_width - endscreen_text.get_width()) // 2, 500))
+        
+        if self.game_state == "MENU":
+            self._screen.blit(self.field_image, (0, 500))
 
         if self.game_state == "PLAY" or self.game_state == "SCORESCREEN":
             # draw noise
