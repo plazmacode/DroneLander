@@ -50,12 +50,11 @@ class ButtonActions(metaclass=Singleton):
         if action == "restartLevel":
             GameWorld().start_game()
 
-        if action == "level1":
-            LevelLoader().current_level = 1
-            LevelLoader().load_level(0)
-
-        if action == "level2":
-            LevelLoader().current_level = 2
+        if "loadLevel" in action:
+            # if action contains "loadLevel" use the number to load that level
+            # loadLevel1, loadLevel2 etc.
+            level = int(action.replace("loadLevel", ""))
+            LevelLoader().current_level = level
             LevelLoader().load_level(0)
 
         # toggle sound and update button text
