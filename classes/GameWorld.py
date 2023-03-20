@@ -257,6 +257,11 @@ class GameWorld(metaclass=Singleton):
         for game_object in self.game_objects:
             game_object.draw(self._screen)
 
+        # alternative draw code, run in profiler to check performance
+        # for sprite in self.game_objects:
+        #     if abs(sprite.rect.x) < (self.screen_width):
+        #         sprite.draw(self._screen) 
+
         if self.game_state == "SCORESCREEN":
             self._screen.blit(endscreen_text, ((self.screen_width - endscreen_text.get_width()) // 2, 500))
 
