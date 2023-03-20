@@ -46,7 +46,8 @@ class LevelLoader(metaclass=Singleton):
             case _ if value > self.max_levels:
                 # if we are at max levels
                 # remember to update
-                self.load_level(self.current_level)
+                self.load_level(self.max_levels)
+                self.current_level = self.max_levels
             case _:
                 # python uses "_" for default case
                 # default case laods current level
@@ -74,6 +75,7 @@ class LevelLoader(metaclass=Singleton):
         GameWorld().tutorial_text = pygame.sprite.Group()
 
         GameWorld().buttons.append(TextField((34, 42, 104), (GameWorld().screen_width / 2, 200), "Score: " + str(GameWorld().score), 48, "score"))
+        GameWorld().buttons.append(TextField((34, 42, 104), (GameWorld().screen_width - 400, 60), "Level: " + str(LevelLoader().current_level), 48, "level"))
         
         # Resets parallax
         Parallax().reset_position()
