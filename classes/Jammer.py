@@ -5,20 +5,35 @@ from classes.Jam import Jam
 from abc import ABC, abstractclassmethod
 
 class Jammer(GameObject):
-    def __init__(self, centerInput) -> None:
+    def __init__(self, centerInput, range) -> None:
         super().__init__()
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load("./images/Jammer.png").convert_alpha()  
         self.image = pygame.transform.scale(self.image, (self.image.get_width() * 10, self.image.get_height() * 10))
-        self.rect = self.image.get_rect(center = centerInput)
+        self.rect = self.image.get_rect(center=centerInput)
         self.tag = "Jammer"
-        self.attack_range = 500
+        self.attack_range = range
         self.attack_cooldown = 1500 # time before the player input is jammed
         self.current_attack_time = 0
         self.attacking = False
         self.jam_sound = pygame.mixer.Sound("./sounds/noise2.wav")
         self.is_alive = True
         self.mask = pygame.mask.from_surface(self.image)
+
+        # Create a surface to hold the jammer image and jammer radius
+        self.surface = pygame.Surface((range * 2, range * 2), pygame.SRCALPHA)
+        self.rect = self.image.get_rect(center=(centerInput[0] - 250, centerInput[1] -250))
+        
+        # Draw the jammer  circle onto the surface
+        pygame.draw.circle(self.surface, (255, 0, 0, 50), (range, range), range)
+        
+        # Draw the jammer image onto the surface
+        self.surface.blit(self.image, (range - self.image.get_width() / 2, range - self.image.get_height() / 2))
+
+        # set the surface_rect to move the surface
+        # set the rect again to fix collision with jammer tower.
+        self.surface_rect = self.surface.get_rect(center = centerInput)
+        self.rect = self.image.get_rect(center=centerInput)
 
     def update(self):
         self.attack()
@@ -27,7 +42,7 @@ class Jammer(GameObject):
         from classes.GameWorld import GameWorld
 
         # get distance between jammer and player
-        distance = pygame.math.Vector2(self.rect.x, self.rect.y).distance_to(Player().rect.center)
+        distance = pygame.math.Vector2(self.surface_rect.center).distance_to(Player().rect.center)
 
         # player inside jammer range
         if distance <= self.attack_range and self.is_alive == True:
@@ -59,14 +74,7 @@ class Jammer(GameObject):
         GameWorld().jamming = self.attacking
         
     def draw(self, screen):
-        from classes.GameWorld import GameWorld
-        screen.blit(self.image, pygame.Rect(self.rect.x, self.rect.y, self.rect.width, self.rect.height))
-
-        
-        # jammer debug circle
-        # surface = pygame.Surface((GameWorld().screen_width, GameWorld().screen_height), pygame.SRCALPHA)
-        # pygame.draw.circle(surface, (255, 0, 0, 50), (self.rect.center[0], self.rect.center[1]), 500)
-        # screen.blit(surface, (0, 0))
+        screen.blit(self.surface, self.surface_rect)
 
     def on_collision(self, other):
         from classes.GameWorld import GameWorld
@@ -74,9 +82,7 @@ class Jammer(GameObject):
             # add score and objectives completed
             GameWorld().objectives_completed += 1
             GameWorld().score += 1000
-            
-            update_score_event = pygame.event.Event(pygame.USEREVENT + 1)
-            pygame.event.post(update_score_event)
+
             # reset jammer values to stop jamming effect
             pygame.mixer.Sound.stop(self.jam_sound)
             Jam().alpha = 0

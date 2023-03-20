@@ -114,10 +114,11 @@ class GameWorld(metaclass=Singleton):
         """
         Moves everything except Player in x-axis according to Player movement
         """
-        #it works first try wow
         for go in self.game_objects:
             if go.tag != "Player":
                 go.rect.move_ip(-x, 0)
+            if go.tag == "Jammer":
+                go.surface_rect.move_ip(-x, 0)
 
         for text in self.tutorial_text:
             text.rect.move_ip(-x, 0)
