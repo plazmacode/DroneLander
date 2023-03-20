@@ -310,7 +310,11 @@ class Player(GameObject):
             from classes.Explosion import Explosion
             GameWorld().too_high = False
             GameWorld().instantiate(Explosion(self.rect.center, 300))
-            GameWorld().endscreen_string = "SHOTDOWN"
+
+            if GameWorld().main_objective_completed == True:
+                GameWorld().endscreen_string = "MISSION COMPLETE DRONE SHOT DOWN"
+            else:
+                GameWorld().endscreen_string = "SHOT DOWN"
             self.on_death()
 
         # Counts down as long as timer is above 0
