@@ -148,13 +148,13 @@ class Player(GameObject):
         """
         Player collision
         """
-        if other.tag == "Obstacle" or other.tag == "Explosion":
-            self.on_death()
+        if other.tag == "Obstacle" or other.tag == "Explosion":           
             from classes.GameWorld import GameWorld
             if GameWorld().main_objective_completed == True:
                 GameWorld().endscreen_string = "MISSION COMPLETE DRONE LOST"
             else:
                 GameWorld().endscreen_string = "MISSION FAILED"
+            self.on_death()
         
         # Ends the game in a win if the main objective is complete before landing
         if other.tag == "Brick" and self.game_won == False:
@@ -166,12 +166,12 @@ class Player(GameObject):
                     self.player_frozen = True
 
                     from classes.MenuHandler import MenuHandler
+                    GameWorld().endscreen_string = "MISSION COMPLETE"
                     MenuHandler().score_screen()
                     GameWorld().get_final_score()
-                    GameWorld().endscreen_string = "MISSION COMPLETE"
                 else:
-                    self.on_death()
                     GameWorld().endscreen_string = "CRASHED ON LANDING"
+                    self.on_death()
                 
 
     def on_death(self):
@@ -310,6 +310,11 @@ class Player(GameObject):
             from classes.Explosion import Explosion
             GameWorld().too_high = False
             GameWorld().instantiate(Explosion(self.rect.center, 300))
+
+            if GameWorld().main_objective_completed == True:
+                GameWorld().endscreen_string = "MISSION COMPLETE DRONE SHOT DOWN"
+            else:
+                GameWorld().endscreen_string = "SHOT DOWN"
             self.on_death()
 
         # Counts down as long as timer is above 0

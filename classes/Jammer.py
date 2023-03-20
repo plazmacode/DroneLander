@@ -74,7 +74,9 @@ class Jammer(GameObject):
             # add score and objectives completed
             GameWorld().objectives_completed += 1
             GameWorld().score += 1000
-
+            
+            update_score_event = pygame.event.Event(pygame.USEREVENT + 1)
+            pygame.event.post(update_score_event)
             # reset jammer values to stop jamming effect
             pygame.mixer.Sound.stop(self.jam_sound)
             Jam().alpha = 0

@@ -1,5 +1,6 @@
 import pygame
 from classes.Button import Button
+from classes.TextField import TextField
 from classes.GameWorld import GameWorld
 
 button_color = (34, 42, 104)
@@ -71,6 +72,8 @@ class MenuHandler(metaclass=Singleton):
         """
         GameWorld().buttons.clear()
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 660, 300, 80), "CONTINUE", "endMenu"))
+        GameWorld().buttons.append(TextField(button_color, (self._screen_width / 2, 200), "Score: " + str(GameWorld().score), 48, "score"))
+        GameWorld().buttons.append(TextField(button_color, (self._screen_width / 2, 400), GameWorld().endscreen_string, 48, "endmessage"))
         GameWorld().game_state = "SCORESCREEN"
 
     def get_sound(self):
