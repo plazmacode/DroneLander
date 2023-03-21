@@ -152,7 +152,7 @@ class GameWorld(metaclass=Singleton):
         Main draw
         """
         # Clear the screen
-        self._screen.fill((63, 153, 249))
+        # self._screen.fill((63, 153, 249))
         self._screen.blit(self.background_image, self.background_rect)
 
         # draw background with parallax
