@@ -42,7 +42,6 @@ class LevelLoader(metaclass=Singleton):
                 self.load_level1()
             case 2:
                 self.load_level2()
-
             case 3:
                 self.load_level3()
             case 4:
@@ -92,6 +91,10 @@ class LevelLoader(metaclass=Singleton):
         from classes.GameWorld import GameWorld
 
         self.grenade_count = 2
+
+        # Set level bounds
+        Player().left_bound = 0
+        Player().right_bound = 4000
 
         # Place floor, value sets number of tiles placed
         for x in range(5):

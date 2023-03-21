@@ -45,8 +45,11 @@ class GameWorld(metaclass=Singleton):
         self.jamming = False
         self.game_state = "MENU"
         self.score = 0
+
         self.too_high = False
         self.death_timer = 3
+        self.outside_level = False
+        self.ol_death_timer = 3
         
         self.objectives_compeleted = 0
         self.main_objective_completed = False
@@ -160,6 +163,7 @@ class GameWorld(metaclass=Singleton):
 
         grenade_text = self._font.render("Grenades: " + str(self.grenades), True, (0, 0, 0))
         too_high_text = self._font.render("GET DOWN! " + str(int(self.death_timer + 1)), True, (0, 0, 0))
+        outside_level_text = self._font.render("RETURN TO THE BATTLEFIELD! " + str(int(self.ol_death_timer + 1)), True, (0, 0, 0))
         # endscreen_text = self._font.render(self.endscreen_string, True, (0, 0, 0))
         # score_text = self._font.render("Score: " + str(self.score), True, (0, 0, 0))
 
@@ -209,6 +213,8 @@ class GameWorld(metaclass=Singleton):
 
         if self.too_high == True:
             self._screen.blit(too_high_text, (self.screen_width / 2 - too_high_text.get_width() / 2, self.screen_height / 2 - too_high_text.get_height() / 2))
+        if self.outside_level == True:
+            self._screen.blit(outside_level_text, (self.screen_width / 2 - outside_level_text.get_width() / 2, self.screen_height / 2 - outside_level_text.get_height() / 2 - 100))
 
         for button in self.buttons:
             button.draw(self._screen)
