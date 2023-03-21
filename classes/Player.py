@@ -295,12 +295,14 @@ class Player(GameObject):
         """
         if self.grenades > 0:
             from classes.GameWorld import GameWorld
+            from classes.MenuHandler import MenuHandler
             g = Grenade((self.rect.center[0], self.rect.center[1]), self.velocity.x, self.velocity.y)
             self.grenades -= 1
             GameWorld().grenades = self.grenades
             GameWorld().instantiate(g)
             self.can_attack = False
-            pygame.mixer.Sound.play(self.release_sound)
+            if Player().is_alive and MenuHandler().sound_enabled:
+                pygame.mixer.Sound.play(self.release_sound)
             
 
     def checkHeight(self):
