@@ -49,7 +49,7 @@ class Jammer(GameObject):
             if self.attacking == False:
                 self.attack_start = pygame.time.get_ticks()
                 self.attacking = True
-                Jam().alpha = 128
+                Jam().active_jammers.append(self)
                 from classes.MenuHandler import MenuHandler
                 if Player().is_alive and MenuHandler().sound_enabled:
                     pygame.mixer.Sound.play(self.jam_sound)
@@ -59,10 +59,10 @@ class Jammer(GameObject):
             Player().can_input = True
             self.attacking = False
             self.current_attack_time = 0
-            Jam().alpha = 0
+            Jam().remove(self)
             pygame.mixer.Sound.stop(self.jam_sound)
         if Player().is_alive == False:
-            Jam().alpha = 0
+            Jam().remove(self)
             pygame.mixer.Sound.stop(self.jam_sound)
 
         # if player has been jammed for attack_cooldown milliseconds
@@ -85,7 +85,7 @@ class Jammer(GameObject):
 
             # reset jammer values to stop jamming effect
             pygame.mixer.Sound.stop(self.jam_sound)
-            Jam().alpha = 0
+            Jam().remove(self)
             self.is_alive = False
             self.kill()
             Player().can_input = True

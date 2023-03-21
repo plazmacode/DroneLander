@@ -15,6 +15,7 @@ class Jam(metaclass=Singleton):
         self.noise_images = self.load_noise(("./images/noise1small.png", "./images/noise2small.png", "./images/noise3small.png"), 6)
         self.current_noise = 0
         self.alpha = 0
+        self.active_jammers = []
 
     def update(self):                
         # animate noise
@@ -22,6 +23,15 @@ class Jam(metaclass=Singleton):
         if self.current_noise > len(self.noise_images) -1:
             self.current_noise = 0
 
+        if len(self.active_jammers) > 0:
+            self.alpha = 128
+        else:
+            self.alpha = 0
+
+
+    def remove(self, jammer):
+        if jammer in self.active_jammers:
+                self.active_jammers.remove(jammer)
 
     def draw(self, screen):
         # draw noise

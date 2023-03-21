@@ -130,10 +130,10 @@ class LevelLoader(metaclass=Singleton):
 
     def load_level2(self):
         from classes.GameWorld import GameWorld
-        # Place floor, value sets number of tiles placed
 
         self.grenade_count = 4
 
+        # Place floor, value sets number of tiles placed
         for x in range(5):
             GameWorld().game_objects.add(Environment("Ground", (x * 2000, 1055), "Obstacle"))
         # Left bounds "wall"
@@ -182,11 +182,11 @@ class LevelLoader(metaclass=Singleton):
 
     def load_level3(self):
         from classes.GameWorld import GameWorld
-        # Place floor, value sets number of tiles placed
 
         self.grenade_count = 4
 
-        for x in range(5):
+        # Place floor, value sets number of tiles placed
+        for x in range(7):
             GameWorld().game_objects.add(Environment("Ground", (x * 2000, 1055), "Obstacle"))
         # Left bounds "wall"
         GameWorld().game_objects.add(Environment("TreeTrunk", (000, 800), "Background"))
@@ -201,6 +201,18 @@ class LevelLoader(metaclass=Singleton):
         # Launch brick
         GameWorld().game_objects.add(Environment("Brick", (960, 1015), "Brick"))
 
-        GameWorld().main_objective_object = Jammer((1800, 905), 500)
+        GameWorld().game_objects.add(Jammer((2400, 905), 500))
+
+        GameWorld().game_objects.add(Jammer((3400, 905), 800))
+
+        GameWorld().game_objects.add(Jammer((5400, 905), 1000))
+
+
+        #main objective and right bounds
+        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (9680, 955), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeTrunk", (10300, 790), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (10300, 405), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (10440, 935), "Obstacle"))
+        GameWorld().main_objective_object = Jammer((10000, 905), 1300)
         GameWorld().main_objective_object.main_objective = True
         GameWorld().game_objects.add(GameWorld().main_objective_object)
