@@ -37,7 +37,6 @@ class Player(GameObject):
         self.mask = pygame.mask.from_surface(self.base_images[0])
         self.current_image = 0
         self.rect = self.image.get_rect()
-        self.virtual_player_position_x = 960
         self.tag = "Player"
         self.rotation_speed = 4
         self.angle = 0
@@ -58,9 +57,6 @@ class Player(GameObject):
 
         self.release_sound = pygame.mixer.Sound("./sounds/release.wav")
 
-        self.left_bound = -2000
-        self.right_bound = 10000
-
         # DEBUG
         self.direction = pygame.math.Vector2(0,0)
         self.velocity = pygame.math.Vector2(0,0)
@@ -74,8 +70,6 @@ class Player(GameObject):
         self.angle = 0
         self.direction = pygame.math.Vector2(0, 0)
         self.velocity = pygame.math.Vector2(0, 0)
-        self.virtual_player_position_x = 960
-
         self.keys = pygame.key.get_pressed()
         self.oldKeys = pygame.key.get_pressed()
         self.can_attack = True
@@ -83,16 +77,9 @@ class Player(GameObject):
         self.load_difficulty()
         from classes.GameWorld import GameWorld
         GameWorld().grenades = self.grenades
-
-
         self.too_high = False
         self.death_timer = 3
         self.reset_timer = 3
-
-        self.outside_level = False
-        self.ol_death_timer = 5
-        self.ol_reset_timer = 5
-
         self.is_alive = True
         self.game_won = False
 
@@ -121,7 +108,6 @@ class Player(GameObject):
 
         self.animate()
         self.checkHeight()
-        self.checkBounds()
     
     def play_sound(self):
         # loop code 1
@@ -227,6 +213,7 @@ class Player(GameObject):
         # update mask for pixel collision
         self.mask = pygame.mask.from_surface(self.image) 
 
+
         # self.rect.move_ip(0, self.direction.y * self.velocity.y)
         self.rect.move_ip(0, self.velocity.y)
         if self.velocity.y < 0:
@@ -238,8 +225,6 @@ class Player(GameObject):
             self.velocity.x += 0.1
         elif self.velocity.x > 0:
             self.velocity.x -= 0.1
-        
-        self.virtual_player_position_x += self.velocity.x
 
     def move_camera(self):
         """
@@ -327,25 +312,7 @@ class Player(GameObject):
         # Runs the countdown as long as the Player is too high up
         if self.too_high == True:
             GameWorld().too_high = True
-            self.count_death()
-
-    def checkBounds(self):
-        """
-        Check to see if Player is outside the level
-        """
-        from classes.GameWorld import GameWorld
-        # Start a new countdown if the Player gets outside the level
-        if self.virtual_player_position_x < self.left_bound and self.outside_level == False or self.virtual_player_position_x > self.right_bound and self.outside_level == False:
-            self.outside_level = True
-            self.ol_death_timer = self.ol_reset_timer
-        elif self.virtual_player_position_x >= self.left_bound and self.virtual_player_position_x <= self.right_bound:
-            self.outside_level = False
-            GameWorld().outside_level = False
-        
-        # Runs the countdown as long as the Player is outside the level
-        if self.outside_level == True:
-            GameWorld().outside_level = True
-            self.ol_count_death()
+            self.count_death()     
 
     def count_death(self):
         """
@@ -369,26 +336,3 @@ class Player(GameObject):
             from classes.GameWorld import GameWorld
             self.death_timer -= GameWorld().delta_time
             GameWorld().death_timer = self.death_timer
-
-    def ol_count_death(self):
-        """
-        Counts down and kills Player when outside the level for too long
-        """
-        # Kills the Player when the timer hits 0
-        if self.ol_death_timer <= 0:
-            from classes.GameWorld import GameWorld
-            from classes.Explosion import Explosion
-            GameWorld().outside_level = False
-            GameWorld().instantiate(Explosion(self.rect.center, 300))
-
-            if GameWorld().main_objective_completed == True:
-                GameWorld().endscreen_string = "MISSION COMPLETE DRONE LOST"
-            else:
-                GameWorld().endscreen_string = "MISSION FAILED"
-            self.on_death()
-
-        # Counts down as long as timer is above 0
-        else:
-            from classes.GameWorld import GameWorld
-            self.ol_death_timer -= GameWorld().delta_time
-            GameWorld().ol_death_timer = self.ol_death_timer
