@@ -3,10 +3,13 @@ import math
 from classes.Environment import Environment
 from classes.Jammer import Jammer
 from classes.Player import Player
-from classes.Button import Button
+from classes.TutorialText import TutorialText
 from classes.TextField import TextField
 from classes.Jam import Jam
 from classes.Parallax import Parallax
+from classes.LevelLoader import LevelLoader
+from classes.GameObject import GameObject
+#from profilehooks import profile
 
 class Singleton(type):
     _instances = {}
@@ -15,7 +18,7 @@ class Singleton(type):
         if cls not in cls._instances:
             cls._instances[cls] = super().__call__(*args, **kwargs)
         return cls._instances[cls]
-
+    
 class GameWorld(metaclass=Singleton):
     def __init__(self):
         pygame.init()
@@ -36,6 +39,7 @@ class GameWorld(metaclass=Singleton):
         self.difficulty = 0
         self.game_objects = pygame.sprite.Group()
         self.new_game_objects = pygame.sprite.Group()
+        self.tutorial_text = pygame.sprite.Group()
         self.buttons = []
         self.mixer = pygame.mixer
         self.jamming = False
@@ -43,120 +47,19 @@ class GameWorld(metaclass=Singleton):
         self.score = 0
         self.too_high = False
         self.death_timer = 3
-
+        
         self.objectives_compeleted = 0
         self.main_objective_completed = False
 
         self.level_time = 0
         self.level_start_time = 0
 
+    # obsolete?
     def start_game(self):
         """
         Creates the selected level and starts the game
         """
-        self.game_state = "PLAY"
-        self.buttons.clear()
-
-        self.objectives_completed = 0
-        self.main_objective_completed = False
-
-        self.score = 0
-        self.level_time = 0
-        self.level_start_time = pygame.time.get_ticks()
-        self.game_objects = pygame.sprite.Group()
-
-        GameWorld().buttons.append(TextField((34, 42, 104), (self.screen_width / 2, 200), "Score: " + str(GameWorld().score), 48, "score"))
-
-        
-        # Resets parallax
-        Parallax().reset_position()
-
-        # Easy Level
-        if self.difficulty == 0:
-            # Place floor, value sets number of tiles placed
-            for x in range(5):
-                self.game_objects.add(Environment("Ground", (x * 2000, 1055), "Obstacle"))
-            # Left bounds "wall"
-            self.game_objects.add(Environment("TreeTrunk", (000, 800), "Background"))
-            self.game_objects.add(Environment("TreeCrown", (000, 405), "Obstacle"))
-            self.game_objects.add(Environment("TreeCrown", (-200, 935), "Obstacle"))
-
-            # Launch brick
-            self.game_objects.add(Environment("Brick", (960, 1015), "Brick"))
-
-            # Tree
-            self.game_objects.add(Environment("TreeTrunk", (1500, 800), "Background"))
-            self.game_objects.add(Environment("TreeCrown", (1500, 405), "Obstacle"))
-
-            # First ammo dump
-            self.game_objects.add(Environment("AmmoDump(Shells)", (2200, 955), "Obstacle"))
-
-            # Bush
-            self.game_objects.add(Environment("TreeCrown", (2600, 935), "Obstacle"))
-            self.game_objects.add(Environment("TreeCrown", (2900, 955), "Obstacle"))
-
-            # Last ammo dump (main objective) + right bounds "wall" 
-            self.main_objective_object = Environment("AmmoDump(Shells)", (3800, 955), "Obstacle")
-            self.main_objective_object.main_objective = True
-            self.game_objects.add(self.main_objective_object)
-            self.game_objects.add(Environment("TreeTrunk", (4000, 805), "Background"))
-            self.game_objects.add(Environment("TreeCrown", (4000, 400), "Obstacle"))
-            self.game_objects.add(Environment("TreeCrown", (4250, 955), "Obstacle"))
-
-
-        # Hard Level
-        if self.difficulty == 1:
-            # Place floor, value sets number of tiles placed
-            for x in range(5):
-                self.game_objects.add(Environment("Ground", (x * 2000, 1055), "Obstacle"))
-            # Left bounds "wall"
-            self.game_objects.add(Environment("TreeTrunk", (000, 800), "Background"))
-            self.game_objects.add(Environment("TreeCrown", (000, 405), "Obstacle"))
-            self.game_objects.add(Environment("TreeCrown", (-200, 935), "Obstacle"))
-
-            # Launch brick
-            self.game_objects.add(Environment("Brick", (960, 1015), "Brick"))
-
-            # Bush
-            self.game_objects.add(Environment("TreeCrown", (500, 935), "Obstacle"))
-
-            # Tree patch
-            self.game_objects.add(Environment("TreeTrunk", (1910, 780), "Background"))
-            self.game_objects.add(Environment("TreeTrunk", (2330, 780), "Background"))
-            self.game_objects.add(Environment("TreeTrunk", (1700, 800), "Background"))
-            self.game_objects.add(Environment("TreeCrown", (1700, 395), "Obstacle"))
-            self.game_objects.add(Environment("TreeTrunk", (2560, 800), "Background"))
-            self.game_objects.add(Environment("TreeCrown", (2560, 405), "Obstacle"))
-            self.game_objects.add(Environment("TreeTrunk", (2120, 790), "Background"))
-            self.game_objects.add(Environment("TreeCrown", (2120, 405), "Obstacle"))
-
-            # Ammo dump under tree
-            self.game_objects.add(Environment("TreeTrunk", (3500, 790), "Background"))
-            self.game_objects.add(Environment("TreeCrown", (3500, 405), "Obstacle"))
-            self.game_objects.add(Environment("AmmoDump(Shells)", (3500, 955), "Obstacle"))
-
-            # Ammo dump between bushes
-            self.game_objects.add(Environment("AmmoDump(Shells)", (4750, 955), "Obstacle"))
-            self.game_objects.add(Environment("TreeCrown", (4400, 935), "Obstacle"))
-            self.game_objects.add(Environment("TreeCrown", (5100, 935), "Obstacle"))
-
-            # Tree
-            self.game_objects.add(Environment("TreeTrunk", (5860, 790), "Background"))
-            self.game_objects.add(Environment("TreeCrown", (5860, 405), "Obstacle"))
-
-            # Jammer + right bounds "wall"
-            self.game_objects.add(Environment("TreeTrunk", (6860, 790), "Background"))
-            self.game_objects.add(Environment("TreeCrown", (6860, 405), "Obstacle"))
-            self.game_objects.add(Environment("AmmoDump(Shells)", (6710, 955), "Obstacle"))
-            self.game_objects.add(Environment("TreeCrown", (7000, 935), "Obstacle"))
-            self.main_objective_object = Jammer((6500, 905))
-            self.main_objective_object.main_objective = True
-            self.game_objects.add(self.main_objective_object)
-
-        
-        self.game_objects.add(Player())
-        Player().initialize_values()
-        # self.gameObjects.add(Environment("DetonationDecal", 0, 850))
+        LevelLoader().load_level(0)
 
     def update_fps(self):
         fps = str(int(self._clock.get_fps()))
@@ -186,7 +89,7 @@ class GameWorld(metaclass=Singleton):
 
             # Limit the frame rate
             self.delta_time = self._clock.tick(60) / 1000
-    
+            
     def update(self, event_list):
         """
         Main update
@@ -199,7 +102,9 @@ class GameWorld(metaclass=Singleton):
 
         self.game_objects.update()
         self.collision_check()
-        
+
+        self.tutorial_text.update()
+
         Jam().update()
         Parallax().update()
 
@@ -210,10 +115,14 @@ class GameWorld(metaclass=Singleton):
         """
         Moves everything except Player in x-axis according to Player movement
         """
-        #it works first try wow
         for go in self.game_objects:
             if go.tag != "Player":
                 go.rect.move_ip(-x, 0)
+            if go.tag == "Jammer":
+                go.surface_rect.move_ip(-x, 0)
+
+        for text in self.tutorial_text:
+            text.rect.move_ip(-x, 0)
 
     def collision_check(self):
         """
@@ -236,13 +145,14 @@ class GameWorld(metaclass=Singleton):
         
         update_score_event = pygame.event.Event(pygame.USEREVENT + 1)
         pygame.event.post(update_score_event)
-
+    
+    #@profile
     def draw(self):
         """
         Main draw
         """
         # Clear the screen
-        self._screen.fill((63, 153, 249))
+        # self._screen.fill((63, 153, 249))
         self._screen.blit(self.background_image, self.background_rect)
 
         # draw background with parallax
@@ -257,10 +167,10 @@ class GameWorld(metaclass=Singleton):
         # attack_text = self._font.render("WE JAMMING: " + str(self.jamming), True, (0, 0, 0)) 
         # objective_text = self._font.render("MAIN OBJECTIVE COMPLETED: " + str(self.main_objective_completed), True, (0, 0, 0)) 
         # player_angle_text = self._font.render("ANGLE: " + str(Player().angle), True, (0, 0, 0)) 
-        player_directionx_text = self._font.render("Direction.x: " + str(Player().direction.x), True, (0, 0, 0)) 
-        player_directiony_text = self._font.render("Direction.y: " + str(Player().direction.y), True, (0, 0, 0))
-        player_velocityx_text = self._font.render("Velocity.x: " + str(Player().velocity.x), True, (0, 0, 0)) 
-        player_velocityy_text = self._font.render("Velocity.y: " + str(Player().velocity.y), True, (0, 0, 0))
+        # player_directionx_text = self._font.render("Direction.x: " + str(Player().direction.x), True, (0, 0, 0)) 
+        # player_directiony_text = self._font.render("Direction.y: " + str(Player().direction.y), True, (0, 0, 0))
+        # player_velocityx_text = self._font.render("Velocity.x: " + str(Player().velocity.x), True, (0, 0, 0)) 
+        # player_velocityy_text = self._font.render("Velocity.y: " + str(Player().velocity.y), True, (0, 0, 0))
 
         # only update level time when playing
         if self.game_state == "PLAY":
@@ -289,10 +199,13 @@ class GameWorld(metaclass=Singleton):
             # self._screen.blit(attack_text, (100, 200))
             # self._screen.blit(objective_text, (100, 300))
             # self._screen.blit(player_angle_text, (100, 400))
-            self._screen.blit(player_directionx_text, (100, 200))
-            self._screen.blit(player_directiony_text, (100, 300))
-            self._screen.blit(player_velocityx_text, (100, 400))
-            self._screen.blit(player_velocityy_text, (100, 500))
+            # self._screen.blit(player_directionx_text, (100, 200))
+            # self._screen.blit(player_directiony_text, (100, 300))
+            # self._screen.blit(player_velocityx_text, (100, 400))
+            # self._screen.blit(player_velocityy_text, (100, 500))
+
+        for text in self.tutorial_text:
+            text.draw(self._screen)
 
         if self.too_high == True:
             self._screen.blit(too_high_text, (self.screen_width / 2 - too_high_text.get_width() / 2, self.screen_height / 2 - too_high_text.get_height() / 2))

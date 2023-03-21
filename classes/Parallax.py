@@ -15,6 +15,12 @@ class Parallax(metaclass = Singleton):
         self.layer2 = pygame.image.load("./images/background2.png").convert_alpha()
         self.layer3 = pygame.image.load("./images/background3.png").convert_alpha()
 
+        scaleing = 0.83
+
+        self.layer1 = pygame.transform.scale(self.layer1, (self.layer1.get_width() * scaleing, self.layer1.get_height() * scaleing))
+        self.layer2 = pygame.transform.scale(self.layer2, (self.layer2.get_width() * scaleing, self.layer2.get_height() * scaleing))
+        self.layer3 = pygame.transform.scale(self.layer3, (self.layer3.get_width() * scaleing, self.layer3.get_height() * scaleing))
+
         self.layer1_scroll = 0
         self.layer2_scroll = 0
         self.layer3_scroll = 0
@@ -26,7 +32,7 @@ class Parallax(metaclass = Singleton):
 
         self.layer1_height = 0
         self.layer2_height = 450
-        self.layer3_height = 700
+        self.layer3_height = 702
 
         self.tiles = 3
 

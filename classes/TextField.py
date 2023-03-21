@@ -19,6 +19,9 @@ class TextField():
             if event.type == self.update_endmessage_event and self.tag == "endmessage":
                 from classes.GameWorld import GameWorld
                 self.surface = self._font.render(GameWorld().endscreen_string, True, (255, 255, 255))
+            if self.tag == "level":
+                from classes.LevelLoader import LevelLoader
+                self.surface= self._font.render("Level: " + str(LevelLoader().current_level), True, (255, 255 , 255))
 
     def draw(self, screen):
         pygame.draw.rect(screen, self.color, [self.position[0] - 10 - self.surface.get_width() / 2, self.position[1] - 5 - self.surface.get_height() / 2, self.surface.get_width() + 20, self.surface.get_height() + 10])

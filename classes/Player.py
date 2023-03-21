@@ -138,10 +138,17 @@ class Player(GameObject):
         Adjusts values that are difficulty dependent
         """
         from classes.GameWorld import GameWorld
+        from classes.LevelLoader import LevelLoader
         if GameWorld().difficulty == 0:
-            self.grenades = 10
+            self.grenades = 6
         if GameWorld().difficulty == 1:
-            self.grenades = 5
+            self.grenades = 3
+        if GameWorld().difficulty == 2:
+            self.grenades = 0
+
+        # adds level specific grenade amounts
+        # based on number of objectives in level
+        self.grenades += LevelLoader().grenade_count
 
     def draw(self, screen):
         """
@@ -288,12 +295,14 @@ class Player(GameObject):
         """
         if self.grenades > 0:
             from classes.GameWorld import GameWorld
+            from classes.MenuHandler import MenuHandler
             g = Grenade((self.rect.center[0], self.rect.center[1]), self.velocity.x, self.velocity.y)
             self.grenades -= 1
             GameWorld().grenades = self.grenades
             GameWorld().instantiate(g)
             self.can_attack = False
-            pygame.mixer.Sound.play(self.release_sound)
+            if Player().is_alive and MenuHandler().sound_enabled:
+                pygame.mixer.Sound.play(self.release_sound)
             
 
     def checkHeight(self):

@@ -1,12 +1,6 @@
 import pygame
-
-class Singleton(type):
-    _instances = {}
-
-    def __call__(cls, *args, **kwargs):
-        if cls not in cls._instances:
-            cls._instances[cls] = super().__call__(*args, **kwargs)
-        return cls._instances[cls]
+from classes.Singleton import Singleton
+from classes.LevelLoader import LevelLoader
 
 class ButtonActions(metaclass=Singleton):
     def __init__(self) -> None:
@@ -37,18 +31,34 @@ class ButtonActions(metaclass=Singleton):
         if action == "endMenu":
             MenuHandler().end_menu()
 
+        if action == "select":
+            MenuHandler().select_level()
+
         if action == "changeDifficulty":
+            GameWorld().difficulty += 1
+
+            if GameWorld().difficulty > 2:
+                GameWorld().difficulty = 0
+
             if GameWorld().difficulty == 0:
-                button.surface = button._font.render(str("DIFFICULTY: HARD"), True, (255, 255, 255))
-                GameWorld().difficulty = 1
-                GameWorld().difficulty = 1
-            elif GameWorld().difficulty == 1:
                 button.surface = button._font.render(str("DIFFICULTY: EASY"), True, (255, 255, 255))
-                GameWorld().difficulty = 0
-                GameWorld().difficulty = 0
+            elif GameWorld().difficulty == 1:
+                button.surface = button._font.render(str("DIFFICULTY: MEDIUM"), True, (255, 255, 255))
+            elif GameWorld().difficulty == 2:
+                button.surface = button._font.render(str("DIFFICULTY: HARD"), True, (255, 255, 255))
+
+        if action == "nextLevel":
+            LevelLoader().next_level()
 
         if action == "restartLevel":
             GameWorld().start_game()
+
+        if "loadLevel" in action:
+            # if action contains "loadLevel" use the number to load that level
+            # loadLevel1, loadLevel2 etc.
+            level = int(action.replace("loadLevel", ""))
+            LevelLoader().current_level = level
+            LevelLoader().load_level(0)
 
         # toggle sound and update button text
         if action == "toggleSound":
