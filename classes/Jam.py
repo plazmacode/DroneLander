@@ -27,9 +27,10 @@ class Jam(metaclass=Singleton):
         # draw noise
         from classes.GameWorld import GameWorld
         surface = pygame.Surface((GameWorld().screen_width, GameWorld().screen_height), pygame.SRCALPHA)
-        surface.blit(self.noise_images[self.current_noise], (0, 0))
-        surface.set_alpha(self.alpha)
-        screen.blit(surface, (0, 0))
+        if(self.alpha != 0):
+            surface.blit(self.noise_images[self.current_noise], (0, 0))
+            surface.set_alpha(self.alpha)
+            screen.blit(surface, (0, 0))
 
     def load_noise(self, imagefiles, scale):
         # noise animation frames are saved in separate files, use this to load them into an array
