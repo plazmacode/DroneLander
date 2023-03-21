@@ -9,7 +9,7 @@ from classes.Jam import Jam
 from classes.Parallax import Parallax
 from classes.LevelLoader import LevelLoader
 from classes.GameObject import GameObject
-from profilehooks import profile
+#from profilehooks import profile
 
 class Singleton(type):
     _instances = {}
@@ -146,7 +146,7 @@ class GameWorld(metaclass=Singleton):
         update_score_event = pygame.event.Event(pygame.USEREVENT + 1)
         pygame.event.post(update_score_event)
     
-    @profile
+    #@profile
     def draw(self):
         """
         Main draw
@@ -189,7 +189,7 @@ class GameWorld(metaclass=Singleton):
 
         if self.game_state == "PLAY" or self.game_state == "SCORESCREEN":
             # draw noise
-            # Jam().draw(self._screen)
+            Jam().draw(self._screen)
 
             #draw UI
             self._screen.blit(grenade_text, (100, 100))
