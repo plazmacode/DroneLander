@@ -101,6 +101,7 @@ class LevelLoader(metaclass=Singleton):
         # Tutorial Text
         GameWorld().tutorial_text.add(TutorialText("Press W to thrust, Press A or D to rotate", (600, 800)))
         GameWorld().tutorial_text.add(TutorialText("Press SPACE to release grenades", (600, 850)))
+        GameWorld().tutorial_text.add(TutorialText("You can fly through the tree trunks", (1200, 850)))
         GameWorld().tutorial_text.add(TutorialText("Destroy side objective to earn score", (1800, 800)))
         GameWorld().tutorial_text.add(TutorialText("This is the main objective, destroy it and fly back", (3500, 800)))
         GameWorld().tutorial_text.add(TutorialText("Height limit above this text", (600, 250)))
