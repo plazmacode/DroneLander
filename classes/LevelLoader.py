@@ -13,7 +13,7 @@ class LevelLoader(metaclass=Singleton):
     """
     def __init__(self) -> None:
         self.current_level = 1
-        self.max_levels = 3
+        self.max_levels = 6
         self.grenade_count = 0
 
     def next_level(self):
@@ -45,6 +45,12 @@ class LevelLoader(metaclass=Singleton):
 
             case 3:
                 self.load_level3()
+            case 4:
+                self.load_level4()
+            case 5:
+                self.load_level5()
+            case 6:
+                self.load_level6()
             case _ if value > self.max_levels:
                 # if we are at max levels
                 # remember to update
@@ -194,25 +200,79 @@ class LevelLoader(metaclass=Singleton):
         GameWorld().game_objects.add(Environment("TreeCrown", (-200, 935), "Obstacle"))
 
 
-        # Bush
+        # Start Bushes
         GameWorld().game_objects.add(Environment("TreeCrown", (500, 935), "Obstacle"))
         GameWorld().game_objects.add(Environment("TreeCrown", (1420, 935), "Obstacle"))
 
         # Launch brick
         GameWorld().game_objects.add(Environment("Brick", (960, 1015), "Brick"))
 
+        GameWorld().game_objects.add(Environment("TreeTrunk", (1800, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (1800, 405), "Obstacle"))
+
         GameWorld().game_objects.add(Jammer((2400, 905), 500))
 
-        GameWorld().game_objects.add(Jammer((3400, 905), 800))
+        # Easier to hit on return
+        GameWorld().game_objects.add(Environment("TreeCrown", (3400, 935), "Obstacle"))
+        GameWorld().game_objects.add(Jammer((3800, 905), 800))
 
-        GameWorld().game_objects.add(Jammer((5400, 905), 1000))
+        GameWorld().game_objects.add(Environment("TreeTrunk", (4800, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (4800, 405), "Obstacle"))
 
+        #Easier to hit on entry
+        GameWorld().game_objects.add(Environment("TreeCrown", (6200, 935), "Obstacle"))
+        GameWorld().game_objects.add(Jammer((5800, 905), 1000))
 
-        #main objective and right bounds
-        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (9680, 955), "Obstacle"))
+        # Annoying end bush
+        GameWorld().game_objects.add(Environment("TreeCrown", (9320, 935), "Obstacle"))
+
+        # main objective and right bounds
+        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (10000, 955), "Obstacle"))
         GameWorld().game_objects.add(Environment("TreeTrunk", (10300, 790), "Background"))
         GameWorld().game_objects.add(Environment("TreeCrown", (10300, 405), "Obstacle"))
         GameWorld().game_objects.add(Environment("TreeCrown", (10440, 935), "Obstacle"))
-        GameWorld().main_objective_object = Jammer((10000, 905), 1300)
+        GameWorld().main_objective_object = Jammer((9700, 905), 2400)
+        GameWorld().main_objective_object.main_objective = True
+        GameWorld().game_objects.add(GameWorld().main_objective_object)
+
+    def load_level4(self):
+        from classes.GameWorld import GameWorld
+        self.grenade_count = 4
+        
+        # Place floor, value sets number of tiles placed
+        for x in range(5):
+            GameWorld().game_objects.add(Environment("Ground", (x * 2000, 1055), "Obstacle"))
+        
+        # Launch brick
+        GameWorld().game_objects.add(Environment("Brick", (960, 1015), "Brick"))
+
+        GameWorld().main_objective_object = Jammer((2000, 905), 500)
+        GameWorld().main_objective_object.main_objective = True
+        GameWorld().game_objects.add(GameWorld().main_objective_object)
+
+    def load_level5(self):
+        from classes.GameWorld import GameWorld
+        self.grenade_count = 4
+
+        # Place floor, value sets number of tiles placed
+        for x in range(5):
+            GameWorld().game_objects.add(Environment("Ground", (x * 2000, 1055), "Obstacle"))
+
+        GameWorld().main_objective_object = Jammer((2000, 905), 500)
+        GameWorld().main_objective_object.main_objective = True
+        GameWorld().game_objects.add(GameWorld().main_objective_object)
+
+    def load_level6(self):
+        from classes.GameWorld import GameWorld
+        self.grenade_count = 4
+
+        # Place floor, value sets number of tiles placed
+        for x in range(5):
+            GameWorld().game_objects.add(Environment("Ground", (x * 2000, 1055), "Obstacle"))
+
+        # Launch brick
+        GameWorld().game_objects.add(Environment("Brick", (960, 1015), "Brick"))
+        
+        GameWorld().main_objective_object = Jammer((2000, 905), 500)
         GameWorld().main_objective_object.main_objective = True
         GameWorld().game_objects.add(GameWorld().main_objective_object)
