@@ -187,7 +187,7 @@ class GameWorld(metaclass=Singleton):
 
         if self.game_state == "PLAY" or self.game_state == "SCORESCREEN":
             # draw noise
-            Jam().draw(self._screen)
+            # Jam().draw(self._screen)
 
             #draw UI
             self._screen.blit(grenade_text, (100, 100))

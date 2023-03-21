@@ -124,8 +124,8 @@ class LevelLoader(metaclass=Singleton):
         GameWorld().main_objective_object = Environment("AmmoDump(Shells)", (3800, 955), "Obstacle")
         GameWorld().main_objective_object.main_objective = True
         GameWorld().game_objects.add(GameWorld().main_objective_object)
-        GameWorld().game_objects.add(Environment("TreeTrunk", (4000, 805), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (4000, 400), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeTrunk", (4000, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (4000, 405), "Obstacle"))
         GameWorld().game_objects.add(Environment("TreeCrown", (4250, 955), "Obstacle"))
 
     def load_level2(self):
