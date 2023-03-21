@@ -49,7 +49,7 @@ class Jammer(GameObject):
             if self.attacking == False:
                 self.attack_start = pygame.time.get_ticks()
                 self.attacking = True
-                Jam().alpha = 128 # DEBUG
+                Jam().alpha = 128
                 from classes.MenuHandler import MenuHandler
                 if Player().is_alive and MenuHandler().sound_enabled:
                     pygame.mixer.Sound.play(self.jam_sound)

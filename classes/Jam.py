@@ -12,7 +12,7 @@ class Jam(metaclass=Singleton):
     # used for creating noise on the screen
     # draws noise images over the screen with transparency
     def __init__(self) -> None:
-        self.noise_images = self.load_noise(("./images/noise1.png", "./images/noise2.png", "./images/noise3.png"), 3)
+        self.noise_images = self.load_noise(("./images/noise1small.png", "./images/noise2small.png", "./images/noise3small.png"), 6)
         self.current_noise = 0
         self.alpha = 0
 
@@ -25,18 +25,21 @@ class Jam(metaclass=Singleton):
 
     def draw(self, screen):
         # draw noise
-        from classes.GameWorld import GameWorld
-        surface = pygame.Surface((GameWorld().screen_width, GameWorld().screen_height), pygame.SRCALPHA)
-        surface.blit(self.noise_images[self.current_noise], (0, 0))
-        surface.set_alpha(self.alpha)
-        screen.blit(surface, (0, 0))
+        if(self.alpha != 0):
+            screen.blit(self.noise_images[self.current_noise], (0, 0))
 
     def load_noise(self, imagefiles, scale):
         # noise animation frames are saved in separate files, use this to load them into an array
         # afterwards the images can be scaled together
+        from classes.GameWorld import GameWorld
+
         images = []
 
         for i in range(0, len(imagefiles)):
             images.append(pygame.image.load(imagefiles[i]).convert_alpha())
             images[i] = pygame.transform.scale(images[i], (images[i].get_width() * scale, images[i].get_height() * scale))
+            surface = pygame.Surface((GameWorld().screen_width, GameWorld().screen_height), pygame.SRCALPHA)
+            surface.blit(images[i], (0,0))
+            surface.set_alpha(128)
+            images[i] = surface
         return images

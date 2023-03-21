@@ -7,7 +7,6 @@ from classes.TextField import TextField
 from classes.Parallax import Parallax
 from classes.Singleton import Singleton
 
-
 class LevelLoader(metaclass=Singleton):
     """
     Handles loading of levels

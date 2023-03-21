@@ -9,6 +9,7 @@ from classes.Jam import Jam
 from classes.Parallax import Parallax
 from classes.LevelLoader import LevelLoader
 from classes.GameObject import GameObject
+from profilehooks import profile
 
 class Singleton(type):
     _instances = {}
@@ -17,7 +18,7 @@ class Singleton(type):
         if cls not in cls._instances:
             cls._instances[cls] = super().__call__(*args, **kwargs)
         return cls._instances[cls]
-
+    
 class GameWorld(metaclass=Singleton):
     def __init__(self):
         pygame.init()
@@ -88,7 +89,7 @@ class GameWorld(metaclass=Singleton):
 
             # Limit the frame rate
             self.delta_time = self._clock.tick(60) / 1000
-    
+            
     def update(self, event_list):
         """
         Main update
@@ -144,13 +145,14 @@ class GameWorld(metaclass=Singleton):
         
         update_score_event = pygame.event.Event(pygame.USEREVENT + 1)
         pygame.event.post(update_score_event)
-
+    
+    @profile
     def draw(self):
         """
         Main draw
         """
         # Clear the screen
-        self._screen.fill((63, 153, 249))
+        # self._screen.fill((63, 153, 249))
         self._screen.blit(self.background_image, self.background_rect)
 
         # draw background with parallax
