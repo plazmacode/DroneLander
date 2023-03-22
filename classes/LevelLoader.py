@@ -269,13 +269,53 @@ class LevelLoader(metaclass=Singleton):
         from classes.GameWorld import GameWorld
         self.grenade_count = 4
 
+                # Set level bounds
+        Player().left_bound = 0
+        Player().right_bound = 12000
+
+
+
+
         # Place floor, value sets number of tiles placed
-        for x in range(5):
+        for x in range(6):
             GameWorld().game_objects.add(Environment("Ground", (x * 2000, 1055), "Obstacle"))
 
         # Launch brick
         GameWorld().game_objects.add(Environment("Brick", (960, 1015), "Brick"))
-        
-        GameWorld().main_objective_object = Jammer((2000, 905), 500)
+
+        GameWorld().game_objects.add(Environment("TreeTrunk", (1205, 790), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (1205, 405), "Obstacle"))
+
+        GameWorld().game_objects.add(Environment("TreeTrunk", (1500, 790), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (1500, 405), "Obstacle"))
+
+        GameWorld().game_objects.add(Environment("TreeTrunk", (1700, 790), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (1700, 405), "Obstacle"))
+
+        GameWorld().game_objects.add(Environment("TreeTrunk", (2500, 790), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (2500, 655), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (2500, 355), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (2500, 55), "Obstacle"))
+
+        GameWorld().game_objects.add(Jammer((3000, 905), 500))
+
+        GameWorld().game_objects.add(Environment("TreeCrown", (3600, 900), "Obstacle"))
+
+        GameWorld().game_objects.add(Environment("TreeTrunk", (5860, 790), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (5860, 655), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (5860, 355), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (5860, 55), "Obstacle"))
+
+        GameWorld().game_objects.add(Environment("TreeTrunk", (6360, 790), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (6360, 655), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (6360, 355), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (6360, 55), "Obstacle"))
+
+        GameWorld().game_objects.add(Environment("TreeTrunk", (6760, 790), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (6760, 655), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (6760, 355), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (6760, 55), "Obstacle"))
+
+        GameWorld().main_objective_object = Jammer((7200, 905), 500)
         GameWorld().main_objective_object.main_objective = True
         GameWorld().game_objects.add(GameWorld().main_objective_object)
