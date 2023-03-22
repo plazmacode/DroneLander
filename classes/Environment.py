@@ -22,6 +22,8 @@ class Environment(GameObject):
         self.image = pygame.transform.scale(self.image, (self.image.get_width() * 10, self.image.get_height() * 10))   # Pixel art is drawn at actual pixel size, scaled up here to be poperly visible
         self.rect = self.image.get_rect(center = position)   # Centers the image on input position, instead of the top left corner
         self.mask = pygame.mask.from_surface(self.image)
+        if self.tag == "Background":
+            self.collision = False
 
     # Poor use currently, only contains functionality for the ammo dumps, that could be separated out into a child class or simmilar instead
     def on_collision(self, other):
