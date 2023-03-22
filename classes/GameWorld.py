@@ -1,14 +1,8 @@
 import pygame
 import math
-from classes.Environment import Environment
-from classes.Jammer import Jammer
-from classes.Player import Player
-from classes.TutorialText import TutorialText
-from classes.TextField import TextField
 from classes.Jam import Jam
 from classes.Parallax import Parallax
 from classes.LevelLoader import LevelLoader
-from classes.GameObject import GameObject
 from profilehooks import profile
 
 class Singleton(type):
