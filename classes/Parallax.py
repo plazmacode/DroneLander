@@ -1,14 +1,6 @@
 import pygame
-import math
+from classes.Singleton import Singleton
 # from profilehooks import profile
-
-class Singleton(type):
-    _instances = {}
-
-    def __call__(cls, *args, **kwargs):
-        if cls not in cls._instances:
-            cls._instances[cls] = super().__call__(*args, **kwargs)
-        return cls._instances[cls]
 
 class Parallax(metaclass = Singleton):
     def __init__(self) -> None:
@@ -81,7 +73,7 @@ class Parallax(metaclass = Singleton):
     # @profile
     def draw(self, screen):
         from classes.GameWorld import GameWorld
-
+        screen.blit(self.background_image, (0, 0))
         for i in range (0, self.tiles):
             if GameWorld().game_state == "MENU":
 

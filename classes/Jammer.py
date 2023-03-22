@@ -2,10 +2,14 @@ import pygame
 from classes.GameObject import GameObject
 from classes.Player import Player
 from classes.Jam import Jam
-from abc import ABC, abstractclassmethod
 
 class Jammer(GameObject):
     def __init__(self, centerInput, range) -> None:
+        """
+        The jammer is the higher difficulty enemy in this game, besides trees.
+        Therefore it is a boss!
+        If you REALLY would like a boss, then imagine it as a person you're KILLING you MONSTER! :)
+        """
         super().__init__()
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load("./images/Jammer.png") 
