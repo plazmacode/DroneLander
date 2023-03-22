@@ -246,15 +246,50 @@ class LevelLoader(metaclass=Singleton):
         for x in range(5):
             GameWorld().game_objects.add(Environment("Ground", (x * 2000, 1055), "Obstacle"))
         
+        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (200, 955), "Obstacle"))
+
         # Left bounds "wall"
         GameWorld().game_objects.add(Environment("TreeTrunk", (000, 800), "Background"))
         GameWorld().game_objects.add(Environment("TreeCrown", (000, 405), "Obstacle"))
         GameWorld().game_objects.add(Environment("TreeCrown", (-200, 935), "Obstacle"))
 
+        # Bush
+        GameWorld().game_objects.add(Environment("TreeCrown", (500, 935), "Obstacle"))
+
         # Launch brick
         GameWorld().game_objects.add(Environment("Brick", (960, 1015), "Brick"))
 
-        GameWorld().main_objective_object = Jammer((2000, 905), 500)
+        # Tree
+        GameWorld().game_objects.add(Environment("TreeTrunk", (2100, 790), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (2100, 405), "Obstacle"))
+
+        # Ammo dump
+        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (2100, 955), "Obstacle"))
+
+        # Bushes
+        GameWorld().game_objects.add(Environment("TreeCrown", (1400, 935), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (1800, 905), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (1600, 965), "Obstacle"))
+
+        # Tree patch
+        GameWorld().game_objects.add(Environment("TreeTrunk", (3410, 780), "Background"))
+        GameWorld().game_objects.add(Environment("TreeTrunk", (3830, 780), "Background"))
+        GameWorld().game_objects.add(Environment("TreeTrunk", (3200, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (3200, 395), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeTrunk", (4060, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (4060, 405), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeTrunk", (3620, 790), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (3620, 405), "Obstacle"))
+
+        # Ammo dumps
+        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (3300, 955), "Obstacle"))
+        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (4000, 955), "Obstacle"))
+
+        # Jammer + right bounds "wall"
+        GameWorld().game_objects.add(Environment("TreeTrunk", (6860, 790), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (6860, 405), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (7000, 935), "Obstacle"))
+        GameWorld().main_objective_object = Jammer((6500, 905), 500)
         GameWorld().main_objective_object.main_objective = True
         GameWorld().game_objects.add(GameWorld().main_objective_object)
 
