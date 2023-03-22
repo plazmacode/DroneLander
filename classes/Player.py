@@ -207,6 +207,8 @@ class Player(GameObject):
         from classes.MenuHandler import MenuHandler
         from classes.GameWorld import GameWorld
         from classes.Explosion import Explosion
+        GameWorld().outside_level = False
+        GameWorld().too_high = False        
         MenuHandler().score_screen()
         self.is_alive = False
         self.kill()
@@ -364,7 +366,6 @@ class Player(GameObject):
         if self.death_timer <= 0:
             from classes.GameWorld import GameWorld
             from classes.Explosion import Explosion
-            GameWorld().too_high = False
             GameWorld().instantiate(Explosion(self.rect.center, 300))
 
             if GameWorld().main_objective_completed == True:
@@ -387,7 +388,6 @@ class Player(GameObject):
         if self.ol_death_timer <= 0:
             from classes.GameWorld import GameWorld
             from classes.Explosion import Explosion
-            GameWorld().outside_level = False
             GameWorld().instantiate(Explosion(self.rect.center, 300))
 
             if GameWorld().main_objective_completed == True:
