@@ -3,7 +3,7 @@ import math
 from classes.Jam import Jam
 from classes.Parallax import Parallax
 from classes.LevelLoader import LevelLoader
-from profilehooks import profile
+# from profilehooks import profile
 
 class Singleton(type):
     _instances = {}
@@ -24,10 +24,10 @@ class GameWorld(metaclass=Singleton):
         self._clock = pygame.time.Clock()
         self._font = pygame.font.SysFont(None, 48)
         self.endscreen_string = "you suck"
-        self.background_image = pygame.image.load("./images/Sky.png").convert_alpha()
-        self.background_image = pygame.transform.scale(self.background_image, (1920, 1080))
-        self.field_image = pygame.image.load("./images/Field.png").convert_alpha()
-        self.field_image = pygame.transform.scale(self.field_image, (1920, 600))
+        self.background_image = pygame.image.load("./images/Sky.png")
+        self.background_image = pygame.transform.scale(self.background_image, (1920, 1080)).convert()
+        self.field_image = pygame.image.load("./images/Field.png")
+        self.field_image = pygame.transform.scale(self.field_image, (1920, 600)).convert_alpha()
         self.background_rect = self.background_image.get_rect()
         self.grenades = 0
         self.difficulty = 0
@@ -86,7 +86,7 @@ class GameWorld(metaclass=Singleton):
 
             # Limit the frame rate
             self.delta_time = self._clock.tick(60) / 1000
-    @profile
+    # @profile
     def update(self, event_list):
         """
         Main update
@@ -144,7 +144,7 @@ class GameWorld(metaclass=Singleton):
         update_score_event = pygame.event.Event(pygame.USEREVENT + 1)
         pygame.event.post(update_score_event)
     
-    @profile
+    # @profile
     def draw(self):
         """
         Main draw

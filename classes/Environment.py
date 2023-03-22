@@ -18,8 +18,8 @@ class Environment(GameObject):
         self.name = name
         self.tag = tag_input
 
-        self.image = pygame.image.load("./images/" + name + ".png").convert_alpha()   # Extend the name to find actual file location
-        self.image = pygame.transform.scale(self.image, (self.image.get_width() * 10, self.image.get_height() * 10))   # Pixel art is drawn at actual pixel size, scaled up here to be poperly visible
+        self.image = pygame.image.load("./images/" + name + ".png")   # Extend the name to find actual file location
+        self.image = pygame.transform.scale(self.image, (self.image.get_width() * 10, self.image.get_height() * 10)).convert_alpha()   # Pixel art is drawn at actual pixel size, scaled up here to be poperly visible
         self.rect = self.image.get_rect(center = position)   # Centers the image on input position, instead of the top left corner
         self.mask = pygame.mask.from_surface(self.image)
         if self.tag == "Background":

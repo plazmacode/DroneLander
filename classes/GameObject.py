@@ -39,7 +39,7 @@ class GameObject(pygame.sprite.Sprite, ABC):
 
         # Fix image scale
         for i in range(0, len(images)):
-            images[i] = pygame.transform.scale(images[i], scale)
+            images[i] = pygame.transform.scale(images[i], scale).convert_alpha()
         return images
     
     # Imagefiles is a tuple with strings that hold the path to the images to be loaded
@@ -47,6 +47,6 @@ class GameObject(pygame.sprite.Sprite, ABC):
         images = []
 
         for i in range(0, len(imagefiles)):
-            images.append(pygame.image.load(imagefiles[i]).convert_alpha())
-            images[i] = pygame.transform.scale(images[i], (images[i].get_width() * scale, images[i].get_height() * scale))
+            images.append(pygame.image.load(imagefiles[i]))
+            images[i] = pygame.transform.scale(images[i], (images[i].get_width() * scale, images[i].get_height() * scale)).convert_alpha()
         return images

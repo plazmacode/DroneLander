@@ -12,9 +12,10 @@ class Button():
         self.hover_color = hover_color
         self.rect = rect
         self._font = pygame.font.SysFont(None, 40)
-        self.surface = self._font.render(str(text), True, (255, 255, 255))
+        self.text_surface = self._font.render(str(text), True, (255, 255, 255))
         self.action = action
         self.old_mouse_state = pygame.MOUSEBUTTONUP
+        # self.button_surface = pygame.
 
     def update(self, event_list):
         #if mouse position inside button rectangle
@@ -42,7 +43,7 @@ class Button():
         # draw button rectangle
         pygame.draw.rect(screen, self.color, [self.rect.x, self.rect.y, self.rect.width, self.rect.height])
         # center text
-        x = self.rect.x + (self.rect.width - self.surface.get_width()) // 2
-        y = self.rect.y + (self.rect.height - self.surface.get_height()) // 2
+        x = self.rect.x + (self.rect.width - self.text_surface.get_width()) // 2
+        y = self.rect.y + (self.rect.height - self.text_surface.get_height()) // 2
         # draw button text
-        screen.blit(self.surface, (x, y))
+        screen.blit(self.text_surface, (x, y))

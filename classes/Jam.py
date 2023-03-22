@@ -50,9 +50,9 @@ class Jam(metaclass=Singleton):
         images = []
 
         for i in range(0, len(imagefiles)):
-            images.append(pygame.image.load(imagefiles[i]).convert_alpha())
+            images.append(pygame.image.load(imagefiles[i]))
             images[i] = pygame.transform.scale(images[i], (images[i].get_width() * scale, images[i].get_height() * scale))
-            surface = pygame.Surface((GameWorld().screen_width, GameWorld().screen_height), pygame.SRCALPHA)
+            surface = pygame.Surface((GameWorld().screen_width, GameWorld().screen_height), pygame.SRCALPHA).convert()
             surface.blit(images[i], (0,0))
             surface.set_alpha(128)
             images[i] = surface

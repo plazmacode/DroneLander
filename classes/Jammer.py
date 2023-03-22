@@ -8,8 +8,8 @@ class Jammer(GameObject):
     def __init__(self, centerInput, range) -> None:
         super().__init__()
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load("./images/Jammer.png").convert_alpha()  
-        self.image = pygame.transform.scale(self.image, (self.image.get_width() * 10, self.image.get_height() * 10))
+        self.image = pygame.image.load("./images/Jammer.png") 
+        self.image = pygame.transform.scale(self.image, (self.image.get_width() * 10, self.image.get_height() * 10)).convert_alpha() 
         self.rect = self.image.get_rect(center=centerInput)
         self.tag = "Jammer"
         self.attack_range = range
