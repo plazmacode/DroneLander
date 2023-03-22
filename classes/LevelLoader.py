@@ -246,6 +246,11 @@ class LevelLoader(metaclass=Singleton):
         for x in range(5):
             GameWorld().game_objects.add(Environment("Ground", (x * 2000, 1055), "Obstacle"))
         
+        # Left bounds "wall"
+        GameWorld().game_objects.add(Environment("TreeTrunk", (000, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (000, 405), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (-200, 935), "Obstacle"))
+
         # Launch brick
         GameWorld().game_objects.add(Environment("Brick", (960, 1015), "Brick"))
 
@@ -260,6 +265,14 @@ class LevelLoader(metaclass=Singleton):
         # Place floor, value sets number of tiles placed
         for x in range(5):
             GameWorld().game_objects.add(Environment("Ground", (x * 2000, 1055), "Obstacle"))
+
+        # Left bounds "wall"
+        GameWorld().game_objects.add(Environment("TreeTrunk", (000, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (000, 405), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (-200, 935), "Obstacle"))
+
+        # Launch brick
+        GameWorld().game_objects.add(Environment("Brick", (960, 1015), "Brick"))
 
         GameWorld().main_objective_object = Jammer((2000, 905), 500)
         GameWorld().main_objective_object.main_objective = True
