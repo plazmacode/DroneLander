@@ -10,21 +10,32 @@ class TextField():
         self.surface = self._font.render(str(text), True, (255, 255, 255))
         self.update_score_event = pygame.USEREVENT + 1
         self.update_endmessage_event = pygame.USEREVENT + 2
+        self.background_surface = pygame.Surface((self.surface.get_width() + 20, self.surface.get_height() + 10))
+        pygame.draw.rect(self.background_surface, self.color, [0, 0, self.surface.get_width() + 20, self.surface.get_height() + 10])
+
+    # Only called once text events actually update our surface.
+    # Increases performance
+    def redraw_surface(self):
+        self.background_surface = pygame.Surface((self.surface.get_width() + 20, self.surface.get_height() + 10))
+        pygame.draw.rect(self.background_surface, self.color, [0, 0, self.surface.get_width() + 20, self.surface.get_height() + 10])
 
     def update(self, event_list):
         for event in event_list:
             if event.type == self.update_score_event and self.tag == "score":
                 from classes.GameWorld import GameWorld
                 self.surface = self._font.render("Score: " + str(GameWorld().score), True, (255, 255, 255))
+                self.redraw_surface()
             if event.type == self.update_endmessage_event and self.tag == "endmessage":
                 from classes.GameWorld import GameWorld
                 self.surface = self._font.render(GameWorld().endscreen_string, True, (255, 255, 255))
+                self.redraw_surface()
             if self.tag == "level":
                 from classes.LevelLoader import LevelLoader
                 self.surface= self._font.render("Level: " + str(LevelLoader().current_level), True, (255, 255 , 255))
+                self.redraw_surface()
 
     def draw(self, screen):
-        pygame.draw.rect(screen, self.color, [self.position[0] - 10 - self.surface.get_width() / 2, self.position[1] - 5 - self.surface.get_height() / 2, self.surface.get_width() + 20, self.surface.get_height() + 10])
+        screen.blit(self.background_surface, (self.position[0] - 10 - self.surface.get_width() / 2, self.position[1] - 5 - self.surface.get_height() / 2))
         # center text
         x = self.position[0] - self.surface.get_width() // 2
         y = self.position[1] - self.surface.get_height() // 2

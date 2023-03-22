@@ -24,10 +24,10 @@ class GameWorld(metaclass=Singleton):
         self._clock = pygame.time.Clock()
         self._font = pygame.font.SysFont(None, 48)
         self.endscreen_string = "you suck"
-        self.background_image = pygame.image.load("./images/Sky.png").convert_alpha()
-        self.background_image = pygame.transform.scale(self.background_image, (1920, 1080))
-        self.field_image = pygame.image.load("./images/Field.png").convert_alpha()
-        self.field_image = pygame.transform.scale(self.field_image, (1920, 600))
+        self.background_image = pygame.image.load("./images/Sky.png")
+        self.background_image = pygame.transform.scale(self.background_image, (1920, 1080)).convert()
+        self.field_image = pygame.image.load("./images/Field.png")
+        self.field_image = pygame.transform.scale(self.field_image, (1920, 600)).convert_alpha()
         self.background_rect = self.background_image.get_rect()
         self.grenades = 0
         self.difficulty = 0
@@ -86,6 +86,7 @@ class GameWorld(metaclass=Singleton):
 
             # Limit the frame rate
             self.delta_time = self._clock.tick(60) / 1000
+    
     @profile
     def update(self, event_list):
         """
@@ -149,11 +150,7 @@ class GameWorld(metaclass=Singleton):
         """
         Main draw
         """
-        # Clear the screen
-        # self._screen.fill((63, 153, 249))
-        self._screen.blit(self.background_image, self.background_rect)
-
-        # draw background with parallax
+        # draw background with parallax (also clears screen)
         Parallax().draw(self._screen)
 
         grenade_text = self._font.render("Grenades: " + str(self.grenades), True, (0, 0, 0))
