@@ -11,7 +11,7 @@ class GameObject(pygame.sprite.Sprite, ABC):
         self.rect : pygame.rect
         self.mask : pygame.mask
         self.tag = ""   # Tag system used for collisions, identifies what collided so the correct response can be run
-        self.collision = False
+        self.collision = True
         self.main_objective = False
 
     # Methods all game objects are expected to define

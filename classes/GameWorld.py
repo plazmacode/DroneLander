@@ -1,15 +1,9 @@
 import pygame
 import math
-from classes.Environment import Environment
-from classes.Jammer import Jammer
-from classes.Player import Player
-from classes.TutorialText import TutorialText
-from classes.TextField import TextField
 from classes.Jam import Jam
 from classes.Parallax import Parallax
 from classes.LevelLoader import LevelLoader
-from classes.GameObject import GameObject
-#from profilehooks import profile
+from profilehooks import profile
 
 class Singleton(type):
     _instances = {}
@@ -92,7 +86,7 @@ class GameWorld(metaclass=Singleton):
 
             # Limit the frame rate
             self.delta_time = self._clock.tick(60) / 1000
-            
+    @profile
     def update(self, event_list):
         """
         Main update
@@ -137,8 +131,9 @@ class GameWorld(metaclass=Singleton):
                     # if go1.rect.colliderect(go2.rect):
                     #     go1.on_collision(go2)
                     # THE GAME WILL CRASH if a gameobject lacks a mask
-                    if go1.mask.overlap(go2.mask, (go2.rect.x - go1.rect.x, go2.rect.y - go1.rect.y)):
-                        go1.on_collision(go2)
+                    if go1.collision and go2.collision:
+                        if go1.mask.overlap(go2.mask, (go2.rect.x - go1.rect.x, go2.rect.y - go1.rect.y)):
+                            go1.on_collision(go2)
 
     def get_final_score(self):
         """
@@ -149,7 +144,7 @@ class GameWorld(metaclass=Singleton):
         update_score_event = pygame.event.Event(pygame.USEREVENT + 1)
         pygame.event.post(update_score_event)
     
-    #@profile
+    @profile
     def draw(self):
         """
         Main draw
