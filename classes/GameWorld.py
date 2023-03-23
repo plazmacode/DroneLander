@@ -3,7 +3,6 @@ import math
 from classes.Jam import Jam
 from classes.Parallax import Parallax
 from classes.LevelLoader import LevelLoader
-from profilehooks import profile
 
 class Singleton(type):
     _instances = {}
@@ -68,26 +67,28 @@ class GameWorld(metaclass=Singleton):
         Main program loop
         """
         from classes.MenuHandler import MenuHandler
+        running = True
         MenuHandler().start_menu()
-        while True:
+        profiler = cProfile.Profile()
+        while running:
             # Handle events
             event_list = pygame.event.get()
             for event in event_list:
                 if event.type == pygame.QUIT:
-                    pygame.quit()
-                    return
+                    # pygame.quit()
+                    running = False
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
-                        pygame.quit()
-                        return
-
+                        # pygame.quit()
+                        running = False
             self.update(event_list)
             self.draw()
 
             # Limit the frame rate
             self.delta_time = self._clock.tick(60) / 1000
-    
-    @profile
+        pygame.quit()
+        return
+    # @profile
     def update(self, event_list):
         """
         Main update
@@ -145,7 +146,6 @@ class GameWorld(metaclass=Singleton):
         update_score_event = pygame.event.Event(pygame.USEREVENT + 1)
         pygame.event.post(update_score_event)
     
-    @profile
     def draw(self):
         """
         Main draw

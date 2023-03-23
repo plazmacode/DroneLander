@@ -1,6 +1,5 @@
 import pygame
 from classes.Singleton import Singleton
-# from profilehooks import profile
 
 class Parallax(metaclass = Singleton):
     def __init__(self) -> None:

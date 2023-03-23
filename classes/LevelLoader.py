@@ -141,7 +141,8 @@ class LevelLoader(metaclass=Singleton):
         from classes.GameWorld import GameWorld
 
         self.grenade_count = 4
-
+        Player().left_bound = 0
+        Player().right_bound = 7500
         # Place floor, value sets number of tiles placed
         for x in range(5):
             GameWorld().game_objects.add(Environment("Ground", (x * 2000, 1055), "Obstacle"))
@@ -243,7 +244,8 @@ class LevelLoader(metaclass=Singleton):
     def load_level4(self):
         from classes.GameWorld import GameWorld
         self.grenade_count = 4
-        
+        Player().left_bound = 0
+        Player().right_bound = 7500
         # Place floor, value sets number of tiles placed
         for x in range(5):
             GameWorld().game_objects.add(Environment("Ground", (x * 2000, 1055), "Obstacle"))
@@ -299,6 +301,9 @@ class LevelLoader(metaclass=Singleton):
         from classes.GameWorld import GameWorld
         self.grenade_count = 4
 
+        Player().left_bound = 0
+        Player().right_bound = 4000
+
         # Place floor, value sets number of tiles placed
         for x in range(5):
             GameWorld().game_objects.add(Environment("Ground", (x * 2000, 1055), "Obstacle"))
@@ -322,9 +327,6 @@ class LevelLoader(metaclass=Singleton):
                 # Set level bounds
         Player().left_bound = 0
         Player().right_bound = 12000
-
-
-
 
         # Place floor, value sets number of tiles placed
         for x in range(6):
