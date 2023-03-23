@@ -69,7 +69,6 @@ class GameWorld(metaclass=Singleton):
         from classes.MenuHandler import MenuHandler
         running = True
         MenuHandler().start_menu()
-        profiler = cProfile.Profile()
         while running:
             # Handle events
             event_list = pygame.event.get()
