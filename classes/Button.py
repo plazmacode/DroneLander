@@ -20,12 +20,21 @@ class Button():
         pygame.draw.rect(self.button_surface, self.color, [0, 0, self.rect.width, self.rect.height])
 
 
+    def redraw(self):
+        """
+        param text_change: bool
+        """
+        if self.new_color != self.color:
+            pygame.draw.rect(self.button_surface, self.new_color, [0, 0, self.rect.width, self.rect.height])
+            self.color = self.new_color
+
     def update(self, event_list):
         #if mouse position inside button rectangle
         mouse = pygame.mouse
         if self.rect.collidepoint(mouse.get_pos()[0], mouse.get_pos()[1]):
             # set hover color on button
             self.new_color = self.hover_color
+            self.redraw()
             for event in event_list:
                 # When mouse released after mouse pressed
                 if event.type == pygame.MOUSEBUTTONUP and self.old_mouse_state == pygame.MOUSEBUTTONDOWN:
@@ -41,12 +50,9 @@ class Button():
         else:
             # set color to base color when not hovering
             self.new_color = self.base_color
+            self.redraw()
     
     def draw(self, screen):
-        if self.new_color != self.color:
-            pygame.draw.rect(self.button_surface, self.new_color, [0, 0, self.rect.width, self.rect.height])
-            self.color = self.new_color
-
         # draw button rectangle
         screen.blit(self.button_surface, (self.rect.x, self.rect.y))
         # center text

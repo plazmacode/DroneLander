@@ -41,11 +41,14 @@ class ButtonActions(metaclass=Singleton):
                 GameWorld().difficulty = 0
 
             if GameWorld().difficulty == 0:
-                button.surface = button._font.render(str("DIFFICULTY: EASY"), True, (255, 255, 255))
+                button.text_surface = button._font.render(str("DIFFICULTY: EASY"), True, (255, 255, 255))
+                button.redraw()
             elif GameWorld().difficulty == 1:
-                button.surface = button._font.render(str("DIFFICULTY: MEDIUM"), True, (255, 255, 255))
+                button.text_surface = button._font.render(str("DIFFICULTY: MEDIUM"), True, (255, 255, 255))
+                button.redraw()
             elif GameWorld().difficulty == 2:
-                button.surface = button._font.render(str("DIFFICULTY: HARD"), True, (255, 255, 255))
+                button.text_surface = button._font.render(str("DIFFICULTY: HARD"), True, (255, 255, 255))
+                button.redraw()
 
         if action == "nextLevel":
             LevelLoader().next_level()
@@ -63,9 +66,11 @@ class ButtonActions(metaclass=Singleton):
         # toggle sound and update button text
         if action == "toggleSound":
             MenuHandler().toggle_sound()
-            button.surface = button._font.render(str(MenuHandler().get_sound()), True, (255, 255, 255))
+            button.text_surface = button._font.render(str(MenuHandler().get_sound()), True, (255, 255, 255))
+            button.redraw()
 
         # toggle music and update button text
         if action == "toggleMusic":
             MenuHandler().toggle_music()
-            button.surface = button._font.render(str(MenuHandler().get_music()), True, (255, 255, 255))
+            button.text_surface = button._font.render(str(MenuHandler().get_music()), True, (255, 255, 255))
+            button.redraw()
