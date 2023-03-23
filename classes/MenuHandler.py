@@ -44,7 +44,6 @@ class MenuHandler(metaclass=Singleton):
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 + 80, 300, 80, 80), "3", "loadLevel3"))
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 - 160, 400, 80, 80), "4", "loadLevel4"))
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 - 40, 400, 80, 80), "5", "loadLevel5"))
-        GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 + 80, 400, 80, 80), "6", "loadLevel6"))
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 660, 300, 80), "BACK", "mainMenu"))
 
 
