@@ -17,7 +17,9 @@ class Button():
         self.old_mouse_state = pygame.MOUSEBUTTONUP
         self.button_surface = pygame.Surface((self.rect.width, self.rect.height))
         self.new_color = color
-        pygame.draw.rect(self.button_surface, self.color, [0, 0, self.rect.width, self.rect.height])
+        self.border_color = (34, 42, 50)
+        pygame.draw.rect(self.button_surface, self.border_color, [0, 0, self.rect.width, self.rect.height])
+        pygame.draw.rect(self.button_surface, self.color, [5, 5, self.rect.width -10, self.rect.height -10])
 
 
     def redraw(self):
@@ -25,7 +27,8 @@ class Button():
         param text_change: bool
         """
         if self.new_color != self.color:
-            pygame.draw.rect(self.button_surface, self.new_color, [0, 0, self.rect.width, self.rect.height])
+            pygame.draw.rect(self.button_surface, self.border_color, [0, 0, self.rect.width, self.rect.height])
+            pygame.draw.rect(self.button_surface, self.color, [5, 5, self.rect.width -10, self.rect.height -10])
             self.color = self.new_color
 
     def update(self, event_list):

@@ -4,6 +4,7 @@ class TextField():
     def __init__(self, color, position, text, font_size, tag) -> None:
         self.base_color = color
         self.color = color
+        self.border_color = (34, 42, 50)
         self.position = position
         self.tag = tag
         self._font = pygame.font.Font("./fonts/PixeloidSans-Bold.ttf", 28)
@@ -15,13 +16,15 @@ class TextField():
         self.update_score_event = pygame.USEREVENT + 1
         self.update_endmessage_event = pygame.USEREVENT + 2
         self.background_surface = pygame.Surface((self.surface.get_width() + 20, self.surface.get_height() + 10))
-        pygame.draw.rect(self.background_surface, self.color, [0, 0, self.surface.get_width() + 20, self.surface.get_height() + 10])
+        pygame.draw.rect(self.background_surface, self.border_color, [0, 0, self.surface.get_width() + 20, self.surface.get_height() + 10])
+        pygame.draw.rect(self.background_surface, self.color, [5, 5, self.surface.get_width() + 10, self.surface.get_height() + 0])
 
     # Only called once text events actually update our surface.
     # Increases performance
     def redraw_surface(self):
         self.background_surface = pygame.Surface((self.surface.get_width() + 20, self.surface.get_height() + 10))
-        pygame.draw.rect(self.background_surface, self.color, [0, 0, self.surface.get_width() + 20, self.surface.get_height() + 10])
+        pygame.draw.rect(self.background_surface, self.border_color, [0, 0, self.surface.get_width() + 20, self.surface.get_height() + 10])
+        pygame.draw.rect(self.background_surface, self.color, [5, 5, self.surface.get_width() + 10, self.surface.get_height() + 0])
 
     def update(self, event_list):
         for event in event_list:
