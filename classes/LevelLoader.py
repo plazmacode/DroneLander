@@ -98,6 +98,7 @@ class LevelLoader(metaclass=Singleton):
         for x in range(5):
             GameWorld().game_objects.add(Environment("Ground", (x * 2000, 1055), "Obstacle"))
         # Left bounds "wall"
+        GameWorld().game_objects.add(Environment("DeadTree", (-400, 550), "Obstacle"))
         GameWorld().game_objects.add(Environment("TreeTrunk", (000, 800), "Background"))
         GameWorld().game_objects.add(Environment("TreeCrown", (000, 405), "Obstacle"))
         GameWorld().game_objects.add(Environment("TreeCrown", (-200, 935), "Obstacle"))
