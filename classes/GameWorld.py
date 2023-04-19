@@ -84,7 +84,7 @@ class GameWorld(metaclass=Singleton):
             self.draw()
 
             # Limit the frame rate
-            self.delta_time = self._clock.tick(60) / 1000
+            self.delta_time = self._clock.tick(30) / 1000
         pygame.quit()
         return
     # @profile
