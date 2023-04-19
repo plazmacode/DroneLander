@@ -3,7 +3,7 @@ import pygame
 class TutorialText(pygame.sprite.Sprite):
     def __init__(self, text, position) -> None:
         super().__init__()
-        self.font = pygame.font.SysFont(None, 48)
+        self.font = pygame.font.Font("./fonts/PixeloidSans-Bold.ttf", 28)
         self.image = self.font.render(text, True, (255, 255, 255))
         self.rect = self.image.get_rect()
         self.rect.move_ip(position)

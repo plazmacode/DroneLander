@@ -6,7 +6,7 @@ class TextField():
         self.color = color
         self.position = position
         self.tag = tag
-        self._font = pygame.font.SysFont(None, font_size)
+        self._font = pygame.font.Font("./fonts/PixeloidSans-Bold.ttf", 28)
         self.surface = self._font.render(str(text), True, (255, 255, 255))
         self.update_score_event = pygame.USEREVENT + 1
         self.update_endmessage_event = pygame.USEREVENT + 2

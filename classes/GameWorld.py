@@ -21,7 +21,7 @@ class GameWorld(metaclass=Singleton):
 
         pygame.display.set_caption("Drone Lander")
         self._clock = pygame.time.Clock()
-        self._font = pygame.font.SysFont(None, 48)
+        self._font = pygame.font.Font("./fonts/PixeloidSans-Bold.ttf", 28)
         self.endscreen_string = "you suck"
         self.background_image = pygame.image.load("./images/Sky.png")
         self.background_image = pygame.transform.scale(self.background_image, (1920, 1080)).convert()
