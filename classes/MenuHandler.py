@@ -16,6 +16,7 @@ class MenuHandler(metaclass=Singleton):
         self._screen_height = GameWorld().screen_height
         self.sound_enabled = True
         self.music_enabled = True
+        self.lore = False
         self.music_initialized = False
 
     def start_menu(self):
@@ -31,6 +32,11 @@ class MenuHandler(metaclass=Singleton):
         GameWorld().buttons.clear()
         GameWorld().game_objects = pygame.sprite.Group()
         GameWorld().tutorial_text = pygame.sprite.Group()
+        if self.lore:
+            GameWorld().buttons.append(TextField(button_color, (self._screen_width / 2, 40), "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua", 48, "lore"))
+            GameWorld().buttons.append(TextField(button_color, (self._screen_width / 2, 80), "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat", 48, "lore"))
+        GameWorld().buttons.append(TextField(button_color, (self._screen_width / 2, 200), "Auxiliary Light On", 48, "title"))
+        GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 + 450, 200, 40, 40), "?", "lore"))
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 300, 300, 80), "PLAY", "play"))
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 420, 300, 80), "SELECT LEVEL", "select"))
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 540, 300, 80), "OPTIONS", "options"))
@@ -127,3 +133,15 @@ class MenuHandler(metaclass=Singleton):
         elif self.music_enabled == False:
             self.music_enabled = True
             GameWorld().mixer.music.set_volume(0.2)
+
+    def toggle_lore(self):
+        """
+        Toggles lore text
+        """
+        if self.lore == True:
+            self.lore = False
+
+        elif self.lore == False:
+            self.lore = True
+        self.start_menu()
+

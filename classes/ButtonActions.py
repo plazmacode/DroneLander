@@ -74,3 +74,6 @@ class ButtonActions(metaclass=Singleton):
             MenuHandler().toggle_music()
             button.text_surface = button._font.render(str(MenuHandler().get_music()), True, (255, 255, 255))
             button.redraw()
+
+        if action == "lore":
+            MenuHandler().toggle_lore()
