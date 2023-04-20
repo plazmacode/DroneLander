@@ -31,10 +31,32 @@ class MenuHandler(metaclass=Singleton):
             GameWorld().mixer.music.play(-1)
         GameWorld().buttons.clear()
         GameWorld().game_objects = pygame.sprite.Group()
+
+
+        """
+        On the 22nd of February 2014, the Russian puppet Yanukovych was officially removed as Ukrainian president.
+        Immediately following this, Russia invaded Ukraine annexing the territory of Crimea and sent unmarked troops into Luhansk and Donetsk.
+        On the 24th of February 2022, Russia escalated this invasion to full scale war, trying to topple the democratically elected Ukrainian government.
+        Today, Russia is still trying to subjugate Ukraine using war, destroying Ukrainian cities and killing Ukrainian citizens.
+
+        This game is a statement of support for Ukraine and showcases a small aspect of the war. 
+        Consumer drones are used to drop grenades, by making the smallest possible modifications.
+        On some, a built-in auxiliary light feature is rewired to control a custom release mechanism instead.
+        In the Ukrainian war, ‘Auxiliary Light On’ usually means ‘Bombs away’.
+
+
+        """
         GameWorld().tutorial_text = pygame.sprite.Group()
         if self.lore:
-            GameWorld().buttons.append(TextField(button_color, (self._screen_width / 2, 40), "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua", 48, "lore"))
-            GameWorld().buttons.append(TextField(button_color, (self._screen_width / 2, 80), "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat", 48, "lore"))
+            GameWorld().buttons.append(TextField(button_color, (self._screen_width / 2, 820), "On the 22nd of February 2014, the Russian puppet Yanukovych was officially removed as Ukrainian president.", 48, "lore"))
+            GameWorld().buttons.append(TextField(button_color, (self._screen_width / 2, 840), "Immediately following this, Russia invaded Ukraine annexing the territory of Crimea and sent unmarked troops into Luhansk and Donetsk.", 48, "lore"))
+            GameWorld().buttons.append(TextField(button_color, (self._screen_width / 2, 860), "On the 24th of February 2022, Russia escalated this invasion to full scale war, trying to topple the democratically elected Ukrainian government.", 48, "lore"))
+            GameWorld().buttons.append(TextField(button_color, (self._screen_width / 2, 880), "Today, Russia is still trying to subjugate Ukraine using war, destroying Ukrainian cities and killing Ukrainian citizens.", 48, "lore"))
+
+            GameWorld().buttons.append(TextField(button_color, (self._screen_width / 2, 920), "On the 24th of February 2022, Russia escalated this invasion to full scale war, trying to topple the democratically elected Ukrainian government.", 48, "lore"))
+            GameWorld().buttons.append(TextField(button_color, (self._screen_width / 2, 940), "Consumer drones are used to drop grenades, by making the smallest possible modifications.", 48, "lore"))
+            GameWorld().buttons.append(TextField(button_color, (self._screen_width / 2, 960), "On some, a built-in auxiliary light feature is rewired to control a custom release mechanism instead.", 48, "lore"))
+            GameWorld().buttons.append(TextField(button_color, (self._screen_width / 2, 980), "In the Ukrainian war, ‘Auxiliary Light On’ usually means ‘Bombs away’.", 48, "lore"))
         GameWorld().buttons.append(TextField(button_color, (self._screen_width / 2, 200), "Auxiliary Light On", 48, "title"))
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 + 450, 200, 40, 40), "?", "lore"))
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 300, 300, 80), "PLAY", "play"))

@@ -11,20 +11,26 @@ class TextField():
         if tag == "title":
             self._font = pygame.font.Font("./fonts/PixeloidSans-Bold.ttf", 80)
         if tag == "lore":
-            self._font = pygame.font.Font("./fonts/PixeloidSans-Bold.ttf", 20)
+            self._font = pygame.font.Font("./fonts/PixeloidSans-Bold.ttf", 14)
         self.surface = self._font.render(str(text), True, (255, 255, 255))
         self.update_score_event = pygame.USEREVENT + 1
         self.update_endmessage_event = pygame.USEREVENT + 2
         self.background_surface = pygame.Surface((self.surface.get_width() + 20, self.surface.get_height() + 10))
-        pygame.draw.rect(self.background_surface, self.border_color, [0, 0, self.surface.get_width() + 20, self.surface.get_height() + 10])
-        pygame.draw.rect(self.background_surface, self.color, [5, 5, self.surface.get_width() + 10, self.surface.get_height() + 0])
+        if tag != "lore":
+            pygame.draw.rect(self.background_surface, self.border_color, [0, 0, self.surface.get_width() + 20, self.surface.get_height() + 10])
+            pygame.draw.rect(self.background_surface, self.color, [5, 5, self.surface.get_width() + 10, self.surface.get_height() + 0])
+        else:
+            pygame.draw.rect(self.background_surface, self.color, [0, 0, self.surface.get_width() + 20, self.surface.get_height() + 10])
 
     # Only called once text events actually update our surface.
     # Increases performance
     def redraw_surface(self):
         self.background_surface = pygame.Surface((self.surface.get_width() + 20, self.surface.get_height() + 10))
-        pygame.draw.rect(self.background_surface, self.border_color, [0, 0, self.surface.get_width() + 20, self.surface.get_height() + 10])
-        pygame.draw.rect(self.background_surface, self.color, [5, 5, self.surface.get_width() + 10, self.surface.get_height() + 0])
+        if self.tag != "lore":
+            pygame.draw.rect(self.background_surface, self.border_color, [0, 0, self.surface.get_width() + 20, self.surface.get_height() + 10])
+            pygame.draw.rect(self.background_surface, self.color, [5, 5, self.surface.get_width() + 10, self.surface.get_height() + 0])
+        else:
+            pygame.draw.rect(self.background_surface, self.color, [0, 0, self.surface.get_width() + 20, self.surface.get_height() + 10])
 
     def update(self, event_list):
         for event in event_list:
@@ -42,7 +48,7 @@ class TextField():
                 self.redraw_surface()
 
     def draw(self, screen):
-        if self.tag != "title":
+        if self.tag != "title" and self.tag != "lore":
             screen.blit(self.background_surface, (self.position[0] - 10 - self.surface.get_width() / 2, self.position[1] - 5 - self.surface.get_height() / 2))
         # center text
         x = self.position[0] - self.surface.get_width() // 2
