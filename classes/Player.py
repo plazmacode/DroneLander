@@ -39,7 +39,7 @@ class Player(GameObject):
         self.rect = self.image.get_rect()
         self.virtual_player_position_x = 960
         self.tag = "Player"
-        self.rotation_speed = 4
+        self.rotation_speed = 5
         self.angle = 0
 
         self.game_won = False
