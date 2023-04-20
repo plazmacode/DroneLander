@@ -1,0 +1,7 @@
+GameWorld().game_objects.add(Environment("Brick", (960, 1015), "Brick"))
+GameWorld().game_objects.add(Environment("TreeTrunk", (0, 800), "Background"))
+GameWorld().game_objects.add(Environment("TreeCrown", (0, 405), "Obstacle"))
+GameWorld().game_objects.add(Environment("TreeCrown", (-200, 935), "Obstacle"))
+GameWorld().game_objects.add(Environment("TreeTrunk", (1500, 800), "Background"))
+GameWorld().game_objects.add(Environment("TreeCrown", (1500, 405), "Obstacle"))
+GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (2200, 955), "Obstacle"))
