@@ -36,7 +36,7 @@ class Button():
         mouse = pygame.mouse
         if self.rect.collidepoint(mouse.get_pos()[0], mouse.get_pos()[1]):
             # set hover color on button
-            self.new_color = self.hover_color
+            self.new_color = self.base_color
             self.redraw()
             for event in event_list:
                 # When mouse released after mouse pressed
@@ -52,7 +52,7 @@ class Button():
                     self.old_mouse_state = pygame.MOUSEBUTTONUP
         else:
             # set color to base color when not hovering
-            self.new_color = self.base_color
+            self.new_color = self.hover_color
             self.redraw()
     
     def draw(self, screen):
