@@ -84,7 +84,6 @@ class Player(GameObject):
         from classes.GameWorld import GameWorld
         GameWorld().grenades = self.grenades
 
-
         self.too_high = False
         self.death_timer = 3
         self.reset_timer = 3

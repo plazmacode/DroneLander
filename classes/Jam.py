@@ -35,7 +35,7 @@ class Jam(metaclass=Singleton):
 
     def remove(self, jammer):
         if jammer in self.active_jammers:
-                self.active_jammers.remove(jammer)
+            self.active_jammers.remove(jammer)
 
     def draw(self, screen):
         # draw noise

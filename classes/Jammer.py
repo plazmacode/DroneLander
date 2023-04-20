@@ -60,7 +60,8 @@ class Jammer(GameObject):
             self.current_attack_time = (pygame.time.get_ticks()-self.attack_start)
         # player outside jammer range
         else:
-            Player().can_input = True
+            if self in Jam().active_jammers:
+                Player().can_input = True
             self.attacking = False
             self.current_attack_time = 0
             Jam().remove(self)
