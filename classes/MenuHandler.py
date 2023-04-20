@@ -5,7 +5,7 @@ from classes.GameWorld import GameWorld
 from classes.Singleton import Singleton
 
 button_color = (34, 42, 104)
-hover_color = (24, 32, 94)
+hover_color = (56, 55, 144)
 
 class MenuHandler(metaclass=Singleton):
     """
