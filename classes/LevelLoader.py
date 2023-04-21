@@ -199,7 +199,7 @@ class LevelLoader(metaclass=Singleton):
         GameWorld().main_objective_object.main_objective = True
         GameWorld().game_objects.add(GameWorld().main_objective_object)
 
-    def load_level3(self):
+    def load_level10(self):
         from classes.GameWorld import GameWorld
 
         self.grenade_count = 4
@@ -250,7 +250,7 @@ class LevelLoader(metaclass=Singleton):
         GameWorld().main_objective_object.main_objective = True
         GameWorld().game_objects.add(GameWorld().main_objective_object)
 
-    def load_level4(self):
+    def load_level8(self):
         from classes.GameWorld import GameWorld
         self.grenade_count = 6
         Player().left_bound = 0
@@ -312,7 +312,7 @@ class LevelLoader(metaclass=Singleton):
         GameWorld().main_objective_object.main_objective = True
         GameWorld().game_objects.add(GameWorld().main_objective_object)
 
-    def load_level5(self):
+    def load_level9(self):
         from classes.GameWorld import GameWorld
         self.grenade_count = 4
 
@@ -375,7 +375,7 @@ class LevelLoader(metaclass=Singleton):
         GameWorld().main_objective_object.main_objective = True
         GameWorld().game_objects.add(GameWorld().main_objective_object)
 
-    def load_level6(self):
+    def load_level7(self):
         from classes.GameWorld import GameWorld
         self.grenade_count = 3
 
@@ -435,7 +435,7 @@ class LevelLoader(metaclass=Singleton):
         GameWorld().main_objective_object.main_objective = True
         GameWorld().game_objects.add(GameWorld().main_objective_object)
 
-    def load_level7(self):
+    def load_level5(self):
         from classes.GameWorld import GameWorld
         self.grenade_count = 3
 
@@ -562,7 +562,7 @@ class LevelLoader(metaclass=Singleton):
         GameWorld().game_objects.add(Environment("TreeCrown", (10100, 405), "Obstacle"))
 
 
-    def load_level8(self):
+    def load_level3(self):
         from classes.GameWorld import GameWorld
         self.grenade_count = 4
 
@@ -608,7 +608,7 @@ class LevelLoader(metaclass=Singleton):
         GameWorld().main_objective_object.main_objective = True
         GameWorld().game_objects.add(GameWorld().main_objective_object)
 
-    def load_level9(self):
+    def load_level6(self):
         from classes.GameWorld import GameWorld
         self.grenade_count = 4
 
@@ -655,7 +655,7 @@ class LevelLoader(metaclass=Singleton):
         GameWorld().main_objective_object.main_objective = True
         GameWorld().game_objects.add(GameWorld().main_objective_object)
 
-    def load_level10(self):
+    def load_level4(self):
         from classes.GameWorld import GameWorld
         self.grenade_count = 6
 
