@@ -103,14 +103,14 @@ tile_y = {
   TILE_TREE: 0,
   TILE_JAMMER: 905,
   TILE_BRICK: 1015,
-  TILE_AMMO: 20,
-  TILE_CAR: 20,
-  TILE_CAR_DESTROYED: 20,
-  TILE_RUIN_BACKGROUND: 20,
-  TILE_RUIN_DEBRIS: 20,
-  TILE_RUIN_LEFT: 20,
-  TILE_RUIN_RIGHT: 20,
-  TILE_RUIN: 20
+  TILE_AMMO: 955,
+  TILE_CAR: 860,
+  TILE_CAR_DESTROYED: 890,
+  TILE_RUIN_BACKGROUND: 660,
+  TILE_RUIN_DEBRIS: 660,
+  TILE_RUIN_LEFT: 660,
+  TILE_RUIN_RIGHT: 660,
+  TILE_RUIN: 0
 }
 
 # Set the default tile type
@@ -227,7 +227,7 @@ while not done:
 
   for x in range(2):
     r = GROUND_TILE.get_rect()
-    r.y = 1055
+    r.y = 1040
     r.x = x*2000
     screen.blit(GROUND_TILE, r)
 
