@@ -25,7 +25,7 @@ font = pygame.font.SysFont(None, 24)
 view_x = 0
 view_move_speed = 16
 view_x_velocity = 0
-
+lock_y = False
 
 # Create a grid to place tiles on
 TILE_SIZE = 8
@@ -180,6 +180,9 @@ while not done:
       # Undo
       elif event.key == pygame.K_u:
         undo()
+      # Lock y
+      elif event.key == pygame.K_y:
+        lock_y = not lock_y
     elif event.type ==pygame.KEYUP:
       # Stop moving the viewport when the key is released
       if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
@@ -193,7 +196,6 @@ while not done:
       # Adds tiles to tiles list
       if current_tile == TILE_TREE: # TREE multi tile
         new_tile = (tile_images[TILE_TREE_TRUNK], tile_images[TILE_TREE_TRUNK].get_rect(center = (x, 800)), TILE_TREE_TRUNK, (x, 800))
-        print(tile_images[TILE_TREE_TRUNK].get_rect(center = (x - view_x, 800)))
         tiles.append(new_tile)
         new_tile = (tile_images[TILE_TREE_CROWN], tile_images[TILE_TREE_CROWN].get_rect(center = (x, 405)), TILE_TREE_CROWN, (x, 405))
         tiles.append(new_tile)
@@ -208,8 +210,13 @@ while not done:
         tiles.append(new_tile)
       else:
         if event.button == 1:
-          new_tile = (tile_images[current_tile], tile_images[current_tile].get_rect(center = (x, y)), current_tile, (x, y))
-          tiles.append(new_tile)
+          if lock_y == True:
+            new_tile = (tile_images[current_tile], tile_images[current_tile].get_rect(center = (x, tile_y[current_tile])), current_tile, (x, tile_y[current_tile]))
+            tiles.append(new_tile)
+            pass
+          else:
+            new_tile = (tile_images[current_tile], tile_images[current_tile].get_rect(center = (x, y)), current_tile, (x, y))
+            tiles.append(new_tile)
         elif event.button == 3:
           new_tile = (tile_images[current_tile], tile_images[current_tile].get_rect(center = (x, tile_y[current_tile])), current_tile, (x, tile_y[current_tile]))
           tiles.append(new_tile)
@@ -223,7 +230,10 @@ while not done:
       elif current_tile == TILE_RUIN:
         preview_tile_rect = tile_images[TILE_RUIN].get_rect(center = (x - view_x, 660))
       else:
-        preview_tile_rect = tile_images[current_tile].get_rect(center = (x - view_x, y))
+        if lock_y:
+          preview_tile_rect = tile_images[current_tile].get_rect(center = (x - view_x, tile_y[current_tile]))
+        else:
+          preview_tile_rect = tile_images[current_tile].get_rect(center = (x - view_x, y))
   
   view_x += view_x_velocity
   # Draw the GUI
@@ -293,7 +303,8 @@ while not done:
   }
 
   def undo():
-    tiles.pop()
+    if len(tiles) > 0:
+      tiles.pop()
 
   def export_code():
     with open("output.txt", "w") as f:
@@ -302,9 +313,7 @@ while not done:
         # Determine the name of the tile based on its index in the TILE_TYPES list
         object_type = OBJECT_TYPES[t[2]]
         environment_type = ENVIRONMENT_TYPES[t[2]]
-
         f.write(f'GameWorld().game_objects.add(Environment("{environment_type}", ({t[3][0]}, {t[3][1]}), "{object_type}"))\n')
-
 
   def load_level():
       # Open the text file and read each line
@@ -329,6 +338,4 @@ while not done:
                         new_tile = (tile_images[key], tile_images[key].get_rect(center=(x, y)), key, (x, y))
                         tiles.append(new_tile)
                         
-
-
 pygame.quit()
