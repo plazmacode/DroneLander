@@ -25,6 +25,8 @@ font = pygame.font.SysFont(None, 24)
 view_x = 0
 view_move_speed = 16
 view_x_velocity = 0
+
+
 # Create a grid to place tiles on
 TILE_SIZE = 8
 GRID_WIDTH = SCREEN_WIDTH // TILE_SIZE
@@ -95,6 +97,22 @@ tile_images = {
   TILE_RUIN: pygame.transform.scale(combine_ruin_images(), (RUIN_BACKGROUND.get_width() * 10, (RUIN_BACKGROUND.get_height() * 10))).convert_alpha(),
 }
 
+tile_y = {
+  TILE_TREE_TRUNK: 800,
+  TILE_TREE_CROWN: 405,
+  TILE_TREE: 0,
+  TILE_JAMMER: 905,
+  TILE_BRICK: 1015,
+  TILE_AMMO: 20,
+  TILE_CAR: 20,
+  TILE_CAR_DESTROYED: 20,
+  TILE_RUIN_BACKGROUND: 20,
+  TILE_RUIN_DEBRIS: 20,
+  TILE_RUIN_LEFT: 20,
+  TILE_RUIN_RIGHT: 20,
+  TILE_RUIN: 20
+}
+
 # Set the default tile type
 current_tile = TILE_TREE
 
@@ -155,6 +173,7 @@ while not done:
       # Import from code
       elif event.key == pygame.K_l:
         load_level()
+      # Undo
       elif event.key == pygame.K_u:
         undo()
     elif event.type ==pygame.KEYUP:
@@ -184,8 +203,12 @@ while not done:
         new_tile = (tile_images[TILE_RUIN_RIGHT], tile_images[TILE_RUIN_RIGHT].get_rect(center = (x, 660)), TILE_RUIN_RIGHT, (x, 660))
         tiles.append(new_tile)
       else:
-        new_tile = (tile_images[current_tile], tile_images[current_tile].get_rect(center = (x, y)), current_tile, (x, y))
-        tiles.append(new_tile)
+        if event.button == 1:
+          new_tile = (tile_images[current_tile], tile_images[current_tile].get_rect(center = (x, y)), current_tile, (x, y))
+          tiles.append(new_tile)
+        elif event.button == 3:
+          new_tile = (tile_images[current_tile], tile_images[current_tile].get_rect(center = (x, tile_y[current_tile])), current_tile, (x, tile_y[current_tile]))
+          tiles.append(new_tile)
     elif event.type == pygame.MOUSEMOTION:
       # Update the position of the tile preview
       pos = (pygame.mouse.get_pos()[0] + view_x, pygame.mouse.get_pos()[1])
@@ -217,8 +240,6 @@ while not done:
     
     # draw the tile using the modified Rect object
     screen.blit(t[0], new_rect)
-
-
 
   # Draw the tile preview
   if current_tile is TILE_TREE:
@@ -266,14 +287,6 @@ while not done:
     TILE_RUIN_LEFT: "RuinWallLeft",
     TILE_RUIN_RIGHT: "RuinWallRight",
   }
-
-  def get_tile_y(tile, y):
-    if tile == TILE_TREE_CROWN:
-      return 445
-    elif tile == TILE_TREE_TRUNK:
-      return 790
-    else:
-      return y
 
   def undo():
     tiles.pop()
