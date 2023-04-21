@@ -99,7 +99,7 @@ tile_images = {
 
 tile_y = {
   TILE_TREE_TRUNK: 800,
-  TILE_TREE_CROWN: 405,
+  TILE_TREE_CROWN: 935,
   TILE_TREE: 0,
   TILE_JAMMER: 905,
   TILE_BRICK: 1015,
@@ -162,6 +162,10 @@ while not done:
         current_tile = TILE_RUIN_BACKGROUND
       elif event.key == pygame.K_KP2:
         current_tile = TILE_RUIN_DEBRIS
+      elif event.key == pygame.K_KP3:
+        current_tile = TILE_RUIN_LEFT
+      elif event.key == pygame.K_KP4:
+        current_tile = TILE_RUIN_RIGHT
       # Move viewport horizontally with arrow keys
       elif event.key == pygame.K_LEFT:
         view_x_velocity = -view_move_speed
