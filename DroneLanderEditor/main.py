@@ -37,7 +37,15 @@ TILE_TREE_TRUNK = 1
 TILE_TREE_CROWN = 2
 TILE_AMMO = 3
 TILE_BRICK = 4
-TILE_JAMMER = 5
+TILE_DEAD_TREE = 5
+TILE_CAR = 6
+TILE_CAR_DESTROYED = 7
+TILE_RUIN = 8
+TILE_JAMMER = 9
+TILE_RUIN_BACKGROUND = 10
+TILE_RUIN_DEBRIS = 11
+TILE_RUIN_LEFT = 12
+TILE_RUIN_RIGHT = 13
 
 tiles = []
 
@@ -49,12 +57,26 @@ BRICK = pygame.image.load('./images/Brick.png').convert_alpha()
 AMMO = pygame.image.load('./images/AmmoDump(Shells).png').convert_alpha()
 GROUND = pygame.image.load('./images/Ground.png').convert_alpha()
 GROUND_TILE = pygame.transform.scale(GROUND, (GROUND.get_width() * 10, GROUND.get_height() * 10)).convert_alpha()
+CAR = pygame.image.load('./images/Truck (Undamaged) Export.png').convert_alpha()
+CAR_DESTROYED = pygame.image.load('./images/Truck (Destroyed) Export.png').convert_alpha()
+RUIN_BACKGROUND = pygame.image.load('./images/RuinBackground.png').convert_alpha()
+RUIN_DEBRIS = pygame.image.load('./images/RuinDebris.png').convert_alpha()
+RUIN_LEFT = pygame.image.load('./images/RuinWallLeft.png').convert_alpha()
+RUIN_RIGHT = pygame.image.load('./images/RuinWallRight.png').convert_alpha()
 
 def combine_tree_images(trunk_image, crown_image):
-    tree_image = pygame.Surface((TREE_CROWN.get_width(), trunk_image.get_height() + crown_image.get_height())).convert_alpha()
-    tree_image.blit(trunk_image, (15, crown_image.get_height()-3))
-    tree_image.blit(crown_image, (0, 0))
-    return tree_image
+  tree_image = pygame.Surface((crown_image.get_width(), trunk_image.get_height() + crown_image.get_height())).convert_alpha()
+  tree_image.blit(trunk_image, (15, crown_image.get_height()-3))
+  tree_image.blit(crown_image, (0, 0))
+  return tree_image
+
+def combine_ruin_images():
+  ruin_image = pygame.Surface((RUIN_BACKGROUND.get_width(), RUIN_BACKGROUND.get_height())).convert_alpha()
+  ruin_image.blit(RUIN_BACKGROUND, (0, 0))
+  ruin_image.blit(RUIN_DEBRIS, (0, 0))
+  ruin_image.blit(RUIN_LEFT, (0, 0))
+  ruin_image.blit(RUIN_RIGHT, (0, 0))
+  return ruin_image
 
 # Scale the tile images and set values
 tile_images = {
@@ -64,6 +86,13 @@ tile_images = {
   TILE_JAMMER: pygame.transform.scale(JAMMER, (JAMMER.get_width() * 10, JAMMER.get_height() * 10)).convert_alpha(),
   TILE_BRICK: pygame.transform.scale(BRICK, (BRICK.get_width() * 10, BRICK.get_height() * 10)).convert_alpha(),
   TILE_AMMO: pygame.transform.scale(AMMO, (AMMO.get_width() * 10, AMMO.get_height() * 10)).convert_alpha(),
+  TILE_CAR: pygame.transform.scale(CAR, (CAR.get_width() * 10, CAR.get_height() * 10)).convert_alpha(),
+  TILE_CAR_DESTROYED: pygame.transform.scale(CAR_DESTROYED, (CAR_DESTROYED.get_width() * 10, CAR_DESTROYED.get_height() * 10)).convert_alpha(),
+  TILE_RUIN_BACKGROUND: pygame.transform.scale(RUIN_BACKGROUND, (RUIN_BACKGROUND.get_width() * 10, RUIN_BACKGROUND.get_height() * 10)).convert_alpha(),
+  TILE_RUIN_DEBRIS: pygame.transform.scale(RUIN_DEBRIS, (RUIN_DEBRIS.get_width() * 10, RUIN_DEBRIS.get_height() * 10)).convert_alpha(),
+  TILE_RUIN_LEFT: pygame.transform.scale(RUIN_LEFT, (RUIN_LEFT.get_width() * 10, RUIN_LEFT.get_height() * 10)).convert_alpha(),
+  TILE_RUIN_RIGHT: pygame.transform.scale(RUIN_RIGHT, (RUIN_RIGHT.get_width() * 10, RUIN_RIGHT.get_height() * 10)).convert_alpha(),
+  TILE_RUIN: pygame.transform.scale(combine_ruin_images(), (RUIN_BACKGROUND.get_width() * 10, (RUIN_BACKGROUND.get_height() * 10))).convert_alpha(),
 }
 
 # Set the default tile type
@@ -76,6 +105,9 @@ def draw_gui():
   # Draw the current tile type
   tile_text = font.render('Current Tile: {}'.format(current_tile), True, WHITE)
   screen.blit(tile_text, (10, 10))
+
+  help_text = font.render('Import with l, Export with c', True, WHITE)
+  screen.blit(help_text, (10, 30))
 
 # Set up the main loop
 done = False
@@ -101,7 +133,17 @@ while not done:
       elif event.key == pygame.K_5:
         current_tile = TILE_BRICK
       elif event.key == pygame.K_6:
+        current_tile = TILE_CAR
+      elif event.key == pygame.K_7:
+        current_tile = TILE_CAR_DESTROYED
+      elif event.key == pygame.K_8:
+        current_tile = TILE_RUIN
+      elif event.key == pygame.K_9:
         current_tile = TILE_JAMMER
+      elif event.key == pygame.K_KP1:
+        current_tile = TILE_RUIN_BACKGROUND
+      elif event.key == pygame.K_KP2:
+        current_tile = TILE_RUIN_DEBRIS
       # Move viewport horizontally with arrow keys
       elif event.key == pygame.K_LEFT:
         view_x_velocity = -view_move_speed
@@ -113,6 +155,8 @@ while not done:
       # Import from code
       elif event.key == pygame.K_l:
         load_level()
+      elif event.key == pygame.K_u:
+        undo()
     elif event.type ==pygame.KEYUP:
       # Stop moving the viewport when the key is released
       if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
@@ -124,11 +168,20 @@ while not done:
       y = pos[1]
 
       # Adds tiles to tiles list
-      if current_tile == TILE_TREE:
+      if current_tile == TILE_TREE: # TREE multi tile
         new_tile = (tile_images[TILE_TREE_TRUNK], tile_images[TILE_TREE_TRUNK].get_rect(center = (x, 800)), TILE_TREE_TRUNK, (x, 800))
         print(tile_images[TILE_TREE_TRUNK].get_rect(center = (x - view_x, 800)))
         tiles.append(new_tile)
         new_tile = (tile_images[TILE_TREE_CROWN], tile_images[TILE_TREE_CROWN].get_rect(center = (x, 405)), TILE_TREE_CROWN, (x, 405))
+        tiles.append(new_tile)
+      elif current_tile == TILE_RUIN: # RUIN multi tile
+        new_tile = (tile_images[TILE_RUIN_BACKGROUND], tile_images[TILE_RUIN_BACKGROUND].get_rect(center = (x, 660)), TILE_RUIN_BACKGROUND, (x, 660))
+        tiles.append(new_tile)
+        new_tile = (tile_images[TILE_RUIN_DEBRIS], tile_images[TILE_RUIN_DEBRIS].get_rect(center = (x, 660)), TILE_RUIN_DEBRIS, (x, 660))
+        tiles.append(new_tile)
+        new_tile = (tile_images[TILE_RUIN_LEFT], tile_images[TILE_RUIN_LEFT].get_rect(center = (x, 660)), TILE_RUIN_LEFT, (x, 660))
+        tiles.append(new_tile)
+        new_tile = (tile_images[TILE_RUIN_RIGHT], tile_images[TILE_RUIN_RIGHT].get_rect(center = (x, 660)), TILE_RUIN_RIGHT, (x, 660))
         tiles.append(new_tile)
       else:
         new_tile = (tile_images[current_tile], tile_images[current_tile].get_rect(center = (x, y)), current_tile, (x, y))
@@ -140,6 +193,8 @@ while not done:
       y = pos[1] 
       if current_tile == TILE_TREE:
         preview_tile_rect = tile_images[TILE_TREE].get_rect(center = (x - view_x, 655))
+      elif current_tile == TILE_RUIN:
+        preview_tile_rect = tile_images[TILE_RUIN].get_rect(center = (x - view_x, 660))
       else:
         preview_tile_rect = tile_images[current_tile].get_rect(center = (x - view_x, y))
   
@@ -189,8 +244,12 @@ while not done:
     TILE_JAMMER: "Obstacle",
     TILE_BRICK: "Brick",
     TILE_AMMO: "Obstacle",
-    # Default value for all other tiles
-    "Unknown": "Unknown"
+    TILE_CAR: "Obstacle",
+    TILE_CAR_DESTROYED: "Obstacle",
+    TILE_RUIN_BACKGROUND: "Background",
+    TILE_RUIN_DEBRIS: "Obstacle",
+    TILE_RUIN_LEFT: "Obstacle",
+    TILE_RUIN_RIGHT: "Obstacle",
   }
 
   # Convert between code names from input and code names from this file
@@ -200,8 +259,12 @@ while not done:
     TILE_JAMMER: "Jammer",
     TILE_BRICK: "Brick",
     TILE_AMMO: "AmmoDump(Shells)",
-    # Default value for all other tiles
-    "Unknown": "Unknown"
+    TILE_CAR: "Truck (Undamaged) Export",
+    TILE_CAR_DESTROYED: "Truck (Destroyed) Export",
+    TILE_RUIN_BACKGROUND: "RuinBackground",
+    TILE_RUIN_DEBRIS: "RuinDebris",
+    TILE_RUIN_LEFT: "RuinWallLeft",
+    TILE_RUIN_RIGHT: "RuinWallRight",
   }
 
   def get_tile_y(tile, y):
@@ -211,6 +274,9 @@ while not done:
       return 790
     else:
       return y
+
+  def undo():
+    tiles.pop()
 
   def export_code():
     with open("output.txt", "w") as f:
