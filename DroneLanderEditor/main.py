@@ -303,7 +303,8 @@ while not done:
   }
 
   def undo():
-    tiles.pop()
+    if len(tiles) > 0:
+      tiles.pop()
 
   def export_code():
     with open("output.txt", "w") as f:
