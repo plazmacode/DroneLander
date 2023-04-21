@@ -199,56 +199,356 @@ class LevelLoader(metaclass=Singleton):
         GameWorld().main_objective_object.main_objective = True
         GameWorld().game_objects.add(GameWorld().main_objective_object)
 
-    def load_level10(self):
+    def load_level3(self):
         from classes.GameWorld import GameWorld
-
         self.grenade_count = 4
+
+        # Set level bounds
         Player().left_bound = 0
-        Player().right_bound = 10440
+        Player().right_bound = 9200
 
         # Place floor, value sets number of tiles placed
-        for x in range(7):
+        for x in range(6):
             GameWorld().game_objects.add(Environment("Ground", (x * 2000, 1055), "Obstacle"))
-        # Left bounds "wall"
-        GameWorld().game_objects.add(Environment("TreeTrunk", (000, 800), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (000, 405), "Obstacle"))
+
+        GameWorld().game_objects.add(Environment("RuinBackground", (811, 660), "Background"))
+        GameWorld().game_objects.add(Environment("RuinDebris", (811, 660), "Obstacle"))
+        GameWorld().game_objects.add(Environment("RuinWallLeft", (811, 660), "Obstacle"))
+        GameWorld().game_objects.add(Environment("RuinWallRight", (811, 660), "Obstacle"))
+        GameWorld().game_objects.add(Environment("Brick", (960, 1015), "Brick"))
+        GameWorld().game_objects.add(Environment("TreeTrunk", (13, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (13, 405), "Obstacle"))
+        GameWorld().game_objects.add(Environment("Truck (Destroyed) Export", (-137, 890), "Obstacle"))
+        GameWorld().game_objects.add(Environment("Truck (Destroyed) Export", (1694, 890), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeTrunk", (2377, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (2377, 405), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (3158, 935), "Obstacle"))
+        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (2747, 955), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeTrunk", (3888, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (3888, 405), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeTrunk", (4220, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (4220, 405), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeTrunk", (5053, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (5053, 405), "Obstacle"))
+        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (4629, 955), "Obstacle"))
+        GameWorld().game_objects.add(Environment("Truck (Undamaged) Export", (5892, 860), "Obstacle"))
+        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (6412, 955), "Obstacle"))
+        GameWorld().game_objects.add(Environment("RuinBackground", (7111, 660), "Background"))
+        GameWorld().game_objects.add(Environment("RuinDebris", (7111, 660), "Obstacle"))
+        GameWorld().game_objects.add(Environment("RuinWallLeft", (7111, 660), "Obstacle"))
+        GameWorld().game_objects.add(Environment("RuinWallRight", (7111, 660), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeTrunk", (7716, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (7716, 405), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (7899, 935), "Obstacle"))
+
+        GameWorld().main_objective_object = Jammer((7138, 905), 500)
+        GameWorld().main_objective_object.main_objective = True
+        GameWorld().game_objects.add(GameWorld().main_objective_object)
+
+    def load_level4(self):
+        from classes.GameWorld import GameWorld
+        self.grenade_count = 6
+
+        # Set level bounds
+        Player().left_bound = 0
+        Player().right_bound = 10000
+
+        # Place floor, value sets number of tiles placed
+        for x in range(6):
+            GameWorld().game_objects.add(Environment("Ground", (x * 2000, 1055), "Obstacle"))
+
+        GameWorld().game_objects.add(Environment("Brick", (960, 1015), "Brick"))
+        GameWorld().game_objects.add(Environment("TreeTrunk", (0, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (0, 405), "Obstacle"))
         GameWorld().game_objects.add(Environment("TreeCrown", (-200, 935), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeTrunk", (1500, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (1500, 405), "Obstacle"))
+        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (2200, 955), "Obstacle"))
+        GameWorld().game_objects.add(Environment("Truck (Undamaged) Export", (1623, 860), "Obstacle"))
+        GameWorld().game_objects.add(Environment("Truck (Undamaged) Export", (2886, 860), "Obstacle"))
+        GameWorld().game_objects.add(Environment("Truck (Undamaged) Export", (3894, 860), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeTrunk", (3401, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (3401, 405), "Obstacle"))
+        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (4478, 955), "Obstacle"))
+        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (4755, 955), "Obstacle"))
+        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (5051, 955), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (5479, 935), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeTrunk", (6161, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (6161, 405), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeTrunk", (7014, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (7014, 405), "Obstacle"))
+        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (6643, 955), "Obstacle"))
+        GameWorld().game_objects.add(Environment("RuinBackground", (8304, 660), "Background"))
+        GameWorld().game_objects.add(Environment("RuinDebris", (8304, 660), "Obstacle"))
+        GameWorld().game_objects.add(Environment("RuinWallLeft", (8304, 660), "Obstacle"))
+        GameWorld().game_objects.add(Environment("RuinWallRight", (8304, 660), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeTrunk", (9813, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (9813, 405), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (7540, 935), "Obstacle"))
+        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (8072, 955), "Obstacle"))
+        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (8566, 955), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeTrunk", (9172, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (9172, 405), "Obstacle"))
 
+        GameWorld().game_objects.add(Environment("TreeTrunk", (9813, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (9813, 405), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (10076, 935), "Obstacle"))
 
-        # Start Bushes
-        GameWorld().game_objects.add(Environment("TreeCrown", (500, 935), "Obstacle"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (1420, 935), "Obstacle"))
+        GameWorld().main_objective_object = Jammer((9700, 905), 500)
+        GameWorld().main_objective_object.main_objective = True
+        GameWorld().game_objects.add(GameWorld().main_objective_object)
+
+    def load_level5(self):
+        from classes.GameWorld import GameWorld
+        self.grenade_count = 3
+
+        # Set level bounds
+        Player().left_bound = 0
+        Player().right_bound = 9500
+
+        # Place floor, value sets number of tiles placed
+        for x in range(6):
+            GameWorld().game_objects.add(Environment("Ground", (x * 2000, 1055), "Obstacle"))
+
+        # Start Forest + Car
+        GameWorld().game_objects.add(Environment("TreeTrunk", (-250, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (-250, 415), "Obstacle"))
+
+        GameWorld().game_objects.add(Environment("TreeTrunk", (840, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (840, 405), "Obstacle"))
+
+        GameWorld().game_objects.add(Environment("TreeTrunk", (-30, 820), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (-30, 405), "Obstacle"))
+
+        GameWorld().game_objects.add(Environment("TreeTrunk", (360, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (360, 435), "Obstacle"))
+
+        GameWorld().game_objects.add(Environment("TreeTrunk", (1420, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (1420, 425), "Obstacle"))
+
+        GameWorld().game_objects.add(Environment("TreeTrunk", (610, 820), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (610, 405), "Obstacle"))
+
+        GameWorld().game_objects.add(Environment("TreeTrunk", (1110, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (1110, 405), "Obstacle"))
+        
+        GameWorld().game_objects.add(Environment("Truck (Undamaged) Export", (330, 860), "Obstacle"))
+
 
         # Launch brick
         GameWorld().game_objects.add(Environment("Brick", (960, 1015), "Brick"))
 
-        GameWorld().game_objects.add(Environment("TreeTrunk", (1800, 800), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (1800, 405), "Obstacle"))
 
-        GameWorld().game_objects.add(Jammer((2400, 905), 500))
+        # Bush
+        GameWorld().game_objects.add(Environment("TreeCrown", (2090, 885), "Obstacle"))
 
-        # Easier to hit on return
-        GameWorld().game_objects.add(Environment("TreeCrown", (3400, 935), "Obstacle"))
-        GameWorld().game_objects.add(Jammer((3800, 905), 800))
 
-        GameWorld().game_objects.add(Environment("TreeTrunk", (4800, 800), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (4800, 405), "Obstacle"))
+        # Forest
+        GameWorld().game_objects.add(Environment("TreeTrunk", (2780, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (2780, 415), "Obstacle"))
 
-        #Easier to hit on entry
-        GameWorld().game_objects.add(Environment("TreeCrown", (6200, 935), "Obstacle"))
-        GameWorld().game_objects.add(Jammer((5800, 905), 1000))
+        GameWorld().game_objects.add(Environment("TreeTrunk", (2970, 810), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (2970, 405), "Obstacle"))
 
-        # Annoying end bush
-        GameWorld().game_objects.add(Environment("TreeCrown", (9320, 935), "Obstacle"))
+        GameWorld().game_objects.add(Environment("DeadTree", (3570, 550), "Background"))
 
-        # Main objective and right bounds
-        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (10000, 955), "Obstacle"))
-        GameWorld().game_objects.add(Environment("TreeTrunk", (10300, 790), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (10300, 405), "Obstacle"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (10440, 935), "Obstacle"))
-        GameWorld().main_objective_object = Jammer((9700, 905), 2400)
+        GameWorld().game_objects.add(Environment("TreeTrunk", (3250, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (3250, 435), "Obstacle"))
+
+
+        # Destroyed town
+        GameWorld().game_objects.add(Environment("RuinBackground", (4350, 660), "Background"))
+        GameWorld().game_objects.add(Environment("RuinDebris", (4350, 660), "Obstacle"))
+        GameWorld().game_objects.add(Environment("RuinWallLeft", (4350, 660), "Obstacle"))
+        GameWorld().game_objects.add(Environment("RuinWallRight", (4350, 660), "Obstacle"))
+
+        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (4500, 955), "Obstacle"))
+        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (4200, 955), "Obstacle"))
+
+        GameWorld().game_objects.add(Environment("RuinDebris", (5310, 660), "Obstacle"))
+
+        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (5510, 825), "Obstacle"))
+        GameWorld().game_objects.add(Environment("Truck (Destroyed) Export", (5300, 890), "Obstacle"))
+
+        GameWorld().game_objects.add(Environment("RuinBackground", (6240, 660), "Background"))
+        GameWorld().game_objects.add(Environment("RuinDebris", (6240, 660), "Obstacle"))
+        GameWorld().game_objects.add(Environment("RuinWallLeft", (6240, 660), "Obstacle"))
+        GameWorld().game_objects.add(Environment("RuinWallRight", (6240, 660), "Obstacle"))
+
+    def load_level6(self):
+        from classes.GameWorld import GameWorld
+        self.grenade_count = 2
+
+        # Set level bounds
+        Player().left_bound = 0
+        Player().right_bound = 11000
+
+        # Place floor, value sets number of tiles placed
+        for x in range(6):
+            GameWorld().game_objects.add(Environment("Ground", (x * 2000, 1055), "Obstacle"))
+
+
+        # Start plants + car
+        GameWorld().game_objects.add(Environment("Truck (Undamaged) Export", (350, 850), "Obstacle"))
+
+        GameWorld().game_objects.add(Environment("TreeTrunk", (210, 810), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (210, 405), "Obstacle"))
+
+        GameWorld().game_objects.add(Environment("TreeCrown", (270, 1035), "Obstacle"))
+
+
+        # Launch brick
+        GameWorld().game_objects.add(Environment("Brick", (960, 1015), "Brick"))
+
+
+        # Dead tree patch
+        GameWorld().game_objects.add(Environment("DeadTree", (1740, 550), "Background"))
+        GameWorld().game_objects.add(Environment("DeadTree", (2100, 560), "Background"))
+        GameWorld().game_objects.add(Environment("DeadTree", (2590, 540), "Background"))
+        GameWorld().game_objects.add(Environment("DeadTree", (2850, 540), "Background"))
+
+
+        # Debris
+        GameWorld().game_objects.add(Environment("RuinDebris", (3700, 670), "Obstacle"))
+
+
+        # Jammer truck
+        GameWorld().game_objects.add(Jammer((5750, 745), 500))
+        GameWorld().game_objects.add(Environment("Truck (Undamaged) Export", (5530, 850), "Obstacle"))
+
+
+        # 2nd dead tree patch
+        GameWorld().game_objects.add(Environment("DeadTree", (7050, 550), "Background"))
+        GameWorld().game_objects.add(Environment("DeadTree", (7860, 540), "Background"))
+        GameWorld().game_objects.add(Environment("DeadTree", (8080, 570), "Background"))
+        GameWorld().game_objects.add(Environment("DeadTree", (8370, 570), "Background"))
+
+
+        # End ruin
+        GameWorld().game_objects.add(Environment("TreeCrown", (8720, 910), "Obstacle"))
+
+        GameWorld().game_objects.add(Environment("RuinBackground", (9780, 660), "Background"))
+        GameWorld().game_objects.add(Environment("RuinDebris", (9780, 660), "Obstacle"))
+        GameWorld().game_objects.add(Environment("RuinWallRight", (9780, 660), "Obstacle"))
+
+        GameWorld().game_objects.add(Environment("TreeTrunk", (10550, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (10550, 405), "Obstacle"))
+        
+        GameWorld().game_objects.add(Environment("TreeCrown", (10560, 935), "Obstacle"))
+
+        GameWorld().main_objective_object = Environment("AmmoDump(Shells)", (9100, 955), "Obstacle")
         GameWorld().main_objective_object.main_objective = True
         GameWorld().game_objects.add(GameWorld().main_objective_object)
+
+    def load_level7(self):
+        from classes.GameWorld import GameWorld
+        self.grenade_count = 3
+
+        # Set level bounds
+        Player().left_bound = 0
+        Player().right_bound = 7700
+
+        # Place floor, value sets number of tiles placed
+        for x in range(6):
+            GameWorld().game_objects.add(Environment("Ground", (x * 2000, 1055), "Obstacle"))
+
+        # House ruin as left wall
+        GameWorld().game_objects.add(Environment("TreeTrunk", (330, 790), "Background"))
+        GameWorld().game_objects.add(Environment("RuinBackground", (000, 660), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (330, 485), "Obstacle"))
+        GameWorld().game_objects.add(Environment("RuinWallLeft", (000, 660), "Obstacle"))
+        GameWorld().game_objects.add(Environment("RuinWallRight", (000, 660), "Obstacle"))
+
+        # Launch brick
+        GameWorld().game_objects.add(Environment("Brick", (960, 1015), "Brick"))
+
+        GameWorld().game_objects.add(Environment("RuinDebris", (1600, 660), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeTrunk", (2200, 790), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (2200, 445), "Obstacle"))
+        GameWorld().game_objects.add(Environment("Truck (Destroyed) Export", (2400, 890), "Obstacle"))
+        
+        GameWorld().game_objects.add(Environment("TreeTrunk", (3200, 790), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (3200, 445), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeTrunk", (3650, 790), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (3650, 445), "Obstacle"))
+
+
+        
+        GameWorld().game_objects.add(Environment("RuinBackground", (4400, 660), "Background"))
+        GameWorld().game_objects.add(Environment("RuinWallLeft", (4400, 660), "Obstacle"))
+        GameWorld().game_objects.add(Environment("RuinWallRight", (4400, 660), "Obstacle"))
+        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (4400, 955), "Obstacle"))
+
+        GameWorld().game_objects.add(Environment("TreeTrunk", (5100, 790), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (5100, 445), "Obstacle"))
+
+
+        GameWorld().game_objects.add(Environment("RuinDebris", (5500, 660), "Obstacle"))
+        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (5650, 955), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeTrunk", (6250, 790), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (6250, 445), "Obstacle"))
+        GameWorld().game_objects.add(Environment("Truck (Destroyed) Export", (6450, 890), "Obstacle"))
+
+        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (7100, 955), "Obstacle"))
+        GameWorld().main_objective_object = Jammer((7300, 905), 490)
+
+        #Right Wall
+        GameWorld().game_objects.add(Environment("TreeTrunk", (7560, 790), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (7560, 405), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (7700, 935), "Obstacle"))
+
+        GameWorld().main_objective_object.main_objective = True
+        GameWorld().game_objects.add(GameWorld().main_objective_object)
+
+
+
+        # End forest
+        GameWorld().game_objects.add(Environment("DeadTree", (6960, 550), "Background"))
+
+        GameWorld().game_objects.add(Environment("TreeTrunk", (7170, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (7170, 415), "Obstacle"))
+
+        GameWorld().game_objects.add(Environment("TreeTrunk", (7510, 810), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (7510, 405), "Obstacle"))
+
+        GameWorld().game_objects.add(Environment("TreeTrunk", (7780, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (7780, 425), "Obstacle"))
+
+        GameWorld().game_objects.add(Environment("TreeTrunk", (8200, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (8200, 405), "Obstacle"))
+
+        GameWorld().game_objects.add(Environment("TreeTrunk", (8490, 810), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (8490, 405), "Obstacle"))
+
+        GameWorld().game_objects.add(Environment("TreeTrunk", (8760, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (8760, 415), "Obstacle"))
+
+        GameWorld().game_objects.add(Environment("TreeTrunk", (9180, 820), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (9180, 405), "Obstacle"))
+
+        GameWorld().game_objects.add(Environment("Truck (Destroyed) Export", (7150, 890), "Obstacle"))
+
+        GameWorld().game_objects.add(Environment("TreeCrown", (9100, 650), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (9320, 900), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (8910, 910), "Obstacle"))
+
+        GameWorld().main_objective_object = Jammer((8540, 905), 500)
+        GameWorld().main_objective_object.main_objective = True
+        GameWorld().game_objects.add(GameWorld().main_objective_object)
+
+        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (8240, 955), "Obstacle"))
+
+        GameWorld().game_objects.add(Environment("TreeTrunk", (9480, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (9480, 405), "Obstacle"))
+
+        GameWorld().game_objects.add(Environment("TreeTrunk", (9870, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (9870, 425), "Obstacle"))
+
+        GameWorld().game_objects.add(Environment("TreeTrunk", (9750, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (9750, 415), "Obstacle"))
+
+        GameWorld().game_objects.add(Environment("TreeTrunk", (10100, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (10100, 405), "Obstacle"))
 
     def load_level8(self):
         from classes.GameWorld import GameWorld
@@ -375,353 +675,53 @@ class LevelLoader(metaclass=Singleton):
         GameWorld().main_objective_object.main_objective = True
         GameWorld().game_objects.add(GameWorld().main_objective_object)
 
-    def load_level7(self):
+    def load_level10(self):
         from classes.GameWorld import GameWorld
-        self.grenade_count = 3
 
-        # Set level bounds
-        Player().left_bound = 0
-        Player().right_bound = 7700
-
-        # Place floor, value sets number of tiles placed
-        for x in range(6):
-            GameWorld().game_objects.add(Environment("Ground", (x * 2000, 1055), "Obstacle"))
-
-        # House ruin as left wall
-        GameWorld().game_objects.add(Environment("TreeTrunk", (330, 790), "Background"))
-        GameWorld().game_objects.add(Environment("RuinBackground", (000, 660), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (330, 485), "Obstacle"))
-        GameWorld().game_objects.add(Environment("RuinWallLeft", (000, 660), "Obstacle"))
-        GameWorld().game_objects.add(Environment("RuinWallRight", (000, 660), "Obstacle"))
-
-        # Launch brick
-        GameWorld().game_objects.add(Environment("Brick", (960, 1015), "Brick"))
-
-        GameWorld().game_objects.add(Environment("RuinDebris", (1600, 660), "Obstacle"))
-        GameWorld().game_objects.add(Environment("TreeTrunk", (2200, 790), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (2200, 445), "Obstacle"))
-        GameWorld().game_objects.add(Environment("Truck (Destroyed) Export", (2400, 890), "Obstacle"))
-        
-        GameWorld().game_objects.add(Environment("TreeTrunk", (3200, 790), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (3200, 445), "Obstacle"))
-        GameWorld().game_objects.add(Environment("TreeTrunk", (3650, 790), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (3650, 445), "Obstacle"))
-
-
-        
-        GameWorld().game_objects.add(Environment("RuinBackground", (4400, 660), "Background"))
-        GameWorld().game_objects.add(Environment("RuinWallLeft", (4400, 660), "Obstacle"))
-        GameWorld().game_objects.add(Environment("RuinWallRight", (4400, 660), "Obstacle"))
-        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (4400, 955), "Obstacle"))
-
-        GameWorld().game_objects.add(Environment("TreeTrunk", (5100, 790), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (5100, 445), "Obstacle"))
-
-
-        GameWorld().game_objects.add(Environment("RuinDebris", (5500, 660), "Obstacle"))
-        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (5650, 955), "Obstacle"))
-        GameWorld().game_objects.add(Environment("TreeTrunk", (6250, 790), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (6250, 445), "Obstacle"))
-        GameWorld().game_objects.add(Environment("Truck (Destroyed) Export", (6450, 890), "Obstacle"))
-
-        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (7100, 955), "Obstacle"))
-        GameWorld().main_objective_object = Jammer((7300, 905), 490)
-
-        #Right Wall
-        GameWorld().game_objects.add(Environment("TreeTrunk", (7560, 790), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (7560, 405), "Obstacle"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (7700, 935), "Obstacle"))
-
-        GameWorld().main_objective_object.main_objective = True
-        GameWorld().game_objects.add(GameWorld().main_objective_object)
-
-    def load_level5(self):
-        from classes.GameWorld import GameWorld
-        self.grenade_count = 3
-
-        # Set level bounds
-        Player().left_bound = 0
-        Player().right_bound = 9500
-
-        # Place floor, value sets number of tiles placed
-        for x in range(6):
-            GameWorld().game_objects.add(Environment("Ground", (x * 2000, 1055), "Obstacle"))
-
-        # Start Forest + Car
-        GameWorld().game_objects.add(Environment("TreeTrunk", (-250, 800), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (-250, 415), "Obstacle"))
-
-        GameWorld().game_objects.add(Environment("TreeTrunk", (840, 800), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (840, 405), "Obstacle"))
-
-        GameWorld().game_objects.add(Environment("TreeTrunk", (-30, 820), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (-30, 405), "Obstacle"))
-
-        GameWorld().game_objects.add(Environment("TreeTrunk", (360, 800), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (360, 435), "Obstacle"))
-
-        GameWorld().game_objects.add(Environment("TreeTrunk", (1420, 800), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (1420, 425), "Obstacle"))
-
-        GameWorld().game_objects.add(Environment("TreeTrunk", (610, 820), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (610, 405), "Obstacle"))
-
-        GameWorld().game_objects.add(Environment("TreeTrunk", (1110, 800), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (1110, 405), "Obstacle"))
-        
-        GameWorld().game_objects.add(Environment("Truck (Undamaged) Export", (330, 860), "Obstacle"))
-
-
-        # Launch brick
-        GameWorld().game_objects.add(Environment("Brick", (960, 1015), "Brick"))
-
-
-        # Bush
-        GameWorld().game_objects.add(Environment("TreeCrown", (2090, 885), "Obstacle"))
-
-
-        # Forest
-        GameWorld().game_objects.add(Environment("TreeTrunk", (2780, 800), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (2780, 415), "Obstacle"))
-
-        GameWorld().game_objects.add(Environment("TreeTrunk", (2970, 810), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (2970, 405), "Obstacle"))
-
-        GameWorld().game_objects.add(Environment("DeadTree", (3570, 550), "Background"))
-
-        GameWorld().game_objects.add(Environment("TreeTrunk", (3250, 800), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (3250, 435), "Obstacle"))
-
-
-        # Destroyed town
-        GameWorld().game_objects.add(Environment("RuinBackground", (4350, 660), "Background"))
-        GameWorld().game_objects.add(Environment("RuinDebris", (4350, 660), "Obstacle"))
-        GameWorld().game_objects.add(Environment("RuinWallLeft", (4350, 660), "Obstacle"))
-        GameWorld().game_objects.add(Environment("RuinWallRight", (4350, 660), "Obstacle"))
-
-        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (4500, 955), "Obstacle"))
-        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (4200, 955), "Obstacle"))
-
-        GameWorld().game_objects.add(Environment("RuinDebris", (5310, 660), "Obstacle"))
-
-        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (5510, 825), "Obstacle"))
-        GameWorld().game_objects.add(Environment("Truck (Destroyed) Export", (5300, 890), "Obstacle"))
-
-        GameWorld().game_objects.add(Environment("RuinBackground", (6240, 660), "Background"))
-        GameWorld().game_objects.add(Environment("RuinDebris", (6240, 660), "Obstacle"))
-        GameWorld().game_objects.add(Environment("RuinWallLeft", (6240, 660), "Obstacle"))
-        GameWorld().game_objects.add(Environment("RuinWallRight", (6240, 660), "Obstacle"))
-
-
-        # End forest
-        GameWorld().game_objects.add(Environment("DeadTree", (6960, 550), "Background"))
-
-        GameWorld().game_objects.add(Environment("TreeTrunk", (7170, 800), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (7170, 415), "Obstacle"))
-
-        GameWorld().game_objects.add(Environment("TreeTrunk", (7510, 810), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (7510, 405), "Obstacle"))
-
-        GameWorld().game_objects.add(Environment("TreeTrunk", (7780, 800), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (7780, 425), "Obstacle"))
-
-        GameWorld().game_objects.add(Environment("TreeTrunk", (8200, 800), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (8200, 405), "Obstacle"))
-
-        GameWorld().game_objects.add(Environment("TreeTrunk", (8490, 810), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (8490, 405), "Obstacle"))
-
-        GameWorld().game_objects.add(Environment("TreeTrunk", (8760, 800), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (8760, 415), "Obstacle"))
-
-        GameWorld().game_objects.add(Environment("TreeTrunk", (9180, 820), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (9180, 405), "Obstacle"))
-
-        GameWorld().game_objects.add(Environment("Truck (Destroyed) Export", (7150, 890), "Obstacle"))
-
-        GameWorld().game_objects.add(Environment("TreeCrown", (9100, 650), "Obstacle"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (9320, 900), "Obstacle"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (8910, 910), "Obstacle"))
-
-        GameWorld().main_objective_object = Jammer((8540, 905), 500)
-        GameWorld().main_objective_object.main_objective = True
-        GameWorld().game_objects.add(GameWorld().main_objective_object)
-
-        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (8240, 955), "Obstacle"))
-
-        GameWorld().game_objects.add(Environment("TreeTrunk", (9480, 800), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (9480, 405), "Obstacle"))
-
-        GameWorld().game_objects.add(Environment("TreeTrunk", (9870, 800), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (9870, 425), "Obstacle"))
-
-        GameWorld().game_objects.add(Environment("TreeTrunk", (9750, 800), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (9750, 415), "Obstacle"))
-
-        GameWorld().game_objects.add(Environment("TreeTrunk", (10100, 800), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (10100, 405), "Obstacle"))
-
-
-    def load_level3(self):
-        from classes.GameWorld import GameWorld
         self.grenade_count = 4
-
-        # Set level bounds
         Player().left_bound = 0
-        Player().right_bound = 9200
+        Player().right_bound = 10440
 
         # Place floor, value sets number of tiles placed
-        for x in range(6):
+        for x in range(7):
             GameWorld().game_objects.add(Environment("Ground", (x * 2000, 1055), "Obstacle"))
-
-        GameWorld().game_objects.add(Environment("RuinBackground", (811, 660), "Background"))
-        GameWorld().game_objects.add(Environment("RuinDebris", (811, 660), "Obstacle"))
-        GameWorld().game_objects.add(Environment("RuinWallLeft", (811, 660), "Obstacle"))
-        GameWorld().game_objects.add(Environment("RuinWallRight", (811, 660), "Obstacle"))
-        GameWorld().game_objects.add(Environment("Brick", (960, 1015), "Brick"))
-        GameWorld().game_objects.add(Environment("TreeTrunk", (13, 800), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (13, 405), "Obstacle"))
-        GameWorld().game_objects.add(Environment("Truck (Destroyed) Export", (-137, 890), "Obstacle"))
-        GameWorld().game_objects.add(Environment("Truck (Destroyed) Export", (1694, 890), "Obstacle"))
-        GameWorld().game_objects.add(Environment("TreeTrunk", (2377, 800), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (2377, 405), "Obstacle"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (3158, 935), "Obstacle"))
-        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (2747, 955), "Obstacle"))
-        GameWorld().game_objects.add(Environment("TreeTrunk", (3888, 800), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (3888, 405), "Obstacle"))
-        GameWorld().game_objects.add(Environment("TreeTrunk", (4220, 800), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (4220, 405), "Obstacle"))
-        GameWorld().game_objects.add(Environment("TreeTrunk", (5053, 800), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (5053, 405), "Obstacle"))
-        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (4629, 955), "Obstacle"))
-        GameWorld().game_objects.add(Environment("Truck (Undamaged) Export", (5892, 860), "Obstacle"))
-        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (6412, 955), "Obstacle"))
-        GameWorld().game_objects.add(Environment("RuinBackground", (7111, 660), "Background"))
-        GameWorld().game_objects.add(Environment("RuinDebris", (7111, 660), "Obstacle"))
-        GameWorld().game_objects.add(Environment("RuinWallLeft", (7111, 660), "Obstacle"))
-        GameWorld().game_objects.add(Environment("RuinWallRight", (7111, 660), "Obstacle"))
-        GameWorld().game_objects.add(Environment("TreeTrunk", (7716, 800), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (7716, 405), "Obstacle"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (7899, 935), "Obstacle"))
-
-        GameWorld().main_objective_object = Jammer((7138, 905), 500)
-        GameWorld().main_objective_object.main_objective = True
-        GameWorld().game_objects.add(GameWorld().main_objective_object)
-
-    def load_level6(self):
-        from classes.GameWorld import GameWorld
-        self.grenade_count = 2
-
-        # Set level bounds
-        Player().left_bound = 0
-        Player().right_bound = 11000
-
-        # Place floor, value sets number of tiles placed
-        for x in range(6):
-            GameWorld().game_objects.add(Environment("Ground", (x * 2000, 1055), "Obstacle"))
+        # Left bounds "wall"
+        GameWorld().game_objects.add(Environment("TreeTrunk", (000, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (000, 405), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (-200, 935), "Obstacle"))
 
 
-        # Start plants + car
-        GameWorld().game_objects.add(Environment("Truck (Undamaged) Export", (350, 850), "Obstacle"))
-
-        GameWorld().game_objects.add(Environment("TreeTrunk", (210, 810), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (210, 405), "Obstacle"))
-
-        GameWorld().game_objects.add(Environment("TreeCrown", (270, 1035), "Obstacle"))
-
+        # Start Bushes
+        GameWorld().game_objects.add(Environment("TreeCrown", (500, 935), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (1420, 935), "Obstacle"))
 
         # Launch brick
         GameWorld().game_objects.add(Environment("Brick", (960, 1015), "Brick"))
 
+        GameWorld().game_objects.add(Environment("TreeTrunk", (1800, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (1800, 405), "Obstacle"))
 
-        # Dead tree patch
-        GameWorld().game_objects.add(Environment("DeadTree", (1740, 550), "Background"))
-        GameWorld().game_objects.add(Environment("DeadTree", (2100, 560), "Background"))
-        GameWorld().game_objects.add(Environment("DeadTree", (2590, 540), "Background"))
-        GameWorld().game_objects.add(Environment("DeadTree", (2850, 540), "Background"))
+        GameWorld().game_objects.add(Jammer((2400, 905), 500))
 
+        # Easier to hit on return
+        GameWorld().game_objects.add(Environment("TreeCrown", (3400, 935), "Obstacle"))
+        GameWorld().game_objects.add(Jammer((3800, 905), 800))
 
-        # Debris
-        GameWorld().game_objects.add(Environment("RuinDebris", (3700, 670), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeTrunk", (4800, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (4800, 405), "Obstacle"))
 
+        #Easier to hit on entry
+        GameWorld().game_objects.add(Environment("TreeCrown", (6200, 935), "Obstacle"))
+        GameWorld().game_objects.add(Jammer((5800, 905), 1000))
 
-        # Jammer truck
-        GameWorld().game_objects.add(Jammer((5750, 745), 500))
-        GameWorld().game_objects.add(Environment("Truck (Undamaged) Export", (5530, 850), "Obstacle"))
+        # Annoying end bush
+        GameWorld().game_objects.add(Environment("TreeCrown", (9320, 935), "Obstacle"))
 
-
-        # 2nd dead tree patch
-        GameWorld().game_objects.add(Environment("DeadTree", (7050, 550), "Background"))
-        GameWorld().game_objects.add(Environment("DeadTree", (7860, 540), "Background"))
-        GameWorld().game_objects.add(Environment("DeadTree", (8080, 570), "Background"))
-        GameWorld().game_objects.add(Environment("DeadTree", (8370, 570), "Background"))
-
-
-        # End ruin
-        GameWorld().game_objects.add(Environment("TreeCrown", (8720, 910), "Obstacle"))
-
-        GameWorld().game_objects.add(Environment("RuinBackground", (9780, 660), "Background"))
-        GameWorld().game_objects.add(Environment("RuinDebris", (9780, 660), "Obstacle"))
-        GameWorld().game_objects.add(Environment("RuinWallRight", (9780, 660), "Obstacle"))
-
-        GameWorld().game_objects.add(Environment("TreeTrunk", (10550, 800), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (10550, 405), "Obstacle"))
-        
-        GameWorld().game_objects.add(Environment("TreeCrown", (10560, 935), "Obstacle"))
-
-        GameWorld().main_objective_object = Environment("AmmoDump(Shells)", (9100, 955), "Obstacle")
-        GameWorld().main_objective_object.main_objective = True
-        GameWorld().game_objects.add(GameWorld().main_objective_object)
-
-    def load_level4(self):
-        from classes.GameWorld import GameWorld
-        self.grenade_count = 6
-
-        # Set level bounds
-        Player().left_bound = 0
-        Player().right_bound = 10000
-
-        # Place floor, value sets number of tiles placed
-        for x in range(6):
-            GameWorld().game_objects.add(Environment("Ground", (x * 2000, 1055), "Obstacle"))
-
-        GameWorld().game_objects.add(Environment("Brick", (960, 1015), "Brick"))
-        GameWorld().game_objects.add(Environment("TreeTrunk", (0, 800), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (0, 405), "Obstacle"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (-200, 935), "Obstacle"))
-        GameWorld().game_objects.add(Environment("TreeTrunk", (1500, 800), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (1500, 405), "Obstacle"))
-        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (2200, 955), "Obstacle"))
-        GameWorld().game_objects.add(Environment("Truck (Undamaged) Export", (1623, 860), "Obstacle"))
-        GameWorld().game_objects.add(Environment("Truck (Undamaged) Export", (2886, 860), "Obstacle"))
-        GameWorld().game_objects.add(Environment("Truck (Undamaged) Export", (3894, 860), "Obstacle"))
-        GameWorld().game_objects.add(Environment("TreeTrunk", (3401, 800), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (3401, 405), "Obstacle"))
-        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (4478, 955), "Obstacle"))
-        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (4755, 955), "Obstacle"))
-        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (5051, 955), "Obstacle"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (5479, 935), "Obstacle"))
-        GameWorld().game_objects.add(Environment("TreeTrunk", (6161, 800), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (6161, 405), "Obstacle"))
-        GameWorld().game_objects.add(Environment("TreeTrunk", (7014, 800), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (7014, 405), "Obstacle"))
-        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (6643, 955), "Obstacle"))
-        GameWorld().game_objects.add(Environment("RuinBackground", (8304, 660), "Background"))
-        GameWorld().game_objects.add(Environment("RuinDebris", (8304, 660), "Obstacle"))
-        GameWorld().game_objects.add(Environment("RuinWallLeft", (8304, 660), "Obstacle"))
-        GameWorld().game_objects.add(Environment("RuinWallRight", (8304, 660), "Obstacle"))
-        GameWorld().game_objects.add(Environment("TreeTrunk", (9813, 800), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (9813, 405), "Obstacle"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (7540, 935), "Obstacle"))
-        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (8072, 955), "Obstacle"))
-        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (8566, 955), "Obstacle"))
-        GameWorld().game_objects.add(Environment("TreeTrunk", (9172, 800), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (9172, 405), "Obstacle"))
-
-        GameWorld().game_objects.add(Environment("TreeTrunk", (9813, 800), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (9813, 405), "Obstacle"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (10076, 935), "Obstacle"))
-
-        GameWorld().main_objective_object = Jammer((9700, 905), 500)
+        # Main objective and right bounds
+        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (10000, 955), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeTrunk", (10300, 790), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (10300, 405), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (10440, 935), "Obstacle"))
+        GameWorld().main_objective_object = Jammer((9700, 905), 2400)
         GameWorld().main_objective_object.main_objective = True
         GameWorld().game_objects.add(GameWorld().main_objective_object)
