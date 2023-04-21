@@ -199,7 +199,7 @@ class LevelLoader(metaclass=Singleton):
         GameWorld().main_objective_object.main_objective = True
         GameWorld().game_objects.add(GameWorld().main_objective_object)
 
-    def load_level3(self):
+    def load_level10(self):
         from classes.GameWorld import GameWorld
 
         self.grenade_count = 4
@@ -250,7 +250,7 @@ class LevelLoader(metaclass=Singleton):
         GameWorld().main_objective_object.main_objective = True
         GameWorld().game_objects.add(GameWorld().main_objective_object)
 
-    def load_level4(self):
+    def load_level8(self):
         from classes.GameWorld import GameWorld
         self.grenade_count = 6
         Player().left_bound = 0
@@ -312,7 +312,7 @@ class LevelLoader(metaclass=Singleton):
         GameWorld().main_objective_object.main_objective = True
         GameWorld().game_objects.add(GameWorld().main_objective_object)
 
-    def load_level5(self):
+    def load_level9(self):
         from classes.GameWorld import GameWorld
         self.grenade_count = 4
 
@@ -375,7 +375,7 @@ class LevelLoader(metaclass=Singleton):
         GameWorld().main_objective_object.main_objective = True
         GameWorld().game_objects.add(GameWorld().main_objective_object)
 
-    def load_level6(self):
+    def load_level7(self):
         from classes.GameWorld import GameWorld
         self.grenade_count = 3
 
@@ -435,8 +435,7 @@ class LevelLoader(metaclass=Singleton):
         GameWorld().main_objective_object.main_objective = True
         GameWorld().game_objects.add(GameWorld().main_objective_object)
 
-    # Town in the woods
-    def load_level7(self):
+    def load_level5(self):
         from classes.GameWorld import GameWorld
         self.grenade_count = 3
 
@@ -563,7 +562,7 @@ class LevelLoader(metaclass=Singleton):
         GameWorld().game_objects.add(Environment("TreeCrown", (10100, 405), "Obstacle"))
 
 
-    def load_level8(self):
+    def load_level3(self):
         from classes.GameWorld import GameWorld
         self.grenade_count = 4
 
@@ -575,59 +574,41 @@ class LevelLoader(metaclass=Singleton):
         for x in range(6):
             GameWorld().game_objects.add(Environment("Ground", (x * 2000, 1055), "Obstacle"))
 
-        # House ruin as left wall
-        GameWorld().game_objects.add(Environment("TreeTrunk", (330, 790), "Background"))
-        GameWorld().game_objects.add(Environment("RuinBackground", (000, 660), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (330, 485), "Obstacle"))
-        GameWorld().game_objects.add(Environment("RuinWallLeft", (000, 660), "Obstacle"))
-        GameWorld().game_objects.add(Environment("RuinWallRight", (000, 660), "Obstacle"))
-
-        # Launch brick
+        GameWorld().game_objects.add(Environment("RuinBackground", (811, 660), "Background"))
+        GameWorld().game_objects.add(Environment("RuinDebris", (811, 660), "Obstacle"))
+        GameWorld().game_objects.add(Environment("RuinWallLeft", (811, 660), "Obstacle"))
+        GameWorld().game_objects.add(Environment("RuinWallRight", (811, 660), "Obstacle"))
         GameWorld().game_objects.add(Environment("Brick", (960, 1015), "Brick"))
+        GameWorld().game_objects.add(Environment("TreeTrunk", (13, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (13, 405), "Obstacle"))
+        GameWorld().game_objects.add(Environment("Truck (Destroyed) Export", (-137, 890), "Obstacle"))
+        GameWorld().game_objects.add(Environment("Truck (Destroyed) Export", (1694, 890), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeTrunk", (2377, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (2377, 405), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (3158, 935), "Obstacle"))
+        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (2747, 955), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeTrunk", (3888, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (3888, 405), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeTrunk", (4220, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (4220, 405), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeTrunk", (5053, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (5053, 405), "Obstacle"))
+        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (4629, 955), "Obstacle"))
+        GameWorld().game_objects.add(Environment("Truck (Undamaged) Export", (5892, 860), "Obstacle"))
+        GameWorld().game_objects.add(Environment("AmmoDump(Shells)", (6412, 955), "Obstacle"))
+        GameWorld().game_objects.add(Environment("RuinBackground", (7111, 660), "Background"))
+        GameWorld().game_objects.add(Environment("RuinDebris", (7111, 660), "Obstacle"))
+        GameWorld().game_objects.add(Environment("RuinWallLeft", (7111, 660), "Obstacle"))
+        GameWorld().game_objects.add(Environment("RuinWallRight", (7111, 660), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeTrunk", (7716, 800), "Background"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (7716, 405), "Obstacle"))
+        GameWorld().game_objects.add(Environment("TreeCrown", (7899, 935), "Obstacle"))
 
-        GameWorld().game_objects.add(Environment("TreeTrunk", (1205, 790), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (1205, 405), "Obstacle"))
-
-        GameWorld().game_objects.add(Environment("TreeTrunk", (1500, 790), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (1500, 405), "Obstacle"))
-
-        GameWorld().game_objects.add(Environment("TreeTrunk", (1700, 790), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (1700, 405), "Obstacle"))
-
-        GameWorld().game_objects.add(Environment("TreeTrunk", (2500, 790), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (2500, 655), "Obstacle"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (2500, 355), "Obstacle"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (2500, 55), "Obstacle"))
-
-        GameWorld().game_objects.add(Jammer((3000, 905), 500))
-
-        GameWorld().game_objects.add(Environment("TreeCrown", (3600, 900), "Obstacle"))
-
-        GameWorld().game_objects.add(Environment("TreeTrunk", (5860, 790), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (5860, 655), "Obstacle"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (5860, 355), "Obstacle"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (5860, 55), "Obstacle"))
-
-        GameWorld().game_objects.add(Environment("TreeTrunk", (6360, 790), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (6360, 655), "Obstacle"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (6360, 355), "Obstacle"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (6360, 55), "Obstacle"))
-
-        GameWorld().game_objects.add(Environment("TreeTrunk", (6760, 790), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (6760, 655), "Obstacle"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (6760, 355), "Obstacle"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (6760, 55), "Obstacle"))
-
-        GameWorld().game_objects.add(Environment("TreeTrunk", (9060, 790), "Background"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (9060, 405), "Obstacle"))
-        GameWorld().game_objects.add(Environment("TreeCrown", (9200, 935), "Obstacle"))
-
-        GameWorld().main_objective_object = Jammer((7200, 905), 500)
+        GameWorld().main_objective_object = Jammer((7138, 905), 500)
         GameWorld().main_objective_object.main_objective = True
         GameWorld().game_objects.add(GameWorld().main_objective_object)
 
-    # Bombed out field
-    def load_level9(self):
+    def load_level6(self):
         from classes.GameWorld import GameWorld
         self.grenade_count = 2
 
@@ -692,9 +673,7 @@ class LevelLoader(metaclass=Singleton):
         GameWorld().main_objective_object.main_objective = True
         GameWorld().game_objects.add(GameWorld().main_objective_object)
 
-
-
-    def load_level10(self):
+    def load_level4(self):
         from classes.GameWorld import GameWorld
         self.grenade_count = 6
 

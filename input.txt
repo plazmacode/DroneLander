@@ -1,0 +1,1 @@
+GameWorld().game_objects.add(Environment("Brick", (960, 1015), "Brick"))
