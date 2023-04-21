@@ -315,7 +315,6 @@ while not done:
         environment_type = ENVIRONMENT_TYPES[t[2]]
         f.write(f'GameWorld().game_objects.add(Environment("{environment_type}", ({t[3][0]}, {t[3][1]}), "{object_type}"))\n')
 
-
   def load_level():
       # Open the text file and read each line
       with open("input.txt") as f:
@@ -339,6 +338,4 @@ while not done:
                         new_tile = (tile_images[key], tile_images[key].get_rect(center=(x, y)), key, (x, y))
                         tiles.append(new_tile)
                         
-
-
 pygame.quit()
