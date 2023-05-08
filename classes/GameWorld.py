@@ -4,6 +4,7 @@ from classes.Jam import Jam
 from classes.Marker import Marker
 from classes.Parallax import Parallax
 from classes.LevelLoader import LevelLoader
+from classes.HighscoreManager import HighscoreManager
 
 class Singleton(type):
     _instances = {}
@@ -50,6 +51,14 @@ class GameWorld(metaclass=Singleton):
 
         self.level_time = 0
         self.level_start_time = 0
+
+
+        HighscoreManager().updateScore(2, 4353)
+        HighscoreManager().updateScore(5, 1337)
+        HighscoreManager().updateScore(3, 1131)
+        HighscoreManager().updateScore(10, 9999)
+        HighscoreManager().updateScore(1, 1)
+
 
     # obsolete?
     def start_game(self):
