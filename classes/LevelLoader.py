@@ -114,7 +114,8 @@ class LevelLoader(metaclass=Singleton):
         GameWorld().game_objects.add(Environment("TreeCrown", (-200, 935), "Obstacle"))
 
         # Launch brick
-        GameWorld().game_objects.add(Environment("Brick", (960, 1015), "Brick"))
+        GameWorld().brick = Environment("Brick", (960, 1015), "Brick")
+        GameWorld().game_objects.add(GameWorld().brick)
 
         # Tutorial Text
         GameWorld().tutorial_text.add(TutorialText("Press W to thrust, Press A or D to rotate", (600, 800)))
@@ -161,7 +162,8 @@ class LevelLoader(metaclass=Singleton):
         GameWorld().game_objects.add(Environment("TreeCrown", (-200, 935), "Obstacle"))
 
         # Launch brick
-        GameWorld().game_objects.add(Environment("Brick", (960, 1015), "Brick"))
+        GameWorld().brick = Environment("Brick", (960, 1015), "Brick")
+        GameWorld().game_objects.add(GameWorld().brick)
 
         # Bush
         GameWorld().game_objects.add(Environment("TreeCrown", (500, 935), "Obstacle"))
@@ -215,7 +217,11 @@ class LevelLoader(metaclass=Singleton):
         GameWorld().game_objects.add(Environment("RuinDebris", (811, 660), "Obstacle"))
         GameWorld().game_objects.add(Environment("RuinWallLeft", (811, 660), "Obstacle"))
         GameWorld().game_objects.add(Environment("RuinWallRight", (811, 660), "Obstacle"))
-        GameWorld().game_objects.add(Environment("Brick", (960, 1015), "Brick"))
+
+        # Launch brick
+        GameWorld().brick = Environment("Brick", (960, 1015), "Brick")
+        GameWorld().game_objects.add(GameWorld().brick)
+
         GameWorld().game_objects.add(Environment("TreeTrunk", (13, 800), "Background"))
         GameWorld().game_objects.add(Environment("TreeCrown", (13, 405), "Obstacle"))
         GameWorld().game_objects.add(Environment("Truck (Destroyed) Export", (-137, 890), "Obstacle"))
@@ -257,7 +263,10 @@ class LevelLoader(metaclass=Singleton):
         for x in range(6):
             GameWorld().game_objects.add(Environment("Ground", (x * 2000, 1055), "Obstacle"))
 
-        GameWorld().game_objects.add(Environment("Brick", (960, 1015), "Brick"))
+        # Launch brick
+        GameWorld().brick = Environment("Brick", (960, 1015), "Brick")
+        GameWorld().game_objects.add(GameWorld().brick)
+        
         GameWorld().game_objects.add(Environment("TreeTrunk", (0, 800), "Background"))
         GameWorld().game_objects.add(Environment("TreeCrown", (0, 405), "Obstacle"))
         GameWorld().game_objects.add(Environment("TreeCrown", (-200, 935), "Obstacle"))
@@ -336,7 +345,8 @@ class LevelLoader(metaclass=Singleton):
 
 
         # Launch brick
-        GameWorld().game_objects.add(Environment("Brick", (960, 1015), "Brick"))
+        GameWorld().brick = Environment("Brick", (960, 1015), "Brick")
+        GameWorld().game_objects.add(GameWorld().brick)
 
 
         # Bush
@@ -398,7 +408,8 @@ class LevelLoader(metaclass=Singleton):
 
 
         # Launch brick
-        GameWorld().game_objects.add(Environment("Brick", (960, 1015), "Brick"))
+        GameWorld().brick = Environment("Brick", (960, 1015), "Brick")
+        GameWorld().game_objects.add(GameWorld().brick)
 
 
         # Dead tree patch
@@ -460,7 +471,8 @@ class LevelLoader(metaclass=Singleton):
         GameWorld().game_objects.add(Environment("RuinWallRight", (000, 660), "Obstacle"))
 
         # Launch brick
-        GameWorld().game_objects.add(Environment("Brick", (960, 1015), "Brick"))
+        GameWorld().brick = Environment("Brick", (960, 1015), "Brick")
+        GameWorld().game_objects.add(GameWorld().brick)
 
         GameWorld().game_objects.add(Environment("RuinDebris", (1600, 660), "Obstacle"))
         GameWorld().game_objects.add(Environment("TreeTrunk", (2200, 790), "Background"))
@@ -570,7 +582,8 @@ class LevelLoader(metaclass=Singleton):
         GameWorld().game_objects.add(Environment("TreeCrown", (500, 935), "Obstacle"))
 
         # Launch brick
-        GameWorld().game_objects.add(Environment("Brick", (960, 1015), "Brick"))
+        GameWorld().brick = Environment("Brick", (960, 1015), "Brick")
+        GameWorld().game_objects.add(GameWorld().brick)
 
         # Tree
         GameWorld().game_objects.add(Environment("TreeTrunk", (2100, 790), "Background"))
@@ -632,7 +645,8 @@ class LevelLoader(metaclass=Singleton):
         GameWorld().game_objects.add(Environment("RuinWallRight", (000, 660), "Obstacle"))
 
         # Launch brick
-        GameWorld().game_objects.add(Environment("Brick", (960, 1015), "Brick"))
+        GameWorld().brick = Environment("Brick", (960, 1015), "Brick")
+        GameWorld().game_objects.add(GameWorld().brick)
 
         GameWorld().game_objects.add(Environment("TreeTrunk", (1205, 790), "Background"))
         GameWorld().game_objects.add(Environment("TreeCrown", (1205, 405), "Obstacle"))
@@ -696,7 +710,8 @@ class LevelLoader(metaclass=Singleton):
         GameWorld().game_objects.add(Environment("TreeCrown", (1420, 935), "Obstacle"))
 
         # Launch brick
-        GameWorld().game_objects.add(Environment("Brick", (960, 1015), "Brick"))
+        GameWorld().brick = Environment("Brick", (960, 1015), "Brick")
+        GameWorld().game_objects.add(GameWorld().brick)
 
         GameWorld().game_objects.add(Environment("TreeTrunk", (1800, 800), "Background"))
         GameWorld().game_objects.add(Environment("TreeCrown", (1800, 405), "Obstacle"))

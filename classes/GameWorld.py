@@ -1,6 +1,7 @@
 import pygame
 import math
 from classes.Jam import Jam
+from classes.Marker import Marker
 from classes.Parallax import Parallax
 from classes.LevelLoader import LevelLoader
 
@@ -104,6 +105,7 @@ class GameWorld(metaclass=Singleton):
         self.tutorial_text.update()
 
         Jam().update()
+        Marker().update()
         Parallax().update()
 
         for button in self.buttons:
@@ -185,7 +187,7 @@ class GameWorld(metaclass=Singleton):
         if self.game_state == "PLAY" or self.game_state == "SCORESCREEN":
             # draw noise
             Jam().draw(self._screen)
-
+            Marker().draw(self._screen)
             #draw UI
             self._screen.blit(grenade_text, (100, 100))
             # self._screen.blit(score_text, ((self.screen_width - score_text.get_width()) // 2, 150))
