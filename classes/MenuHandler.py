@@ -3,6 +3,8 @@ from classes.Button import Button
 from classes.TextField import TextField
 from classes.GameWorld import GameWorld
 from classes.Singleton import Singleton
+from classes.HighscoreManager import HighscoreManager
+from classes.LevelLoader import LevelLoader
 
 button_color = (34, 42, 104)
 hover_color = (56, 55, 144)
@@ -78,6 +80,7 @@ class MenuHandler(metaclass=Singleton):
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 + 80, 400, 80, 80), "9", "loadLevel9"))
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 + 200, 400, 80, 80), "10", "loadLevel10"))
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 660, 300, 80), "BACK", "mainMenu"))
+        GameWorld().buttons.append(TextField(button_color, (self._screen_width / 2, 100), "                        ", 48, "LevelSelectHighscore"))
 
 
     def end_menu(self):
@@ -114,8 +117,10 @@ class MenuHandler(metaclass=Singleton):
         """
         Score screen
         """
+        HighscoreManager().updateScore(GameWorld().score, LevelLoader().current_level)
         GameWorld().buttons.clear()
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 660, 300, 80), "CONTINUE", "endMenu"))
+        GameWorld().buttons.append(TextField(button_color, (self._screen_width / 2, 100), "Highscore: " + str(HighscoreManager().getScore(LevelLoader().current_level)), 48, "highscore"))
         GameWorld().buttons.append(TextField(button_color, (self._screen_width / 2, 200), "Score: " + str(GameWorld().score), 48, "score"))
         GameWorld().buttons.append(TextField(button_color, (self._screen_width / 2, 400), GameWorld().endscreen_string, 48, "endmessage"))
         GameWorld().game_state = "SCORESCREEN"

@@ -192,8 +192,8 @@ class Player(GameObject):
 
                     from classes.MenuHandler import MenuHandler
                     GameWorld().endscreen_string = "MISSION COMPLETE"
-                    MenuHandler().score_screen()
                     GameWorld().get_final_score()
+                    MenuHandler().score_screen()
                 else:
                     GameWorld().endscreen_string = "CRASHED ON LANDING"
                     self.on_death()

@@ -8,8 +8,10 @@ class Singleton(type):
             cls._instances[cls] = super().__call__(*args, **kwargs)
         return cls._instances[cls]
 
-# Class for making and mainting the highscore txt file
 class HighscoreManager(metaclass=Singleton):
+    """
+    Class for making and mainting the highscore txt file
+    """
     def __init__(self) -> None:
         try: # Creates a highscore file only if one does not exist yet
             with open("highscores.txt", "x") as hs:
@@ -22,10 +24,12 @@ class HighscoreManager(metaclass=Singleton):
         except:
             pass
     
-    # Takes a level and score, comparing against the existing score and replaces it if needed
-    # level: The target level for the update
-    # score: The score achived on this call
-    def updateScore(self, level, score):
+    def updateScore(self, score, level):
+        """
+        Takes a level and score, comparing against the existing score and replaces it if needed
+        level: The target level for the update
+        score: The score achived on this call
+        """
         with open("highscores.txt") as hs:
             content = []   # Copies the txt file to temporary memory with an array
             for line in hs:
@@ -45,11 +49,15 @@ class HighscoreManager(metaclass=Singleton):
                             hs.write(content[x])
 
                     hs.close()
-                
-    #             return score
-    #         return lineData[0]
 
+    def getScore(self, level):
+        with open("highscores.txt") as hs:
+            content = []   # Copies the txt file to temporary memory with an array
+            for line in hs:
+                content.append(line)
 
-    # def readScore(self, level):
-    #     score = 0
-    #     return score
+            hs.close()
+
+            lineData = [int(s) for s in content[level - 1].split() if s.isdigit()]   # Exposes the score part of the string as an integer (as an array element because we're too stupid to do it directly)
+
+            return lineData[0]

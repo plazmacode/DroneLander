@@ -40,6 +40,7 @@ class GameWorld(metaclass=Singleton):
         self.jamming = False
         self.game_state = "MENU"
         self.score = 0
+        self.level_select = 0
 
         self.too_high = False
         self.death_timer = 3
@@ -51,14 +52,6 @@ class GameWorld(metaclass=Singleton):
 
         self.level_time = 0
         self.level_start_time = 0
-
-
-        HighscoreManager().updateScore(2, 4353)
-        HighscoreManager().updateScore(5, 1337)
-        HighscoreManager().updateScore(3, 1131)
-        HighscoreManager().updateScore(10, 9999)
-        HighscoreManager().updateScore(1, 1)
-
 
     # obsolete?
     def start_game(self):

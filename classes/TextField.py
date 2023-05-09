@@ -15,6 +15,7 @@ class TextField():
         self.surface = self._font.render(str(text), True, (255, 255, 255))
         self.update_score_event = pygame.USEREVENT + 1
         self.update_endmessage_event = pygame.USEREVENT + 2
+        self.level_select_event = pygame.USEREVENT + 3
         self.background_surface = pygame.Surface((self.surface.get_width() + 20, self.surface.get_height() + 10))
         if tag != "lore":
             pygame.draw.rect(self.background_surface, self.border_color, [0, 0, self.surface.get_width() + 20, self.surface.get_height() + 10])
@@ -37,6 +38,22 @@ class TextField():
             if event.type == self.update_score_event and self.tag == "score":
                 from classes.GameWorld import GameWorld
                 self.surface = self._font.render("Score: " + str(GameWorld().score), True, (255, 255, 255))
+                self.redraw_surface()
+            if event.type == self.update_score_event and self.tag == "highscore":
+                from classes.HighscoreManager import HighscoreManager
+                from classes.LevelLoader import LevelLoader
+                from classes.GameWorld import GameWorld
+                HighscoreManager().updateScore(GameWorld().score, LevelLoader().current_level)
+                self.surface = self._font.render("Highscore: " + str(HighscoreManager().getScore(LevelLoader().current_level)), True, (255, 255, 255))
+                self.redraw_surface()
+            if event.type == self.level_select_event and self.tag == "LevelSelectHighscore":
+                from classes.HighscoreManager import HighscoreManager
+                from classes.LevelLoader import LevelLoader
+                from classes.GameWorld import GameWorld
+                if GameWorld().level_select == 0:
+                    self.surface = self._font.render("                        ", True, (255, 255, 255))
+                else:
+                    self.surface = self._font.render("Highscore: " + str(HighscoreManager().getScore(GameWorld().level_select)), True, (255, 255, 255))
                 self.redraw_surface()
             if event.type == self.update_endmessage_event and self.tag == "endmessage":
                 from classes.GameWorld import GameWorld

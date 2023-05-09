@@ -11,6 +11,7 @@ class Button():
         self.color = color
         self.hover_color = hover_color
         self.rect = rect
+        self.text = text
         self._font = pygame.font.Font("./fonts/PixeloidSans-Bold.ttf", 22)
         self.text_surface = self._font.render(str(text), True, (255, 255, 255))
         self.action = action
@@ -26,17 +27,28 @@ class Button():
         """
         param text_change: bool
         """
-        if self.new_color != self.color:
+        if self.new_color != self.color:            
+            self.color = self.new_color
+            
+            lineData = [int(s) for s in self.text.split() if s.isdigit()]
+            if len(lineData) != 0:
+                from classes.GameWorld import GameWorld
+                if self.color == self.hover_color:
+                    GameWorld().level_select = lineData[0]
+                else:
+                    GameWorld().level_select = 0
+                level_select_event = pygame.event.Event(pygame.USEREVENT + 3)
+                pygame.event.post(level_select_event)
+
             pygame.draw.rect(self.button_surface, self.border_color, [0, 0, self.rect.width, self.rect.height])
             pygame.draw.rect(self.button_surface, self.color, [5, 5, self.rect.width -10, self.rect.height -10])
-            self.color = self.new_color
 
     def update(self, event_list):
         #if mouse position inside button rectangle
         mouse = pygame.mouse
         if self.rect.collidepoint(mouse.get_pos()[0], mouse.get_pos()[1]):
             # set hover color on button
-            self.new_color = self.base_color
+            self.new_color = self.hover_color
             self.redraw()
             for event in event_list:
                 # When mouse released after mouse pressed
@@ -52,7 +64,7 @@ class Button():
                     self.old_mouse_state = pygame.MOUSEBUTTONUP
         else:
             # set color to base color when not hovering
-            self.new_color = self.hover_color
+            self.new_color = self.base_color
             self.redraw()
     
     def draw(self, screen):
