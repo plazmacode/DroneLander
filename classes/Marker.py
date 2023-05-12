@@ -13,7 +13,7 @@ class Singleton(type):
 class Marker(metaclass=Singleton):
     def __init__(self) -> None:
         self.image = pygame.image.load("./images/marker.png")
-        self.image = pygame.transform.scale(self.image, (self.image.get_width() * 5, self.image.get_height() * 5)).convert_alpha()
+        self.image = pygame.transform.scale(self.image, (self.image.get_width() * 10, self.image.get_height() * 10)).convert_alpha()
         self.base_image = self.image
         self.image_left = pygame.transform.rotate(self.base_image, 90)
         self.image_right = pygame.transform.rotate(self.base_image, -90)
