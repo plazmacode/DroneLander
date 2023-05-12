@@ -21,7 +21,7 @@ class GameWorld(metaclass=Singleton):
         self.screen_width = self._screen.get_width()
         self.screen_height = self._screen.get_height()
 
-        pygame.display.set_caption("Drone Lander")
+        pygame.display.set_caption("Auxiliary Light On")
         self._clock = pygame.time.Clock()
         self._font = pygame.font.Font("./fonts/PixeloidSans-Bold.ttf", 28)
         self.endscreen_string = "you suck"
@@ -191,9 +191,9 @@ class GameWorld(metaclass=Singleton):
             Jam().draw(self._screen)
             Marker().draw(self._screen)
             #draw UI
-            self._screen.blit(grenade_text, (100, 100))
+            self._screen.blit(grenade_text, (45, 100))
             # self._screen.blit(score_text, ((self.screen_width - score_text.get_width()) // 2, 150))
-            self._screen.blit(timer_text, (self.screen_width - 200, 50))
+            self._screen.blit(timer_text, (45, 43))
             # DEBUG
             # self._screen.blit(attack_text, (100, 200))
             # self._screen.blit(objective_text, (100, 300))
@@ -216,7 +216,7 @@ class GameWorld(metaclass=Singleton):
 
         self._screen.blit(self._screen, (0,0))
 
-        self._screen.blit(self.update_fps(), (10,0))
+        # self._screen.blit(self.update_fps(), (10,0))
 
         pygame.display.flip()
     

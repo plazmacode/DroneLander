@@ -90,8 +90,10 @@ class LevelLoader(metaclass=Singleton):
         GameWorld().tutorial_text = pygame.sprite.Group()
 
         GameWorld().buttons.append(TextField((34, 42, 104), (GameWorld().screen_width / 2, 200), "Score: " + str(GameWorld().score), 48, "score"))
-        GameWorld().buttons.append(TextField((34, 42, 104), (GameWorld().screen_width - 400, 60), "Level: " + str(LevelLoader().current_level), 48, "level"))
-        
+        GameWorld().buttons.append(TextField((34, 42, 104), (GameWorld().screen_width - 120, 60), "Level: " + str(LevelLoader().current_level), 48, "level"))
+        # GameWorld().buttons.append(TextField((34, 42, 104), (GameWorld().screen_width - 400, 100), "Grenades: " + str(GameWorld().grenades), 48, "grenades"))
+        # GameWorld().buttons.append(TextField((34, 42, 104), (GameWorld().screen_width - 400, 140), "Time: " + str(GameWorld().level_time), 48, "time"))
+
         # Resets parallax
         Parallax().reset_position()
 
