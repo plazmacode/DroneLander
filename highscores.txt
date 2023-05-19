@@ -6,5 +6,5 @@ Level: 5, Highscore: 1200
 Level: 6, Highscore: 200
 Level: 7, Highscore: 1200
 Level: 8, Highscore: 1000
-Level: 9, Highscore: 0
+Level: 9, Highscore: 1000
 Level: 10, Highscore: 1000
