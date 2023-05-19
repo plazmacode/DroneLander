@@ -79,6 +79,7 @@ class LevelLoader(metaclass=Singleton):
         from classes.GameWorld import GameWorld
         GameWorld().game_state = "PLAY"
         GameWorld().buttons.clear()
+        GameWorld().text_fields.clear()
 
         GameWorld().objectives_completed = 0
         GameWorld().main_objective_completed = False
@@ -89,10 +90,10 @@ class LevelLoader(metaclass=Singleton):
         GameWorld().game_objects = pygame.sprite.Group()
         GameWorld().tutorial_text = pygame.sprite.Group()
 
-        GameWorld().buttons.append(TextField((34, 42, 104), (GameWorld().screen_width / 2, 200), "Score: " + str(GameWorld().score), 48, "score"))
-        GameWorld().buttons.append(TextField((34, 42, 104), (GameWorld().screen_width - 120, 60), "Level: " + str(LevelLoader().current_level), 48, "level"))
-        # GameWorld().buttons.append(TextField((34, 42, 104), (GameWorld().screen_width - 400, 100), "Grenades: " + str(GameWorld().grenades), 48, "grenades"))
-        # GameWorld().buttons.append(TextField((34, 42, 104), (GameWorld().screen_width - 400, 140), "Time: " + str(GameWorld().level_time), 48, "time"))
+        GameWorld().text_fields.append(TextField((34, 42, 104), (GameWorld().screen_width / 2, 200), "Score: " + str(GameWorld().score), 48, "score"))
+        GameWorld().text_fields.append(TextField((34, 42, 104), (GameWorld().screen_width - 120, 60), "Level: " + str(LevelLoader().current_level), 48, "level"))
+        # GameWorld().text_fields.append(TextField((34, 42, 104), (GameWorld().screen_width - 400, 100), "Grenades: " + str(GameWorld().grenades), 48, "grenades"))
+        # GameWorld().text_fields.append(TextField((34, 42, 104), (GameWorld().screen_width - 400, 140), "Time: " + str(GameWorld().level_time), 48, "time"))
 
         # Resets parallax
         Parallax().reset_position()

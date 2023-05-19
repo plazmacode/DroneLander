@@ -32,6 +32,7 @@ class MenuHandler(metaclass=Singleton):
             GameWorld().mixer.music.set_volume(0.2)
             GameWorld().mixer.music.play(-1)
         GameWorld().buttons.clear()
+        GameWorld().text_fields.clear()
         GameWorld().game_objects = pygame.sprite.Group()
 
 
@@ -50,25 +51,26 @@ class MenuHandler(metaclass=Singleton):
         """
         GameWorld().tutorial_text = pygame.sprite.Group()
         if self.lore:
-            GameWorld().buttons.append(TextField(button_color, (self._screen_width / 2, 820), "On the 22nd of February 2014, the Russian puppet Yanukovych was officially removed as Ukrainian president.", 48, "lore"))
-            GameWorld().buttons.append(TextField(button_color, (self._screen_width / 2, 848), "Immediately following this, Russia invaded Ukraine annexing the territory of Crimea and sent unmarked troops into Luhansk and Donetsk.", 48, "lore"))
-            GameWorld().buttons.append(TextField(button_color, (self._screen_width / 2, 872), "On the 24th of February 2022, Russia escalated this invasion to full scale war, trying to topple the democratically elected Ukrainian government.", 48, "lore"))
-            GameWorld().buttons.append(TextField(button_color, (self._screen_width / 2, 900), "Today, Russia is still trying to subjugate Ukraine using war, destroying Ukrainian cities and killing Ukrainian citizens.", 48, "lore"))
+            GameWorld().text_fields.append(TextField(button_color, (self._screen_width / 2, 820), "On the 22nd of February 2014, the Russian puppet Yanukovych was officially removed as Ukrainian president.", 48, "lore"))
+            GameWorld().text_fields.append(TextField(button_color, (self._screen_width / 2, 848), "Immediately following this, Russia invaded Ukraine annexing the territory of Crimea and sent unmarked troops into Luhansk and Donetsk.", 48, "lore"))
+            GameWorld().text_fields.append(TextField(button_color, (self._screen_width / 2, 872), "On the 24th of February 2022, Russia escalated this invasion to full scale war, trying to topple the democratically elected Ukrainian government.", 48, "lore"))
+            GameWorld().text_fields.append(TextField(button_color, (self._screen_width / 2, 900), "Today, Russia is still trying to subjugate Ukraine using war, destroying Ukrainian cities and killing Ukrainian citizens.", 48, "lore"))
 
-            GameWorld().buttons.append(TextField(button_color, (self._screen_width / 2, 938), "On the 24th of February 2022, Russia escalated this invasion to full scale war, trying to topple the democratically elected Ukrainian government.", 48, "lore"))
-            GameWorld().buttons.append(TextField(button_color, (self._screen_width / 2, 962), "Consumer drones are used to drop grenades, by making the smallest possible modifications.", 48, "lore"))
-            GameWorld().buttons.append(TextField(button_color, (self._screen_width / 2, 986), "On some, a built-in auxiliary light feature is rewired to control a custom release mechanism instead.", 48, "lore"))
-            GameWorld().buttons.append(TextField(button_color, (self._screen_width / 2, 1010), "In the Ukrainian war, ‘Auxiliary Light On’ usually means ‘Bombs away’.", 48, "lore"))
-        GameWorld().buttons.append(TextField(button_color, (self._screen_width / 2, 200), "Auxiliary Light On", 48, "title"))
-        GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 + 450, 200, 40, 40), "?", "lore"))
+            GameWorld().text_fields.append(TextField(button_color, (self._screen_width / 2, 938), "On the 24th of February 2022, Russia escalated this invasion to full scale war, trying to topple the democratically elected Ukrainian government.", 48, "lore"))
+            GameWorld().text_fields.append(TextField(button_color, (self._screen_width / 2, 962), "Consumer drones are used to drop grenades, by making the smallest possible modifications.", 48, "lore"))
+            GameWorld().text_fields.append(TextField(button_color, (self._screen_width / 2, 986), "On some, a built-in auxiliary light feature is rewired to control a custom release mechanism instead.", 48, "lore"))
+            GameWorld().text_fields.append(TextField(button_color, (self._screen_width / 2, 1010), "In the Ukrainian war, ‘Auxiliary Light On’ usually means ‘Bombs away’.", 48, "lore"))
+        GameWorld().text_fields.append(TextField(button_color, (self._screen_width / 2, 200), "Auxiliary Light On", 48, "title"))
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 300, 300, 80), "PLAY", "play"))
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 420, 300, 80), "SELECT LEVEL", "select"))
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 540, 300, 80), "OPTIONS", "options"))
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 660, 300, 80), "QUIT", "quit"))
+        GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 + 450, 200, 40, 40), "?", "lore"))
         GameWorld().game_state = "MENU" #this is an enum trust me
     
     def select_level(self):
         GameWorld().buttons.clear()
+        GameWorld().text_fields.clear()
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 - 280, 300, 80, 80), "1", "loadLevel1"))
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 - 160, 300, 80, 80), "2", "loadLevel2"))
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 - 40, 300, 80, 80), "3", "loadLevel3"))
@@ -80,7 +82,7 @@ class MenuHandler(metaclass=Singleton):
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 + 80, 400, 80, 80), "9", "loadLevel9"))
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 + 200, 400, 80, 80), "10", "loadLevel10"))
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 660, 300, 80), "BACK", "mainMenu"))
-        GameWorld().buttons.append(TextField(button_color, (self._screen_width / 2, 100), "                        ", 48, "LevelSelectHighscore"))
+        GameWorld().text_fields.append(TextField(button_color, (self._screen_width / 2, 100), "                        ", 48, "LevelSelectHighscore"))
 
 
     def end_menu(self):
@@ -88,6 +90,7 @@ class MenuHandler(metaclass=Singleton):
         End screen menu
         """
         GameWorld().buttons.clear()
+        GameWorld().text_fields.clear()
 
         # Show NEXT LEVEL button if objective completed
         if GameWorld().main_objective_completed:
@@ -105,6 +108,8 @@ class MenuHandler(metaclass=Singleton):
         Options menu
         """
         GameWorld().buttons.clear()
+        GameWorld().text_fields.clear()
+
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 300, 300, 80), self.get_difficulty(), "changeDifficulty"))
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 420, 300, 80), self.get_sound(), "toggleSound"))
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 540, 300, 80), self.get_music(), "toggleMusic"))
@@ -119,10 +124,12 @@ class MenuHandler(metaclass=Singleton):
         """
         HighscoreManager().updateScore(GameWorld().score, LevelLoader().current_level)
         GameWorld().buttons.clear()
+        GameWorld().text_fields.clear()
+
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 660, 300, 80), "CONTINUE", "endMenu"))
-        GameWorld().buttons.append(TextField(button_color, (self._screen_width / 2, 100), "Highscore: " + str(HighscoreManager().getScore(LevelLoader().current_level)), 48, "highscore"))
-        GameWorld().buttons.append(TextField(button_color, (self._screen_width / 2, 200), "Score: " + str(GameWorld().score), 48, "score"))
-        GameWorld().buttons.append(TextField(button_color, (self._screen_width / 2, 400), GameWorld().endscreen_string, 48, "endmessage"))
+        GameWorld().text_fields.append(TextField(button_color, (self._screen_width / 2, 100), "Highscore: " + str(HighscoreManager().getScore(LevelLoader().current_level)), 48, "highscore"))
+        GameWorld().text_fields.append(TextField(button_color, (self._screen_width / 2, 200), "Score: " + str(GameWorld().score), 48, "score"))
+        GameWorld().text_fields.append(TextField(button_color, (self._screen_width / 2, 400), GameWorld().endscreen_string, 48, "endmessage"))
         GameWorld().game_state = "SCORESCREEN"
 
     def get_sound(self):

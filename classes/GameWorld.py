@@ -5,6 +5,7 @@ from classes.Marker import Marker
 from classes.Parallax import Parallax
 from classes.LevelLoader import LevelLoader
 from classes.HighscoreManager import HighscoreManager
+from classes.ButtonActions import ButtonActions
 
 class Singleton(type):
     _instances = {}
@@ -35,12 +36,16 @@ class GameWorld(metaclass=Singleton):
         self.game_objects = pygame.sprite.Group()
         self.new_game_objects = pygame.sprite.Group()
         self.tutorial_text = pygame.sprite.Group()
-        self.buttons = []
         self.mixer = pygame.mixer
         self.jamming = False
         self.game_state = "MENU"
         self.score = 0
         self.level_select = 0
+
+        #menu
+        self.text_fields = []
+        self.buttons = []
+        self.selected_button = 0
 
         self.too_high = False
         self.death_timer = 3
@@ -106,8 +111,35 @@ class GameWorld(metaclass=Singleton):
         Marker().update()
         Parallax().update()
 
-        for button in self.buttons:
+        for event in event_list:
+            if event.type == pygame.KEYDOWN and len(self.buttons) > 0:
+                """
+                menu selection does not loop
+                when it was looping the player would accidentally be pressing w and loop around and hit the quit menu
+                because w is also the thrust button
+                """
+                if event.key == pygame.K_s:
+                    self.selected_button = min(self.selected_button + 1, len(self.buttons) - 1)
+                    print(self.selected_button)
+                elif event.key == pygame.K_w:
+                    self.selected_button = max(self.selected_button - 1, 0)
+                elif event.key == pygame.K_RETURN:
+                    ButtonActions().run(self.buttons[self.selected_button].action, self.buttons[self.selected_button])
+                    self.selected_button = 0
+
+
+                
+
+        for i, button in enumerate(self.buttons):
             button.update(event_list)
+            if i == self.selected_button:
+                button.new_color = button.hover_color
+                button.redraw()
+
+        for text_field in self.text_fields:
+            text_field.update(event_list)
+
+
 
     def move_camera(self, x):
         """
@@ -209,6 +241,9 @@ class GameWorld(metaclass=Singleton):
 
         for button in self.buttons:
             button.draw(self._screen)
+
+        for text_field in self.text_fields:
+            text_field.draw(self._screen)
 
         self._screen.blit(self._screen, (0,0))
 

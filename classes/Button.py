@@ -44,7 +44,10 @@ class Button():
             pygame.draw.rect(self.button_surface, self.color, [5, 5, self.rect.width -10, self.rect.height -10])
 
     def update(self, event_list):
-        #if mouse position inside button rectangle
+        from classes.GameWorld import GameWorld
+        #keyboard controls
+
+        # if mouse position inside button rectangle
         mouse = pygame.mouse
         if self.rect.collidepoint(mouse.get_pos()[0], mouse.get_pos()[1]):
             # set hover color on button
@@ -62,11 +65,12 @@ class Button():
 
                 if event.type == pygame.MOUSEBUTTONUP:
                     self.old_mouse_state = pygame.MOUSEBUTTONUP
+
         else:
             # set color to base color when not hovering
             self.new_color = self.base_color
             self.redraw()
-    
+
     def draw(self, screen):
         # draw button rectangle
         screen.blit(self.button_surface, (self.rect.x, self.rect.y))
