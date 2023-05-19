@@ -16,9 +16,12 @@ class ButtonActions(metaclass=Singleton):
         from classes.GameWorld import GameWorld
         if action == "play":
             GameWorld().start_game()
+            GameWorld().selected_button = 0
 
         if action == "options":
             MenuHandler().options_menu()
+            GameWorld().selected_button = 0
+
 
         if action == "quit":
             # send quit event
@@ -27,12 +30,15 @@ class ButtonActions(metaclass=Singleton):
             
         if action == "mainMenu":
             MenuHandler().start_menu()
+            GameWorld().selected_button = 0
 
         if action == "endMenu":
             MenuHandler().end_menu()
+            GameWorld().selected_button = 0
 
         if action == "select":
             MenuHandler().select_level()
+            GameWorld().selected_button = 0
 
         if action == "changeDifficulty":
             GameWorld().difficulty += 1
@@ -52,9 +58,11 @@ class ButtonActions(metaclass=Singleton):
 
         if action == "nextLevel":
             LevelLoader().next_level()
+            GameWorld().selected_button = 0
 
         if action == "restartLevel":
             GameWorld().start_game()
+            GameWorld().selected_button = 0
 
         if "loadLevel" in action:
             # if action contains "loadLevel" use the number to load that level

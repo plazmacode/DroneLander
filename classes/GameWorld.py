@@ -125,7 +125,6 @@ class GameWorld(metaclass=Singleton):
                     self.selected_button = max(self.selected_button - 1, 0)
                 elif event.key == pygame.K_RETURN:
                     ButtonActions().run(self.buttons[self.selected_button].action, self.buttons[self.selected_button])
-                    self.selected_button = 0
 
 
                 
