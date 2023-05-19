@@ -91,13 +91,13 @@ class MenuHandler(metaclass=Singleton):
 
         # Show NEXT LEVEL button if objective completed
         if GameWorld().main_objective_completed:
-            GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 180, 300, 80), "PLAY AGAIN", "restartLevel"))
-            GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 300, 300, 80), "NEXT LEVEL", "nextLevel"))
+            GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 180, 300, 80), "NEXT LEVEL", "nextLevel"))
+            GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 300, 300, 80), "PLAY AGAIN", "restartLevel"))
         else:
             GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 300, 300, 80), "PLAY AGAIN", "restartLevel"))
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 420, 300, 80), "OPTIONS", "options"))
         GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 540, 300, 80), "MAIN MENU", "mainMenu"))
-        GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 660, 300, 80), "QUIT", "quit"))
+        GameWorld().buttons.append(Button(button_color, hover_color, pygame.Rect(self._screen_width / 2 -150, 780, 300, 80), "QUIT", "quit"))
         GameWorld().game_state = "ENDMENU"
 
     def options_menu(self):

@@ -79,10 +79,6 @@ class GameWorld(metaclass=Singleton):
                 if event.type == pygame.QUIT:
                     # pygame.quit()
                     running = False
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_ESCAPE:
-                        # pygame.quit()
-                        running = False
             self.update(event_list)
             self.draw()
 
